@@ -11,7 +11,7 @@ export type ResizerProps = {
   split: "vertical" | "horizontal";
 };
 
-const Resizer: FunctionComponent<ResizerProps> = ({
+export const Resizer: FunctionComponent<ResizerProps> = ({
   split,
   sx,
   onClick,
@@ -70,5 +70,3 @@ const Resizer: FunctionComponent<ResizerProps> = ({
     />
   );
 };
-
-export default Resizer;

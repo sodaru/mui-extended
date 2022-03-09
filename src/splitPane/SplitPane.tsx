@@ -1,7 +1,7 @@
 import { Box, SxProps } from "@mui/material";
 import { Children, Component, ReactNode } from "react";
-import Pane from "./Pane";
-import Resizer from "./Resizer";
+import { Pane } from "./Pane";
+import { Resizer } from "./Resizer";
 
 const unFocus = (window: Window) => {
   if (window.document.getSelection) {
@@ -58,7 +58,7 @@ type SplitPaneState = {
   instanceProps?: { size: number };
 };
 
-class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
+export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
   static defaultProps: Partial<SplitPaneProps> = {
     allowResize: true,
     minSize: 100,
@@ -352,5 +352,3 @@ class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
     );
   }
 }
-
-export default SplitPane;

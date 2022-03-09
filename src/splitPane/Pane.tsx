@@ -8,7 +8,7 @@ export type PaneProps = {
   eleRef?: Ref<HTMLDivElement>;
 };
 
-const Pane: FunctionComponent<PaneProps> = ({
+export const Pane: FunctionComponent<PaneProps> = ({
   size,
   split,
   sx,
@@ -40,5 +40,3 @@ const Pane: FunctionComponent<PaneProps> = ({
     </Box>
   );
 };
-
-export default Pane;

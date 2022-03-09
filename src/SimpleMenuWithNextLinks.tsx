@@ -2,7 +2,7 @@ import { MenuList, MenuItem, ListItemText } from "@mui/material";
 import Link from "next/link";
 import { FunctionComponent, ReactElement } from "react";
 
-const SimpleMenuWithNextLinks: FunctionComponent<{
+export const SimpleMenuWithNextLinks: FunctionComponent<{
   pages: (string | { label: string; link: string })[];
 }> = ({ pages }) => {
   const pageLinks: ReactElement[] = [];
@@ -19,5 +19,3 @@ const SimpleMenuWithNextLinks: FunctionComponent<{
   }
   return <MenuList>{pageLinks}</MenuList>;
 };
-
-export default SimpleMenuWithNextLinks;

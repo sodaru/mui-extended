@@ -8,7 +8,7 @@ export const SodaruThemeContext = createContext<SodaruThemeContextType>(() => {
   // don't do anything
 });
 
-const SodaruTheme: FunctionComponent = ({ children }) => {
+export const SodaruTheme: FunctionComponent = ({ children }) => {
   const [themeOptions, setThemeOptions] = useState<ThemeOptions>({});
 
   const theme = useMemo(() => {
@@ -35,5 +35,3 @@ const SodaruTheme: FunctionComponent = ({ children }) => {
     </SodaruThemeContext.Provider>
   );
 };
-
-export default SodaruTheme;

@@ -1,6 +1,6 @@
 import { FunctionComponent, ReactNode } from "react";
 import { Box, Grid } from "@mui/material";
-import SplitPane from "./splitPane/SplitPane";
+import { SplitPane } from "./splitPane/SplitPane";
 
 export type LayoutProps = {
   appBar?: ReactNode;

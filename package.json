@@ -2,7 +2,11 @@
   "name": "@solib/ui-components",
   "version": "0.0.1",
   "description": "Basic UI Components for Sodaru Projects",
-  "main": "index.js",
+  "module": "./dist/index.js",
+  "typings": "./dist/index.d.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "npx rimraf dist",
     "prettier": "npx prettier --check --ignore-unknown ./**/*",
