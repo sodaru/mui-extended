@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import Layout from "../src/Layout";
 import SimpleMenuWithNextLinks from "../src/SimpleMenuWithNextLinks";
@@ -21,7 +21,10 @@ export const ComposedLayout: FunctionComponent = ({ children }) => {
 const Index: SodaruPageComponentType = () => {
   return (
     <Box>
-      Welcome <div style={{ fontFamily: "sans-serif" }}>Welcome</div>
+      <Typography variant="h2">Welcome</Typography>
+      <Typography variant="h3" fontFamily="sans-serif">
+        This is a showcase of Common UI Components
+      </Typography>
     </Box>
   );
 };
