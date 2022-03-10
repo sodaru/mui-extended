@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
-import Layout from "../src/Layout";
+import { Layout } from "../src/Layout";
 import { SimpleMenuWithNextLinks } from "../src/SimpleMenuWithNextLinks";
 import { SodaruPageComponentType } from "../src/SodaruApp";
 
@@ -9,7 +9,11 @@ export const ComposedLayout: FunctionComponent = ({ children }) => {
     <Layout
       menu={
         <SimpleMenuWithNextLinks
-          pages={[{ link: "/", label: "Home" }, "textfield"]}
+          pages={[
+            { link: "/", label: "Home" },
+            { link: "sodaru-theme", label: "Sodaru Theme" },
+            { link: "sodaru-logo", label: "Sodaru Logo" }
+          ]}
         />
       }
     >

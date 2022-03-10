@@ -25,12 +25,14 @@ const BaseLayout: FunctionComponent<LayoutProps> = ({
   );
 };
 
-const Layout: FunctionComponent<LayoutProps> = ({ appBar, menu, children }) => {
+export const Layout: FunctionComponent<LayoutProps> = ({
+  appBar,
+  menu,
+  children
+}) => {
   return (
     <BaseLayout appBar={appBar} menu={menu}>
       {children}
     </BaseLayout>
   );
 };
-
-export default Layout;

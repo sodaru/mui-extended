@@ -10,7 +10,8 @@ export const SimpleMenuWithNextLinks: FunctionComponent<{
     const link = typeof page == "string" ? page : page.link;
     const label = typeof page == "string" ? page : page.label;
     pageLinks.push(
-      <Link href={link} key={link} passHref>
+      // eslint-disable-next-line @next/next/link-passhref
+      <Link href={link} key={link}>
         <MenuItem>
           <ListItemText>{label}</ListItemText>
         </MenuItem>
