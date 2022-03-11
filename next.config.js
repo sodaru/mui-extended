@@ -2,4 +2,10 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: false
 });
-module.exports = withBundleAnalyzer({});
+const images = {};
+if (process.env.NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION === "true") {
+  images.loader = "custom";
+}
+module.exports = withBundleAnalyzer({
+  images: images
+});

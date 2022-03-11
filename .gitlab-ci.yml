@@ -26,3 +26,13 @@ publish:
     - git describe --exact-match | grep ^v && npm publish
   only:
     - tags
+
+pages:
+  stage: deploy
+  script:
+    - echo "NEXT_PUBLIC_DISABLE_IMAGE_OPTIMIZATION=true" > .env.local
+    - npx next build
+    - npx next export
+  artifacts:
+    paths:
+      - out
