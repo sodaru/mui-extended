@@ -2,6 +2,7 @@ image: registry.gitlab.com/sodaru/container/sodaru/ci-nodejs
 
 stages:
   - test
+  - deploy
   - publish
 
 cache:
