@@ -7,11 +7,13 @@ export type ResizerProps = {
   onMouseDown: MouseEventHandler;
   onTouchStart: TouchEventHandler;
   onTouchEnd: TouchEventHandler;
+  size: number;
   sx: SxProps;
   split: "vertical" | "horizontal";
 };
 
 export const Resizer: FunctionComponent<ResizerProps> = ({
+  size,
   split,
   sx,
   onClick,
@@ -39,7 +41,7 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
       sx={{
         backgroundColor: "divider",
         backgroundClip: "padding-box",
-        width: "7px",
+        width: size,
         "&:hover": {
           borderColor: "rgba(212, 212, 212, 0.2)"
         },

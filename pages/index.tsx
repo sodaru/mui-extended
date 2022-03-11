@@ -1,9 +1,13 @@
 import { Box, Typography } from "@mui/material";
 import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
-import { Layout } from "../src/Layout";
-import { SimpleMenuWithNextLinks } from "../src/SimpleMenuWithNextLinks";
-import { SodaruPageComponentType } from "../src/SodaruApp";
+import {
+  SodaruAppBar,
+  Layout,
+  SimpleMenuWithNextLinks,
+  SodaruPageComponentType,
+  HideMenuProvider
+} from "../src";
 
 const Menu: FunctionComponent<{ route: string }> = ({ route }) => (
   <SimpleMenuWithNextLinks
@@ -18,14 +22,21 @@ const Menu: FunctionComponent<{ route: string }> = ({ route }) => (
         link: "sodaru-logo",
         label: "Sodaru Logo",
         menuItemProps: { selected: route === "/sodaru-logo" }
-      }
+      },
+      "layout-without-menu"
     ]}
   />
 );
 
 export const ComposedLayout: FunctionComponent = ({ children }) => {
   const router = useRouter();
-  return <Layout menu={<Menu route={router.route} />}>{children}</Layout>;
+  return (
+    <HideMenuProvider>
+      <Layout menu={<Menu route={router.route} />} appBar={<SodaruAppBar />}>
+        {children}
+      </Layout>
+    </HideMenuProvider>
+  );
 };
 
 const Index: SodaruPageComponentType = () => {

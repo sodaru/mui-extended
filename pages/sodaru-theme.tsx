@@ -6,16 +6,14 @@ import {
   TextField,
   useTheme
 } from "@mui/material";
-import { ChangeEventHandler, useContext, useState } from "react";
+import { ChangeEventHandler, useState } from "react";
 import { ComposedLayout } from "./index";
-import { SodaruPageComponentType } from "../src/SodaruApp";
-import { soTextField } from "../src/SodaruTextFieldStyle";
-import { SodaruThemeContext } from "../src/SodaruTheme";
+import { useSodaruTheme, SodaruPageComponentType, soTextField } from "../src";
 
 const SodaruTextField = soTextField(TextField);
 
 const TextFieldDemo: SodaruPageComponentType = () => {
-  const setTheme = useContext(SodaruThemeContext);
+  const setTheme = useSodaruTheme();
   const theme = useTheme();
 
   const [color, setColor] = useState(theme.palette.primary.main);

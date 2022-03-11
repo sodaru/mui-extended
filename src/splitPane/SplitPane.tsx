@@ -1,4 +1,5 @@
 import { Box, SxProps } from "@mui/material";
+import { SystemCssProperties } from "@mui/system";
 import { Children, Component, ReactNode } from "react";
 import { Pane } from "./Pane";
 import { Resizer } from "./Resizer";
@@ -47,6 +48,7 @@ export type SplitPaneProps = {
   resizerSx?: SxProps;
   step?: number;
   primary?: "first" | "second";
+  hidePrimary?: boolean;
 };
 
 type SplitPaneState = {
@@ -58,6 +60,9 @@ type SplitPaneState = {
   instanceProps?: { size: number };
 };
 
+/**
+ * This component is rendered in `absolute` position stretching 100% height and width of the parent `relative` element
+ */
 export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
   static defaultProps: Partial<SplitPaneProps> = {
     allowResize: true,
@@ -274,10 +279,12 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
       sx,
       resizerSx,
       primary,
-      children
+      children,
+      hidePrimary
     } = this.props;
 
     const { primaryPaneSize } = this.state;
+    const resizerSize = 7;
 
     const notNullChildren = removeNullChildren(children);
 
@@ -288,10 +295,6 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
       position: "absolute",
       outline: "none",
       overflow: "hidden",
-      MozUserSelect: "text",
-      WebkitUserSelect: "text",
-      msUserSelect: "text",
-      userSelect: "text",
       ...sx
     };
 
@@ -311,8 +314,41 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
       });
     }
 
+    const pane1Sx: SystemCssProperties = {
+      transition: "margin ease-in-out 500ms"
+    };
+    const pane2Sx: SystemCssProperties = {
+      transition: "margin ease-in-out 500ms"
+    };
+
+    const resizerSxForSlide: SystemCssProperties = {
+      transition: "margin ease-in-out 500ms"
+    };
+    if (hidePrimary) {
+      const offsetPaneMargin = -1 * primaryPaneSize + "px";
+      const offsetResizerMargin = -1 * resizerSize + "px";
+      if (split == "vertical") {
+        if (primary == "first") {
+          pane1Sx.marginLeft = offsetPaneMargin;
+          resizerSxForSlide.marginLeft = offsetResizerMargin;
+        } else {
+          pane2Sx.marginRight = offsetPaneMargin;
+          resizerSxForSlide.marginRight = offsetResizerMargin;
+        }
+      } else {
+        if (primary == "first") {
+          pane1Sx.marginTop = offsetPaneMargin;
+          resizerSxForSlide.marginTop = offsetResizerMargin;
+        } else {
+          pane2Sx.marginBottom = offsetPaneMargin;
+          resizerSxForSlide.marginBottom = offsetResizerMargin;
+        }
+      }
+    }
+
     return (
       <Box
+        id="split-pane-root"
         ref={(node: HTMLDivElement) => {
           this.splitPane = node;
         }}
@@ -320,11 +356,12 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
       >
         <Pane
           key="pane1"
-          eleRef={node => {
+          ref={node => {
             this.pane1 = node;
           }}
           size={primary == "first" ? primaryPaneSize : undefined}
           split={split}
+          sx={pane1Sx}
         >
           {notNullChildren[0]}
         </Pane>
@@ -335,16 +372,18 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
           onTouchStart={event => this.onTouchStart(event.nativeEvent)}
           onTouchEnd={this.onMouseUp}
           key="resizer"
-          sx={resizerSx}
+          sx={{ ...resizerSx, ...resizerSxForSlide } as SxProps}
           split={split}
+          size={resizerSize}
         />
         <Pane
           key="pane2"
-          eleRef={node => {
+          ref={node => {
             this.pane2 = node;
           }}
           size={primary == "second" ? primaryPaneSize : undefined}
           split={split}
+          sx={pane2Sx}
         >
           {notNullChildren[1]}
         </Pane>

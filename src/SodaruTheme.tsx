@@ -1,12 +1,22 @@
 import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
-import { createContext, FunctionComponent, useMemo, useState } from "react";
+import {
+  createContext,
+  FunctionComponent,
+  useContext,
+  useMemo,
+  useState
+} from "react";
 import { deepmerge } from "@mui/utils";
 
-export type SodaruThemeContextType = (theme: ThemeOptions) => void;
+type SodaruThemeContextType = (theme: ThemeOptions) => void;
 
-export const SodaruThemeContext = createContext<SodaruThemeContextType>(() => {
+const SodaruThemeContext = createContext<SodaruThemeContextType>(() => {
   // don't do anything
 });
+
+export const useSodaruTheme = () => {
+  return useContext(SodaruThemeContext);
+};
 
 export const SodaruTheme: FunctionComponent = ({ children }) => {
   const [themeOptions, setThemeOptions] = useState<ThemeOptions>({});
@@ -15,7 +25,10 @@ export const SodaruTheme: FunctionComponent = ({ children }) => {
     return createTheme(
       deepmerge(
         {
-          palette: { primary: { main: "#004b89" } },
+          palette: {
+            primary: { main: "#004b89" },
+            secondary: { main: "#ffb476" }
+          },
           textfield: { variant: "outlined", size: "small" }
         },
         themeOptions
