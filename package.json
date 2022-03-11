@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "clean": "npx rimraf dist",
-    "prettier": "npx prettier --check --ignore-unknown ./**/*",
+    "prettier": "npx prettier --check --ignore-unknown ./**/*.{ts,tsx,js,json,yml,yaml}",
     "eslint": "npx eslint ./ --no-error-on-unmatched-pattern",
     "tsc": "npx tsc --project tsconfig.build.json",
     "copyAssets": "cp -R src/assets dist/assets",
