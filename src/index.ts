@@ -4,4 +4,5 @@ export * from "./SimpleMenuWithNextLinks";
 export * from "./SodaruApp";
 export * from "./SodaruTextFieldStyle";
 export * from "./SodaruTheme";
+export * from "./SodaruImage";
 export * from "./SodaruLogo";
