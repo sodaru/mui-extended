@@ -3,9 +3,14 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { FunctionComponent } from "react";
 import { SodaruTheme } from "./SodaruTheme";
-import { NextComponentType } from "next";
+import { NextComponentType, NextPageContext } from "next";
 
-export type SodaruPageComponentType = NextComponentType & {
+// eslint-disable-next-line @typescript-eslint/ban-types
+export type SodaruPageComponentType<P = {}, IP = {}> = NextComponentType<
+  NextPageContext,
+  IP,
+  P
+> & {
   layout?: FunctionComponent;
 };
 
@@ -20,13 +25,14 @@ export type SodaruPageComponentType = NextComponentType & {
  * import "@fontsource/roboto/700.css";
  * ```
  *
+ * page components in SodaruApp may contain a layout property to have same layout between pages. type `SodaruPageComponentType` comes handy
+ *
  */
 export const SodaruApp: FunctionComponent<AppProps> = ({
   Component,
   pageProps
 }) => {
-  //@ts-expect-error Component may have layout property
-  const Layout = (Component.layout as FunctionComponent) || Box;
+  const Layout = (Component as SodaruPageComponentType).layout || Box;
   return (
     <>
       <Head>

@@ -13,6 +13,7 @@ const Menu: FunctionComponent<{ route: string }> = ({ route }) => (
   <SimpleMenuWithNextLinks
     pages={[
       { link: "/", label: "Home", menuItemProps: { selected: route === "/" } },
+      "layout-without-menu",
       {
         link: "sodaru-theme",
         label: "Sodaru Theme",
@@ -23,7 +24,11 @@ const Menu: FunctionComponent<{ route: string }> = ({ route }) => (
         label: "Sodaru Logo",
         menuItemProps: { selected: route === "/sodaru-logo" }
       },
-      "layout-without-menu"
+      {
+        link: "hash-router",
+        label: "Hash Router",
+        menuItemProps: { selected: route === "/hash-router" }
+      }
     ]}
   />
 );
