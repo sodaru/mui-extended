@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import LogoImage from "./assets/logo.png";
+import LogoImage from "../assets/logo.png";
 import { SodaruImage, SodaruImageProps } from "./SodaruImage";
 
 export const SodaruLogo: FunctionComponent<

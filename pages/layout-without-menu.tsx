@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { Layout, SodaruPageComponentType } from "../src";
+import { getComposedLayout } from ".";
+import { SodaruPageComponentType } from "../src";
 
 const LayoutWithoutMenuDemo: SodaruPageComponentType = () => {
   return (
@@ -13,6 +14,6 @@ const LayoutWithoutMenuDemo: SodaruPageComponentType = () => {
   );
 };
 
-LayoutWithoutMenuDemo.layout = Layout;
+LayoutWithoutMenuDemo.layout = getComposedLayout(true);
 
 export default LayoutWithoutMenuDemo;

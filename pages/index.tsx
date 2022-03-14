@@ -28,15 +28,26 @@ const Menu: FunctionComponent<{ route: string }> = ({ route }) => (
   />
 );
 
-export const ComposedLayout: FunctionComponent = ({ children }) => {
-  const router = useRouter();
-  return (
-    <HideMenuProvider>
-      <Layout menu={<Menu route={router.route} />} appBar={<SodaruAppBar />}>
-        {children}
-      </Layout>
-    </HideMenuProvider>
-  );
+const composedLayouts: FunctionComponent[] = [];
+
+export const getComposedLayout = (noMenu = false, noAppBar = false) => {
+  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0);
+  if (!composedLayouts[index]) {
+    const CLayout: FunctionComponent = ({ children }) => {
+      const router = useRouter();
+      const menu = noMenu ? undefined : <Menu route={router.route} />;
+      const appBar = noAppBar ? undefined : <SodaruAppBar />;
+      return (
+        <HideMenuProvider>
+          <Layout menu={menu} appBar={appBar}>
+            {children}
+          </Layout>
+        </HideMenuProvider>
+      );
+    };
+    composedLayouts[index] = CLayout;
+  }
+  return composedLayouts[index];
 };
 
 const Index: SodaruPageComponentType = () => {

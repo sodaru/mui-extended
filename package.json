@@ -5,15 +5,15 @@
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
   "files": [
-    "dist"
+    "dist",
+    "assets"
   ],
   "scripts": {
     "clean": "npx rimraf dist",
-    "prettier": "npx prettier --check --ignore-unknown ./**/*.{ts,tsx,js,json,yml,yaml}",
+    "prettier": "npx prettier --check --ignore-unknown ./**/*",
     "eslint": "npx eslint ./ --no-error-on-unmatched-pattern",
     "tsc": "npx tsc --project tsconfig.build.json",
-    "copyAssets": "cp -R src/assets dist/assets",
-    "build": "npm run prettier && npm run eslint && npm run clean && npm run tsc && npm run copyAssets",
+    "build": "npm run prettier && npm run eslint && npm run clean && npm run tsc",
     "pretest": "npm run build",
     "test": "echo 'no tests'",
     "prepack": "npm run test",

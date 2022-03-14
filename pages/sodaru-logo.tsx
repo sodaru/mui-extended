@@ -1,5 +1,5 @@
 import { List, ListItem } from "@mui/material";
-import { ComposedLayout } from ".";
+import { getComposedLayout } from ".";
 import { SodaruLogo, SodaruPageComponentType } from "../src";
 
 const SodaruLogoDemo: SodaruPageComponentType = () => {
@@ -17,6 +17,6 @@ const SodaruLogoDemo: SodaruPageComponentType = () => {
   );
 };
 
-SodaruLogoDemo.layout = ComposedLayout;
+SodaruLogoDemo.layout = getComposedLayout();
 
 export default SodaruLogoDemo;
