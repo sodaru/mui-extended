@@ -41,7 +41,9 @@ export const getComposedLayout = (noMenu = false, noAppBar = false) => {
     const CLayout: FunctionComponent = ({ children }) => {
       const router = useRouter();
       const menu = noMenu ? undefined : <Menu route={router.route} />;
-      const appBar = noAppBar ? undefined : <SodaruAppBar />;
+      const appBar = noAppBar ? undefined : (
+        <SodaruAppBar hideMenuBtn={noMenu} />
+      );
       return (
         <HideMenuProvider>
           <Layout menu={menu} appBar={appBar}>

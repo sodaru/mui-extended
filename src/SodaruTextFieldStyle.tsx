@@ -1,5 +1,5 @@
 import { TextFieldProps, useTheme } from "@mui/material";
-import { FunctionComponent } from "react";
+import { forwardRef, FunctionComponent, PropsWithChildren } from "react";
 
 declare module "@mui/material/styles" {
   interface Theme {
@@ -17,7 +17,7 @@ declare module "@mui/material/styles" {
   }
 }
 
-export const soTextField = <
+export const withSizeAndVariantFromTheme = <
   T extends {
     variant?: TextFieldProps["variant"];
     size?: TextFieldProps["size"];
@@ -25,17 +25,20 @@ export const soTextField = <
 >(
   TextField: FunctionComponent<T>
 ): FunctionComponent<T> => {
-  const SoTextField: FunctionComponent<T> = props => {
-    const theme = useTheme();
-    return (
-      <TextField
-        size={theme.textfield.size}
-        variant={theme.textfield.variant}
-        {...props}
-      >
-        {props.children}
-      </TextField>
-    );
-  };
-  return SoTextField;
+  const SoTextField = forwardRef<HTMLInputElement, PropsWithChildren<T>>(
+    function TextFieldWithSizeAndVariantFromTheme({ children, ...props }, ref) {
+      const theme = useTheme();
+      return (
+        <TextField
+          size={theme.textfield.size}
+          variant={theme.textfield.variant}
+          {...(props as T)}
+          ref={ref}
+        >
+          {children}
+        </TextField>
+      );
+    }
+  );
+  return SoTextField as FunctionComponent<T>;
 };

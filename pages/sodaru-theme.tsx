@@ -8,9 +8,13 @@ import {
 } from "@mui/material";
 import { ChangeEventHandler, useState } from "react";
 import { getComposedLayout } from "./index";
-import { useSodaruTheme, SodaruPageComponentType, soTextField } from "../src";
+import {
+  useSodaruTheme,
+  SodaruPageComponentType,
+  withSizeAndVariantFromTheme
+} from "../src";
 
-const SodaruTextField = soTextField(TextField);
+const SodaruTextField = withSizeAndVariantFromTheme(TextField);
 
 const TextFieldDemo: SodaruPageComponentType = () => {
   const setTheme = useSodaruTheme();

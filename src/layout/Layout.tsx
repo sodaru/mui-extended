@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { SplitPane } from "../splitPane/SplitPane";
 import { useHideMenu } from "./HideMenu";
-import { useHashRouter, useNonInitialEffect } from "../utils";
+import { withBackButtonClose } from "../BackClosableModal";
 
 type BaseLayoutProps = {
   menu: ReactNode;
@@ -25,37 +25,25 @@ const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
   );
 };
 
+const SodaruSwipeableDrawer = withBackButtonClose(SwipeableDrawer);
+
 const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
   menu,
   children
 }) => {
   const drawerWidth = "80vw";
-  const [hashState, setHashState] = useHashRouter<string>("");
   const hideMenu = useHideMenu();
-
-  const toggleHashState = () => {
-    setHashState(hashState == "" ? "menu-open" : "");
-  };
-
   useEffect(() => {
-    const hideMenuFromHashState = hashState == "";
-    if (hideMenuFromHashState != hideMenu.hide) {
+    if (!hideMenu.hide) {
       hideMenu.toggle();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hashState]);
-
-  useNonInitialEffect(() => {
-    const hideMenuFromHashState = hashState == "";
-    if (hideMenuFromHashState != hideMenu.hide) {
-      toggleHashState();
-    }
-  }, [hideMenu.hide]);
+  }, []);
 
   return (
     <>
       {menu ? (
-        <SwipeableDrawer
+        <SodaruSwipeableDrawer
           anchor="left"
           open={!hideMenu.hide}
           onClose={hideMenu.toggle}
@@ -72,7 +60,7 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
         >
           <Toolbar />
           <Box sx={{ overflow: "auto" }}>{menu}</Box>
-        </SwipeableDrawer>
+        </SodaruSwipeableDrawer>
       ) : (
         ""
       )}

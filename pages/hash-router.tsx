@@ -1,10 +1,10 @@
-import { SodaruPageComponentType, soTextField } from "../src";
+import { SodaruPageComponentType, withSizeAndVariantFromTheme } from "../src";
 import { getComposedLayout } from ".";
 import { Button, List, ListItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useHashRouter } from "../src/utils";
 
-const SoTextField = soTextField(TextField);
+const SoTextField = withSizeAndVariantFromTheme(TextField);
 
 const RouterDemo: SodaruPageComponentType = () => {
   const [hashState, setHashState] = useHashRouter<string>("");

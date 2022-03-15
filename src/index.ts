@@ -7,3 +7,4 @@ export * from "./SodaruTextFieldStyle";
 export * from "./SodaruTheme";
 export * from "./SodaruImage";
 export * from "./SodaruLogo";
+export * from "./BackClosableModal";
