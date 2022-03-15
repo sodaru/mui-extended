@@ -9,9 +9,13 @@ export const useHashRouter = <T extends string | number | boolean>(
   const router = useRouter();
 
   const updateRoute = (_hash: T) => {
-    const url = new URL(window.location.href);
-    url.hash = "#" + _hash;
-    router.push(url);
+    if (!_hash) {
+      router.back();
+    } else {
+      const url = new URL(window.location.href);
+      url.hash = "#" + _hash;
+      router.push(url);
+    }
   };
 
   useEffect(() => {

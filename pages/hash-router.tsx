@@ -2,7 +2,7 @@ import { SodaruPageComponentType, soTextField } from "../src";
 import { getComposedLayout } from ".";
 import { Button, List, ListItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useHashRouter } from "../src/HashRouter";
+import { useHashRouter } from "../src/utils";
 
 const SoTextField = soTextField(TextField);
 
