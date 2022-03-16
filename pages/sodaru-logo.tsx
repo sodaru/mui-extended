@@ -1,6 +1,7 @@
 import { List, ListItem } from "@mui/material";
-import { getComposedLayout } from ".";
 import { SodaruLogo, SodaruPageComponentType } from "../src";
+import { getDemoLayout } from "../src/demo-utils/demoLayout";
+import { listDemoPages } from "../src/demo-utils/listDemoPages";
 
 const SodaruLogoDemo: SodaruPageComponentType = () => {
   return (
@@ -17,6 +18,11 @@ const SodaruLogoDemo: SodaruPageComponentType = () => {
   );
 };
 
-SodaruLogoDemo.layout = getComposedLayout();
+SodaruLogoDemo.layout = getDemoLayout();
 
 export default SodaruLogoDemo;
+
+export async function getStaticProps() {
+  const pages = await listDemoPages();
+  return { props: { pages } };
+}

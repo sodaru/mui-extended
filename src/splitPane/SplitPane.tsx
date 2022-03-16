@@ -322,7 +322,7 @@ export class SplitPane extends Component<SplitPaneProps, SplitPaneState> {
     };
 
     const resizerSxForSlide: SystemCssProperties = {
-      transition: "margin ease-in-out 500ms"
+      transition: "all ease-in-out 500ms"
     };
     if (hidePrimary) {
       const offsetPaneMargin = -1 * primaryPaneSize + "px";

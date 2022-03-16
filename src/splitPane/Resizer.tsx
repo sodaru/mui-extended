@@ -22,7 +22,7 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
   onTouchStart,
   onTouchEnd
 }) => {
-  const sxProps: SxProps =
+  const styles: SxProps =
     split == "vertical"
       ? {
           cursor: "col-resize",
@@ -39,13 +39,13 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
     <Box
       role="presentation"
       sx={{
-        backgroundColor: "divider",
+        backgroundColor: "transparent",
         backgroundClip: "padding-box",
         width: size,
         "&:hover": {
-          borderColor: "rgba(212, 212, 212, 0.2)"
+          backgroundColor: "primary.light"
         },
-        ...sxProps,
+        ...styles,
         ...sx
       }}
       onMouseDown={event => onMouseDown(event)}

@@ -2,6 +2,7 @@ import { FunctionComponent, ReactNode, useEffect } from "react";
 import {
   Box,
   Grid,
+  Paper,
   SwipeableDrawer,
   Theme,
   Toolbar,
@@ -15,11 +16,31 @@ type BaseLayoutProps = {
   menu: ReactNode;
 };
 
+const MenuBox: FunctionComponent = ({ children }) => {
+  return (
+    <Paper
+      sx={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        width: "100%",
+        height: "100%",
+        overflow: "auto",
+        backgroundColor: (theme: Theme) => theme.palette.grey[50]
+      }}
+      square
+      variant="outlined"
+    >
+      {children}
+    </Paper>
+  );
+};
+
 const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
   const hideMenu = useHideMenu();
   return (
     <SplitPane minSize={180} maxSize={500} hidePrimary={hideMenu.hide || !menu}>
-      <Box>{menu}</Box>
+      <MenuBox>{menu}</MenuBox>
       <Box>{children}</Box>
     </SplitPane>
   );
@@ -58,8 +79,10 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
             }
           }}
         >
-          <Toolbar />
-          <Box sx={{ overflow: "auto" }}>{menu}</Box>
+          <MenuBox>
+            <Toolbar />
+            {menu}
+          </MenuBox>
         </SodaruSwipeableDrawer>
       ) : (
         ""

@@ -26,7 +26,7 @@ export const Pane = forwardRef<HTMLDivElement, PropsWithChildren<PaneProps>>(
       style.flex = "none";
     }
 
-    const finalSx = Object.assign({}, style, sx || {});
+    const finalSx = { ...style, ...sx };
 
     return (
       <Box ref={ref} sx={finalSx}>

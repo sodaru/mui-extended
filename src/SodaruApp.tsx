@@ -6,12 +6,19 @@ import { SodaruTheme } from "./SodaruTheme";
 import { NextComponentType, NextPageContext } from "next";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
+type PropsDistribution<P = {}> = {
+  layout?: (keyof P)[];
+  page?: (keyof P)[];
+};
+
+// eslint-disable-next-line @typescript-eslint/ban-types
 export type SodaruPageComponentType<P = {}, IP = {}> = NextComponentType<
   NextPageContext,
   IP,
   P
 > & {
   layout?: FunctionComponent;
+  propsDistribution?: PropsDistribution<P>;
 };
 
 /**
@@ -33,6 +40,20 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
   pageProps
 }) => {
   const Layout = (Component as SodaruPageComponentType).layout || Box;
+  const propsDistribution: PropsDistribution =
+    (Component as SodaruPageComponentType).propsDistribution || {};
+
+  const layoutPropNames = propsDistribution.layout || Object.keys(pageProps);
+  const pagePropNames = propsDistribution.page || Object.keys(pageProps);
+
+  const layoutProps = Object.fromEntries(
+    layoutPropNames.map(propName => [propName, pageProps[propName]])
+  );
+
+  const componentProps = Object.fromEntries(
+    pagePropNames.map(propName => [propName, pageProps[propName]])
+  );
+
   return (
     <>
       <Head>
@@ -40,8 +61,8 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
       </Head>
       <CssBaseline enableColorScheme />
       <SodaruTheme>
-        <Layout>
-          <Component {...pageProps} />
+        <Layout {...layoutProps}>
+          <Component {...componentProps} />
         </Layout>
       </SodaruTheme>
     </>

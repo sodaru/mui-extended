@@ -1,6 +1,7 @@
 import Link from "next/link";
-import { getComposedLayout } from ".";
 import { SodaruPageComponentType } from "../src";
+import { listDemoPages } from "../src/demo-utils/listDemoPages";
+import { getDemoLayout } from "../src/demo-utils/demoLayout";
 
 const LayoutWithoutMenuDemo: SodaruPageComponentType = () => {
   return (
@@ -14,6 +15,11 @@ const LayoutWithoutMenuDemo: SodaruPageComponentType = () => {
   );
 };
 
-LayoutWithoutMenuDemo.layout = getComposedLayout(true);
+LayoutWithoutMenuDemo.layout = getDemoLayout(true);
 
 export default LayoutWithoutMenuDemo;
+
+export async function getStaticProps() {
+  const pages = await listDemoPages();
+  return { props: { pages } };
+}
