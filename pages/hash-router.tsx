@@ -1,13 +1,13 @@
-import { SodaruPageComponentType, withSizeAndVariantFromTheme } from "../src";
 import { Button, List, ListItem, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
+import { withSizeAndVariantFromTheme } from "../src";
+import { demoPage } from "../src/demo-utils/demoLayout";
+import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 import { useHashRouter } from "../src/utils";
-import { listDemoPages } from "../src/demo-utils/listDemoPages";
-import { getDemoLayout } from "../src/demo-utils/demoLayout";
 
 const SoTextField = withSizeAndVariantFromTheme(TextField);
 
-const RouterDemo: SodaruPageComponentType = () => {
+const RouterDemo = demoPage(() => {
   const [hashState, setHashState] = useHashRouter<string>("");
   const [hashTempState, setHashTempState] = useState("");
   const [nonHashState, setNonHashState] = useState("");
@@ -47,13 +47,8 @@ const RouterDemo: SodaruPageComponentType = () => {
       </ListItem>
     </List>
   );
-};
-
-RouterDemo.layout = getDemoLayout();
+});
 
 export default RouterDemo;
 
-export async function getStaticProps() {
-  const pages = await listDemoPages();
-  return { props: { pages } };
-}
+export const getStaticProps = getStaticPropsFactory();

@@ -1,6 +1,44 @@
+import getConfig from "next/config";
 import { FunctionComponent } from "react";
+import { SodaruPageComponentType } from "..";
 import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
-import { SimpleMenuWithNextLinks } from "../SimpleMenuWithNextLinks";
+import {
+  TreeMenuWithNextLinks,
+  TreeMenuWithNextLinksProps
+} from "../TreeMenuWithNextLinks";
+
+export const convertDemoPagesToTreeMenuProps = (
+  pages: string[]
+): TreeMenuWithNextLinksProps => {
+  const props: TreeMenuWithNextLinksProps = {
+    links: pages.map(page => {
+      let link: TreeMenuWithNextLinksProps["links"][number] = page;
+      if (link == "index") {
+        link = { link: "/", label: "home" };
+      } else if (link.endsWith("/index")) {
+        link = link.substring(0, link.lastIndexOf("/index"));
+      }
+      return link;
+    }),
+    basePath: getConfig().basePath,
+    improveLabels: true
+  };
+
+  props.links.sort((a, b) => {
+    const key1 = typeof a == "string" ? a : a.link;
+    const key2 = typeof b == "string" ? b : b.link;
+
+    if (key1 === "/") {
+      return -1;
+    }
+    if (key2 === "/") {
+      return 1;
+    }
+    return key1.localeCompare(key2);
+  });
+
+  return props;
+};
 
 const demoLayouts: FunctionComponent[] = [];
 
@@ -12,7 +50,7 @@ export const getDemoLayout = (noMenu = false, noAppBar = false) => {
       pages
     }) => {
       const menu = noMenu ? undefined : (
-        <SimpleMenuWithNextLinks pages={pages} />
+        <TreeMenuWithNextLinks {...convertDemoPagesToTreeMenuProps(pages)} />
       );
       const appBar = noAppBar ? undefined : (
         <SodaruAppBar hideMenuBtn={noMenu} />
@@ -28,4 +66,25 @@ export const getDemoLayout = (noMenu = false, noAppBar = false) => {
     demoLayouts[index] = DemoLayout;
   }
   return demoLayouts[index];
+};
+
+type DemoPageProps = {
+  docs: Record<string, string>;
+  pages: string[];
+};
+
+export const demoPage = (
+  demo: FunctionComponent<Partial<DemoPageProps>>,
+  noMenu = false,
+  noAppBar = false,
+  noLayout = false
+): SodaruPageComponentType<DemoPageProps> => {
+  const pageComponent = demo as SodaruPageComponentType<DemoPageProps>;
+
+  if (!noLayout) {
+    pageComponent.layout = getDemoLayout(noMenu, noAppBar);
+    pageComponent.propsDistribution = { page: ["docs"], layout: ["pages"] };
+  }
+
+  return pageComponent;
 };

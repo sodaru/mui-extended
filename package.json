@@ -36,6 +36,7 @@
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.3",
     "@mui/icons-material": "^5.5.0",
+    "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.4.4",
     "@next/bundle-analyzer": "^12.1.0",
     "@sodev/eslint-config": "^1.1.0",

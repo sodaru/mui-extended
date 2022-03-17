@@ -1,9 +1,9 @@
 import { List, ListItem } from "@mui/material";
-import { SodaruLogo, SodaruPageComponentType } from "../src";
-import { getDemoLayout } from "../src/demo-utils/demoLayout";
-import { listDemoPages } from "../src/demo-utils/listDemoPages";
+import { SodaruLogo } from "../src";
+import { demoPage } from "../src/demo-utils/demoLayout";
+import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const SodaruLogoDemo: SodaruPageComponentType = () => {
+const SodaruLogoDemo = demoPage(() => {
   return (
     <List>
       <ListItem>
@@ -16,13 +16,8 @@ const SodaruLogoDemo: SodaruPageComponentType = () => {
       </ListItem>
     </List>
   );
-};
-
-SodaruLogoDemo.layout = getDemoLayout();
+});
 
 export default SodaruLogoDemo;
 
-export async function getStaticProps() {
-  const pages = await listDemoPages();
-  return { props: { pages } };
-}
+export const getStaticProps = getStaticPropsFactory();

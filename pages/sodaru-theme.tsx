@@ -7,17 +7,13 @@ import {
   useTheme
 } from "@mui/material";
 import { ChangeEventHandler, useState } from "react";
-import {
-  SodaruPageComponentType,
-  useSodaruTheme,
-  withSizeAndVariantFromTheme
-} from "../src";
-import { listDemoPages } from "../src/demo-utils/listDemoPages";
-import { getDemoLayout } from "../src/demo-utils/demoLayout";
+import { useSodaruTheme, withSizeAndVariantFromTheme } from "../src";
+import { demoPage } from "../src/demo-utils/demoLayout";
+import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
 const SodaruTextField = withSizeAndVariantFromTheme(TextField);
 
-const TextFieldDemo: SodaruPageComponentType = () => {
+const TextFieldDemo = demoPage(() => {
   const setTheme = useSodaruTheme();
   const theme = useTheme();
 
@@ -88,13 +84,8 @@ const TextFieldDemo: SodaruPageComponentType = () => {
       </ListItem>
     </List>
   );
-};
-
-TextFieldDemo.layout = getDemoLayout();
+});
 
 export default TextFieldDemo;
 
-export async function getStaticProps() {
-  const pages = await listDemoPages();
-  return { props: { pages } };
-}
+export const getStaticProps = getStaticPropsFactory();
