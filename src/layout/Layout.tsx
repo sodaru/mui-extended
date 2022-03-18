@@ -1,6 +1,7 @@
 import { FunctionComponent, ReactNode, useEffect } from "react";
 import {
   Box,
+  BoxProps,
   Grid,
   Paper,
   SwipeableDrawer,
@@ -36,12 +37,20 @@ const MenuBox: FunctionComponent = ({ children }) => {
   );
 };
 
+const ContentBox: FunctionComponent<BoxProps> = ({ children, ...props }) => {
+  return (
+    <Box p={1} {...props}>
+      {children}
+    </Box>
+  );
+};
+
 const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
   const hideMenu = useHideMenu();
   return (
     <SplitPane minSize={180} maxSize={500} hidePrimary={hideMenu.hide || !menu}>
       <MenuBox>{menu}</MenuBox>
-      <Box>{children}</Box>
+      <ContentBox>{children}</ContentBox>
     </SplitPane>
   );
 };
@@ -87,7 +96,7 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
       ) : (
         ""
       )}
-      <Box
+      <ContentBox
         sx={{
           overflow: "auto",
           position: "absolute",
@@ -98,7 +107,7 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
         }}
       >
         {children}
-      </Box>
+      </ContentBox>
     </>
   );
 };

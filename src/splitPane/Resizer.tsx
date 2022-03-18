@@ -27,21 +27,26 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
       ? {
           cursor: "col-resize",
           borderLeft: "3px solid rgba(255, 255, 255, 0)",
-          borderRight: "3px solid rgba(255, 255, 255, 0)"
+          borderRight: "3px solid rgba(255, 255, 255, 0)",
+          marginLeft: "-3px",
+          marginRight: "-3px"
         }
       : {
           cursor: "row-resize",
           borderTop: "3px solid rgba(255, 255, 255, 0)",
-          borderBottom: "3px solid rgba(255, 255, 255, 0)"
+          borderBottom: "3px solid rgba(255, 255, 255, 0)",
+          marginTop: "-3px",
+          marginBottom: "-3px"
         };
 
   return (
     <Box
       role="presentation"
       sx={{
-        backgroundColor: "transparent",
+        backgroundColor: "divider",
         backgroundClip: "padding-box",
         width: size,
+        zIndex: 1000,
         "&:hover": {
           backgroundColor: "primary.light"
         },
