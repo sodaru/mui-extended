@@ -1,6 +1,7 @@
 import {
   Alert,
   Paper,
+  styled,
   Table,
   TableBody,
   TableCell,
@@ -17,6 +18,8 @@ import typescript from "refractor/lang/typescript";
 import { VsCodeDarkThemeStyle } from "./vsc-dark-theme";
 
 SyntaxHighlighter.registerLanguage("typescript", typescript);
+
+const Span = styled("span")``;
 
 const SyntaxHighLightedCodeComponent: Components["code"] = ({
   inline,
@@ -36,9 +39,18 @@ const SyntaxHighLightedCodeComponent: Components["code"] = ({
       {children}
     </SyntaxHighlighter>
   ) : (
-    <code className={className} {...props}>
-      {children}
-    </code>
+    <Span
+      sx={{
+        paddingLeft: 1,
+        paddingRight: 1,
+        backgroundColor: theme => theme.palette.grey[100],
+        color: "primary.main"
+      }}
+    >
+      <code className={className} {...props}>
+        {children}
+      </code>
+    </Span>
   );
 };
 
