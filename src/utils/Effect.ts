@@ -7,7 +7,7 @@ export const useNonInitialEffect: typeof useEffect = (effect, deps) => {
     if (initialRender.current) {
       initialRender.current = false;
     } else {
-      effect();
+      return effect();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps);

@@ -54,25 +54,58 @@ const SyntaxHighLightedCodeComponent: Components["code"] = ({
   );
 };
 
+const H1 = props => (
+  <Typography {...props} variant="h4" sx={{ marginTop: 2 }} />
+);
+
+const H2 = props => (
+  <Typography {...props} variant="h5" sx={{ marginTop: 1.5 }} />
+);
+
+const H3 = props => (
+  <Typography {...props} variant="h6" sx={{ marginTop: 1 }} />
+);
+
+const H4 = props => <Typography {...props} variant="subtitle1" />;
+const H5 = props => <Typography {...props} variant="subtitle2" />;
+const H6 = props => <Typography {...props} variant="body1" />;
+const P = props => <Typography {...props} variant="body2" />;
+const Blockquote = props => (
+  <Alert {...props} icon={false} severity="info" color="info" />
+);
+const TableComponent = props => (
+  <TableContainer component={Paper}>
+    <Table {...props} size="small" />
+  </TableContainer>
+);
+const Img = props => {
+  const propsFromTitle = {};
+  if (props.title) {
+    const [title, attrs] = props.title.split("?", 2);
+    propsFromTitle["title"] = title;
+    Object.assign(
+      propsFromTitle,
+      Object.fromEntries(new URLSearchParams(attrs).entries())
+    );
+  }
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img {...props} {...propsFromTitle} alt={props.alt} />;
+};
+
 export const MarkdownPreview: FunctionComponent = ({ children }) => {
   return (
     <ReactMarkdown
       components={{
-        h1: props => <Typography {...props} variant="h4" />,
-        h2: props => <Typography {...props} variant="h5" />,
-        h3: props => <Typography {...props} variant="h6" />,
-        h4: props => <Typography {...props} variant="subtitle1" />,
-        h5: props => <Typography {...props} variant="subtitle2" />,
-        h6: props => <Typography {...props} variant="body1" />,
-        p: props => <Typography {...props} variant="body2" />,
-        blockquote: props => (
-          <Alert {...props} icon={false} severity="info" color="info" />
-        ),
-        table: props => (
-          <TableContainer component={Paper}>
-            <Table {...props} size="small" />
-          </TableContainer>
-        ),
+        h1: H1,
+        h2: H2,
+        h3: H3,
+        h4: H4,
+        h5: H5,
+        h6: H6,
+        p: P,
+        blockquote: Blockquote,
+        table: TableComponent,
+        img: Img,
         thead: TableHead,
         tbody: TableBody,
         th: TableCell as unknown as Components["th"],

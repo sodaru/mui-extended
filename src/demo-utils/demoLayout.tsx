@@ -1,5 +1,6 @@
+import { Typography } from "@mui/material";
 import getConfig from "next/config";
-import { FunctionComponent } from "react";
+import { FunctionComponent, ReactNode } from "react";
 import { SodaruPageComponentType } from "..";
 import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
 import {
@@ -42,7 +43,11 @@ export const convertDemoPagesToTreeMenuProps = (
 
 const demoLayouts: FunctionComponent[] = [];
 
-export const getDemoLayout = (noMenu = false, noAppBar = false) => {
+export const getDemoLayout = (
+  title: ReactNode,
+  noMenu = false,
+  noAppBar = false
+) => {
   const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0);
   if (!demoLayouts[index]) {
     const DemoLayout: FunctionComponent<{ pages?: string[] }> = ({
@@ -53,7 +58,7 @@ export const getDemoLayout = (noMenu = false, noAppBar = false) => {
         <TreeMenuWithNextLinks {...convertDemoPagesToTreeMenuProps(pages)} />
       );
       const appBar = noAppBar ? undefined : (
-        <SodaruAppBar hideMenuBtn={noMenu} />
+        <SodaruAppBar hideMenuBtn={noMenu}>{title}</SodaruAppBar>
       );
       return (
         <HideMenuProvider>
@@ -75,6 +80,11 @@ type DemoPageProps = {
 
 export const demoPage = (
   demo: FunctionComponent<Partial<DemoPageProps>>,
+  title: ReactNode = (
+    <Typography variant="h6" sx={{ flexGrow: 1 }}>
+      Sodaru UI Components
+    </Typography>
+  ),
   noMenu = false,
   noAppBar = false,
   noLayout = false
@@ -82,7 +92,7 @@ export const demoPage = (
   const pageComponent = demo as SodaruPageComponentType<DemoPageProps>;
 
   if (!noLayout) {
-    pageComponent.layout = getDemoLayout(noMenu, noAppBar);
+    pageComponent.layout = getDemoLayout(title, noMenu, noAppBar);
     pageComponent.propsDistribution = { page: ["docs"], layout: ["pages"] };
   }
 

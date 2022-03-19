@@ -4,6 +4,7 @@ import {
   BoxProps,
   Grid,
   Paper,
+  PaperProps,
   SwipeableDrawer,
   Theme,
   Toolbar,
@@ -17,9 +18,10 @@ type BaseLayoutProps = {
   menu: ReactNode;
 };
 
-const MenuBox: FunctionComponent = ({ children }) => {
+const MenuBox: FunctionComponent<PaperProps> = ({ children, ...props }) => {
   return (
     <Paper
+      {...props}
       sx={{
         position: "absolute",
         left: 0,

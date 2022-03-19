@@ -1,55 +1,51 @@
-# **Markdown Preview**
+# Markdown Preview
+
+## Usage
+
+```typescript
+import { MarkdownPreview } from "@solib/ui-components";
+
+// load the markdown content
+const markdownContent: string;
+
+const markdownView = <MarkdownPreview>{markdownContent}</MarkdownPreview>;
+```
+
+Following Document demo the different markdown features supported by `MarkdownPreview` Component
+
+## Features
+
+### 1. Headers
+
+- # h1 Heading
+
+- ## h2 Heading
+
+- ### h3 Heading
+
+- #### h4 Heading
+
+- ##### h5 Heading
+
+- ###### h6 Heading
+
+### 2. Horizontal Rules
 
 ---
 
-**Advertisement :)**
+### 3. Special Chars
 
-- **[pica](https://nodeca.github.io/pica/demo/)** - high quality and fast image
-  resize in browser.
-- **[babelfish](https://github.com/nodeca/babelfish/)** - developer friendly
-  i18n with plurals support and easy syntax.
+- &copy; &amp;
 
-You will like those projects!
+### 4. Emphasis
 
----
+- **This is bold text**
 
-## Headers
+- _This is italic text_
 
-# h1 Heading
+- ~~Strikethrough~~
 
-## h2 Heading
-
-### h3 Heading
-
-#### h4 Heading
-
-##### h5 Heading
-
-###### h6 Heading
-
----
-
-## Horizontal Rules
-
----
-
-## Special Chars
-
-&copy; &amp;
-
----
-
-## Emphasis
-
-**This is bold text**
-
-_This is italic text_
-
-~~Strikethrough~~
-
----
-
-## Blockquotes
+### 5. Blockquotes
 
 > Blockquotes can also be nested...
 >
@@ -57,11 +53,9 @@ _This is italic text_
 > >
 > > > ...or with spaces between arrows.
 
----
+### 6. Lists
 
-## Lists
-
-Unordered
+#### Unordered
 
 - Create a list by starting a line with `+`, `-`, or `*`
 - Sub-lists are made by indenting 2 spaces:
@@ -71,7 +65,7 @@ Unordered
     - Nulla volutpat aliquam velit
 - Very easy!
 
-Ordered
+#### Ordered
 
 1. Lorem ipsum dolor sit amet
 2. Consectetur adipiscing elit
@@ -85,87 +79,78 @@ Start numbering with offset:
 57. foo
 1. bar
 
----
+### 7. Code
 
-## Code
+- Inline `code`
 
-Inline `code`
+- Indented code
 
-Indented code
+      // Some comments
+      line 1 of code
+      line 2 of code
+      line 3 of code
 
-    // Some comments
-    line 1 of code
-    line 2 of code
-    line 3 of code
+- Block code "fences"
 
-Block code "fences"
+  ```
+  Sample text here...
+  ```
 
-```
-Sample text here...
-```
+- Syntax highlighting
 
-Syntax highlighting
+  ```js
+  var foo = function (bar) {
+    return bar++;
+  };
 
-```js
-var foo = function (bar) {
-  return bar++;
-};
+  console.log(foo(5));
+  ```
 
-console.log(foo(5));
-```
+### 8. Tables
 
----
+- Normal
+  | Option | Description |
+  | ------ | ------------------------------------------------------------------------- |
+  | data | path to data files to supply the data that will be passed into templates. |
+  | engine | engine to be used for processing templates. Handlebars is the default. |
+  | ext | extension to be used for dest files. |
 
-## Tables
+- Right aligned columns
 
-| Option | Description                                                               |
-| ------ | ------------------------------------------------------------------------- |
-| data   | path to data files to supply the data that will be passed into templates. |
-| engine | engine to be used for processing templates. Handlebars is the default.    |
-| ext    | extension to be used for dest files.                                      |
+  | Option |                                                               Description |
+  | -----: | ------------------------------------------------------------------------: |
+  |   data | path to data files to supply the data that will be passed into templates. |
+  | engine |    engine to be used for processing templates. Handlebars is the default. |
+  |    ext |                                      extension to be used for dest files. |
 
-Right aligned columns
+### 9. Links
 
-| Option |                                                               Description |
-| -----: | ------------------------------------------------------------------------: |
-|   data | path to data files to supply the data that will be passed into templates. |
-| engine |    engine to be used for processing templates. Handlebars is the default. |
-|    ext |                                      extension to be used for dest files. |
+- [link text](http://dev.nodeca.com)
 
----
+- [link with title](http://nodeca.github.io/pica/demo/ "title text!")
 
-## Links
+- Autoconverted link https://github.com/nodeca/pica
 
-[link text](http://dev.nodeca.com)
+### 10. Images
 
-[link with title](http://nodeca.github.io/pica/demo/ "title text!")
+- ![minion](https://octodex.github.com/images/minion.png "?width=200")
+- ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "With Title and width?width=200")
 
-Autoconverted link https://github.com/nodeca/pica (enable linkify to see)
+- Like links, Images also have a footnote style syntax
 
----
+  ![Alt text][id]
 
-## Images
+  With a reference later in the document defining the URL location:
 
-![<img src="https://octodex.github.com/images/minion.png" width="200"/>](https://octodex.github.com/images/minion.png)
-![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "The Stormtroopocat")
+  [id]: https://octodex.github.com/images/dojocat.jpg "The Dojocat?width=200"
 
-Like links, Images also have a footnote style syntax
+### 11. Footnotes
 
-![Alt text][id]
+- Footnote 1 link[^first].
 
-With a reference later in the document defining the URL location:
+- Footnote 2 link[^second].
 
-[id]: https://octodex.github.com/images/dojocat.jpg "The Dojocat"
-
----
-
-## Footnotes
-
-Footnote 1 link[^first].
-
-Footnote 2 link[^second].
-
-Duplicated footnote reference[^second].
+- Duplicated footnote reference[^second].
 
 [^first]: Footnote **can have markup**
 
