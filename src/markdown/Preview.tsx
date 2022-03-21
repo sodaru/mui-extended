@@ -66,10 +66,14 @@ const H3 = props => (
   <Typography {...props} variant="h6" sx={{ marginTop: 1 }} />
 );
 
-const H4 = props => <Typography {...props} variant="subtitle1" />;
-const H5 = props => <Typography {...props} variant="subtitle2" />;
-const H6 = props => <Typography {...props} variant="body1" />;
-const P = props => <Typography {...props} variant="body2" />;
+const H4 = props => (
+  <Typography {...props} variant="subtitle1" sx={{ fontWeight: "bold" }} />
+);
+const H5 = props => (
+  <Typography {...props} variant="subtitle2" sx={{ fontWeight: "bold" }} />
+);
+const H6 = props => <Typography {...props} variant="subtitle2" />;
+const P = props => <Typography {...props} variant="body1" />;
 const Blockquote = props => (
   <Alert {...props} icon={false} severity="info" color="info" />
 );

@@ -1,5 +1,7 @@
 # Markdown Preview
 
+---
+
 ## Usage
 
 ```typescript
@@ -12,6 +14,8 @@ const markdownView = <MarkdownPreview>{markdownContent}</MarkdownPreview>;
 ```
 
 Following Document demo the different markdown features supported by `MarkdownPreview` Component
+
+---
 
 ## Features
 
@@ -29,9 +33,11 @@ Following Document demo the different markdown features supported by `MarkdownPr
 
 - ###### h6 Heading
 
+- Paragraph
+
 ### 2. Horizontal Rules
 
----
+use `---`
 
 ### 3. Special Chars
 
@@ -132,6 +138,8 @@ Start numbering with offset:
 - Autoconverted link https://github.com/nodeca/pica
 
 ### 10. Images
+
+Use query parameters syntax in title field to provide more attributes to img tag `![minion](https://octodex.github.com/images/minion.png `**`"?width=200"`**`)`
 
 - ![minion](https://octodex.github.com/images/minion.png "?width=200")
 - ![Stormtroopocat](https://octodex.github.com/images/stormtroopocat.jpg "With Title and width?width=200")

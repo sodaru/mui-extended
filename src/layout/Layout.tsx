@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { SplitPane } from "../splitPane/SplitPane";
 import { useHideMenu } from "./HideMenu";
-import { withBackButtonClose } from "../BackClosableModal";
+import { withBackButtonClose } from "../utils";
 
 type BaseLayoutProps = {
   menu: ReactNode;

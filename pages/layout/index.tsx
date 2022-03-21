@@ -1,11 +1,11 @@
-import { Typography } from "@mui/material";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 import { demoPage } from "../../src/demo-utils/demoLayout";
+import { MarkdownPreview } from "../../src";
 
-const Index = demoPage(() => {
-  return <Typography variant="h4">Test</Typography>;
+const LayoutDemo = demoPage(({ docs }) => {
+  return <MarkdownPreview>{docs["layout/index"]}</MarkdownPreview>;
 });
 
-export default Index;
+export default LayoutDemo;
 
-export const getStaticProps = getStaticPropsFactory();
+export const getStaticProps = getStaticPropsFactory(["layout/index"]);

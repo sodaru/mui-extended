@@ -1,19 +1,11 @@
-import Link from "next/link";
+import { MarkdownPreview } from "../../src";
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const LayoutWithoutMenuDemo = demoPage(() => {
-  return (
-    <>
-      This is a page using (Layout with out menu)
-      <br />
-      <Link href="/">Go Back to Home</Link>
-      <br />
-      <Link href="/sodaru-theme">Go Back to Sodaru Theme</Link>
-    </>
-  );
+const LayoutWithoutMenuDemo = demoPage(({ docs }) => {
+  return <MarkdownPreview>{docs["layout/without-menu"]}</MarkdownPreview>;
 }, true);
 
 export default LayoutWithoutMenuDemo;
 
-export const getStaticProps = getStaticPropsFactory();
+export const getStaticProps = getStaticPropsFactory(["layout/without-menu"]);

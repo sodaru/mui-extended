@@ -1,2 +1,2 @@
 export * from "./Effect";
-export * from "./HashRouter";
+export * from "./BackClosableModal";
