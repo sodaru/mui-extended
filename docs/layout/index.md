@@ -5,14 +5,22 @@
 ## Usage
 
 ```typescript
-import { Layout } from "@solib/ui-components";
+import { Layout, SplitPaneProps } from "@solib/ui-components";
+import { SwipeableDrawerProps } from "@mui/material";
 
 const menu: ReactNode;
 const appBar: ReactNode;
 const content: ReactNode;
+const splitPaneProps: SplitPaneProps; // optional - splitpane used for Desktop Layout
+const swipeableDrawerProps: SwipeableDrawerProps; //optional - swipeableDrawer used for Mobile Layout
 
 const layout = (
-  <Layout menu={menu} appBar={appBar}>
+  <Layout
+    menu={menu}
+    appBar={appBar}
+    splitPaneProps={splitPaneProps}
+    swipeableDrawerProps={swipeableDrawerProps}
+  >
     {content}
   </Layout>
 );

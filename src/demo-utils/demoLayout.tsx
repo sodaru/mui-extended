@@ -11,6 +11,30 @@ import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
 } from "../TreeMenuWithNextLinks";
+import { useStateWithSessionStorage } from "../utils";
+
+export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
+  TreeMenuWithNextLinksProps
+> = props => {
+  const [expanded, setExpanded] = useStateWithSessionStorage<string[]>(
+    "layoutMenuExpanded",
+    []
+  );
+
+  const onNodeToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
+    setExpanded(nodeIds);
+  };
+
+  return (
+    <TreeMenuWithNextLinks
+      {...props}
+      TreeViewProps={{
+        expanded,
+        onNodeToggle
+      }}
+    />
+  );
+};
 
 export const convertDemoPagesToTreeMenuProps = (
   pages: string[]
@@ -55,14 +79,16 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
       pages
     }) => {
       const menu = noMenu ? undefined : (
-        <TreeMenuWithNextLinks {...convertDemoPagesToTreeMenuProps(pages)} />
+        <TreeMenuWithNextLinksSessionPersisted
+          {...convertDemoPagesToTreeMenuProps(pages)}
+        />
       );
       const appBar = noAppBar ? undefined : (
         <SodaruAppBar hideMenuBtn={noMenu}>{title}</SodaruAppBar>
       );
       return (
         <HideMenuProvider>
-          <Layout menu={menu} appBar={appBar}>
+          <Layout menu={menu} appBar={appBar} splitPaneProps={{ minSize: 250 }}>
             {children}
           </Layout>
         </HideMenuProvider>

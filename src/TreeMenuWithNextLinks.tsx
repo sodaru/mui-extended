@@ -12,6 +12,8 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import Link from "next/link";
 import { Typography } from "@mui/material";
 import clsx from "clsx";
+import { deepmerge } from "@mui/utils";
+import { useRouter } from "next/router";
 
 type TreeLinkType = {
   link: string;
@@ -66,7 +68,11 @@ const trimSlashes = (str: string): string => {
 
 const convertLinksToTreeNodes = (
   links: TreeMenuWithNextLinksProps["links"]
-): Record<string, TreeNode> => {
+): {
+  linkToNodeIdMap: Record<string, string>;
+  topTreeNodes: Record<string, TreeNode>;
+} => {
+  const linkToNodeIdMap: Record<string, string> = {};
   const rootTreeNode: TreeNode = {
     id: -1,
     link: "",
@@ -115,16 +121,17 @@ const convertLinksToTreeNodes = (
       }
     }
     currentNode.link = _link.link;
+    linkToNodeIdMap[currentNode.link] = currentNode.id + "";
   }
 
-  return rootTreeNode.children;
+  return { linkToNodeIdMap, topTreeNodes: rootTreeNode.children };
 };
 
 /**
  * Prevents event from bubling up from icon component, So clicking on icon only provides expansion and collapse of childtree
  */
-const CustomContent = forwardRef<HTMLDivElement, TreeItemContentProps>(
-  function CustomContent(props, ref) {
+const CustomTreeItemContent = forwardRef<HTMLDivElement, TreeItemContentProps>(
+  function CustomTreeItemContent(props, ref) {
     const {
       classes,
       className,
@@ -194,7 +201,7 @@ const CustomContent = forwardRef<HTMLDivElement, TreeItemContentProps>(
 );
 
 const TreeItemWithSeparateExpansionClick = (props: TreeItemProps) => (
-  <TreeItem ContentComponent={CustomContent} {...props} />
+  <TreeItem ContentComponent={CustomTreeItemContent} {...props} />
 );
 
 const improveLabel = (label: string, improve?: boolean) => {
@@ -258,7 +265,24 @@ export const TreeMenuWithNextLinks: FunctionComponent<
   TreeItemProps,
   CustomTreeItem
 }) => {
-  const topTreeNodes = convertLinksToTreeNodes(links);
+  const router = useRouter();
+
+  const { linkToNodeIdMap, topTreeNodes } = convertLinksToTreeNodes(links);
+
+  const _treeViewProps = { ...TreeViewProps };
+  const selected = linkToNodeIdMap[router.asPath.substring(1)];
+  _treeViewProps.selected = selected;
+
+  const treeViewSx = deepmerge(TreeViewProps?.sx || {}, {
+    "& .MuiTreeItem-content": {
+      padding: 0.5
+    },
+    "& a, a:hover": {
+      textDecoration: "none",
+      color: "inherit"
+    }
+  });
+  _treeViewProps.sx = treeViewSx;
 
   const TreeItemComponent =
     CustomTreeItem || TreeItemWithSeparateExpansionClick;
@@ -268,16 +292,7 @@ export const TreeMenuWithNextLinks: FunctionComponent<
       aria-label="links"
       defaultCollapseIcon={<ArrowDropDownIcon />}
       defaultExpandIcon={<ArrowRightIcon />}
-      sx={{
-        "& .MuiTreeItem-content": {
-          padding: 0.5
-        },
-        "& a, a:hover": {
-          textDecoration: "none",
-          color: "inherit"
-        }
-      }}
-      {...TreeViewProps}
+      {..._treeViewProps}
     >
       {Object.values(topTreeNodes).map(node =>
         renderTreeNode(

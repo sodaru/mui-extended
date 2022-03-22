@@ -6,11 +6,13 @@ import {
   Paper,
   PaperProps,
   SwipeableDrawer,
+  SwipeableDrawerProps,
   Theme,
   Toolbar,
   useMediaQuery
 } from "@mui/material";
-import { SplitPane } from "../splitPane/SplitPane";
+import { deepmerge } from "@mui/utils";
+import { SplitPane, SplitPaneProps } from "../splitPane/SplitPane";
 import { useHideMenu } from "./HideMenu";
 import { withCloseOnNavigation } from "../utils";
 
@@ -47,10 +49,17 @@ const ContentBox: FunctionComponent<BoxProps> = ({ children, ...props }) => {
   );
 };
 
-const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
+const WebLayout: FunctionComponent<
+  BaseLayoutProps & { splitPaneProps?: SplitPaneProps }
+> = ({ menu, splitPaneProps, children }) => {
   const hideMenu = useHideMenu();
   return (
-    <SplitPane minSize={180} maxSize={500} hidePrimary={hideMenu.hide || !menu}>
+    <SplitPane
+      minSize={180}
+      maxSize={500}
+      hidePrimary={hideMenu.hide || !menu}
+      {...splitPaneProps}
+    >
       <MenuBox>{menu}</MenuBox>
       <ContentBox>{children}</ContentBox>
     </SplitPane>
@@ -59,10 +68,9 @@ const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
 
 const SodaruSwipeableDrawer = withCloseOnNavigation(SwipeableDrawer);
 
-const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
-  menu,
-  children
-}) => {
+const MobileLayout: FunctionComponent<
+  BaseLayoutProps & { swipeableDrawerProps?: SwipeableDrawerProps }
+> = ({ menu, swipeableDrawerProps, children }) => {
   const drawerWidth = "80vw";
   const hideMenu = useHideMenu();
   useEffect(() => {
@@ -71,6 +79,15 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const sx = deepmerge(swipeableDrawerProps?.sx || {}, {
+    width: drawerWidth,
+    flexShrink: 0,
+    [`& .MuiDrawer-paper`]: {
+      width: drawerWidth,
+      boxSizing: "border-box"
+    }
+  });
 
   return (
     <>
@@ -81,14 +98,8 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
           onClose={hideMenu.toggle}
           onOpen={hideMenu.toggle}
           variant="temporary"
-          sx={{
-            width: drawerWidth,
-            flexShrink: 0,
-            [`& .MuiDrawer-paper`]: {
-              width: drawerWidth,
-              boxSizing: "border-box"
-            }
-          }}
+          {...swipeableDrawerProps}
+          sx={sx}
         >
           <MenuBox>
             <Toolbar />
@@ -117,11 +128,15 @@ const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
 export type LayoutProps = {
   appBar?: ReactNode;
   menu?: ReactNode;
+  splitPaneProps?: SplitPaneProps;
+  swipeableDrawerProps?: SwipeableDrawerProps;
 };
 
 export const Layout: FunctionComponent<LayoutProps> = ({
   appBar,
   menu,
+  splitPaneProps,
+  swipeableDrawerProps,
   children
 }) => {
   const _menu = menu || "";
@@ -129,6 +144,9 @@ export const Layout: FunctionComponent<LayoutProps> = ({
   const isMobile = useMediaQuery<Theme>(theme => theme.breakpoints.down("sm"));
 
   const BaseLayout = isMobile ? MobileLayout : WebLayout;
+  const baseLayoutProps = isMobile
+    ? { swipeableDrawerProps }
+    : { splitPaneProps };
 
   return (
     <Grid container flexDirection={"column"} height={"100vh"}>
@@ -144,7 +162,9 @@ export const Layout: FunctionComponent<LayoutProps> = ({
         {_appBar}
       </Grid>
       <Grid item flexGrow={1} sx={{ position: "relative" }}>
-        <BaseLayout menu={_menu}>{children}</BaseLayout>
+        <BaseLayout menu={_menu} {...baseLayoutProps}>
+          {children}
+        </BaseLayout>
       </Grid>
     </Grid>
   );
