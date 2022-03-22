@@ -1,23 +1,29 @@
-import { List, ListItem } from "@mui/material";
-import { SodaruLogo } from "../src";
+import { Divider, List, ListItem, Typography } from "@mui/material";
+import { MarkdownPreview, SodaruLogo } from "../src";
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const SodaruLogoDemo = demoPage(() => {
+const SodaruLogoDemo = demoPage(({ docs }) => {
   return (
-    <List>
-      <ListItem>
-        Default
-        <SodaruLogo />
-      </ListItem>
-      <ListItem>
-        Custom Dimention
-        <SodaruLogo width={200} height={200} />
-      </ListItem>
-    </List>
+    <>
+      <MarkdownPreview>{docs["sodaru-logo"]}</MarkdownPreview>
+      <hr />
+      <Typography variant="h5">Demo</Typography>
+      <List>
+        <ListItem>Default</ListItem>
+        <ListItem>
+          <SodaruLogo />
+        </ListItem>
+        <Divider />
+        <ListItem>Custom Dimention</ListItem>
+        <ListItem>
+          <SodaruLogo width={200} height={200} />
+        </ListItem>
+      </List>
+    </>
   );
 });
 
 export default SodaruLogoDemo;
 
-export const getStaticProps = getStaticPropsFactory();
+export const getStaticProps = getStaticPropsFactory(["sodaru-logo"]);

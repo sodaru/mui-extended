@@ -32,4 +32,4 @@ Provides utilities for `localStorage` and `sessionStorage`
   );
   ```
 
-_This Demo uses `useStateWithSessionStorage` to persist navigation menu across page reloads_
+_This Demo uses `useStateWithSessionStorage` to persist navigation menu's expansion state across page reloads_
