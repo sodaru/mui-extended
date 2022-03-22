@@ -17,6 +17,8 @@ const sodaruAppBar = (
 );
 ```
 
+_[Layout](../layout) component uses `SodaruAppBar`_
+
 ## Features
 
 - `SodaruAppBar` wraps [`AppBar`](https://mui.com/components/app-bar/) from mui

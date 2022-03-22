@@ -29,14 +29,16 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
           borderLeft: "3px solid rgba(255, 255, 255, 0)",
           borderRight: "3px solid rgba(255, 255, 255, 0)",
           marginLeft: "-3px",
-          marginRight: "-3px"
+          marginRight: "-3px",
+          width: size
         }
       : {
           cursor: "row-resize",
           borderTop: "3px solid rgba(255, 255, 255, 0)",
           borderBottom: "3px solid rgba(255, 255, 255, 0)",
           marginTop: "-3px",
-          marginBottom: "-3px"
+          marginBottom: "-3px",
+          height: size
         };
 
   return (
@@ -45,7 +47,6 @@ export const Resizer: FunctionComponent<ResizerProps> = ({
       sx={{
         backgroundColor: "divider",
         backgroundClip: "padding-box",
-        width: size,
         zIndex: 1000,
         "&:hover": {
           backgroundColor: "primary.light"

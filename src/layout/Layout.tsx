@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { SplitPane } from "../splitPane/SplitPane";
 import { useHideMenu } from "./HideMenu";
-import { withBackButtonClose } from "../utils";
+import { withCloseOnNavigation } from "../utils";
 
 type BaseLayoutProps = {
   menu: ReactNode;
@@ -57,7 +57,7 @@ const WebLayout: FunctionComponent<BaseLayoutProps> = ({ menu, children }) => {
   );
 };
 
-const SodaruSwipeableDrawer = withBackButtonClose(SwipeableDrawer);
+const SodaruSwipeableDrawer = withCloseOnNavigation(SwipeableDrawer);
 
 const MobileLayout: FunctionComponent<BaseLayoutProps> = ({
   menu,

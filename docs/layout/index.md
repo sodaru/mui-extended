@@ -33,7 +33,7 @@ _This Documentation Uses Layout component along with [`SodaruAppBar`](../layout/
 ### Responsive
 
 - [`SplitPane`](../layout/split-pane) for Desktop
-- [`SwipeableDrawer`](https://mui.com/components/drawers/#swipeable) wraapped with [`BackClosableModal`](./back-closable-modal)
+- [`SwipeableDrawer`](https://mui.com/components/drawers/#swipeable) wraapped with [`withCloseOnNavigation`](./close-on-navigation)
 
 ### Contained
 
