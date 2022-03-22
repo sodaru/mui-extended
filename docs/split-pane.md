@@ -7,7 +7,7 @@ Splits a container into 2 parts with resizable divider
 ## Usage
 
 ```typescript
-import { SplitPane } from "@solib/ui-components";
+import { SplitPane, SplitPaneProps } from "@solib/ui-components";
 
 const props: SplitPaneProps = {
   minSize: 180;

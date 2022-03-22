@@ -46,7 +46,6 @@ export type TreeMenuWithNextLinksProps = {
   improveLabels?: boolean;
   TreeViewProps?: TreeViewProps;
   TreeItemProps?: TreeItemProps;
-  CustomTreeItem?: ComponentType<TreeItemProps>;
 };
 
 type TreeNode = {
@@ -257,14 +256,7 @@ const renderTreeNode = (
 
 export const TreeMenuWithNextLinks: FunctionComponent<
   TreeMenuWithNextLinksProps
-> = ({
-  links,
-  basePath,
-  improveLabels,
-  TreeViewProps,
-  TreeItemProps,
-  CustomTreeItem
-}) => {
+> = ({ links, basePath, improveLabels, TreeViewProps, TreeItemProps }) => {
   const router = useRouter();
 
   const { linkToNodeIdMap, topTreeNodes } = convertLinksToTreeNodes(links);
@@ -284,9 +276,6 @@ export const TreeMenuWithNextLinks: FunctionComponent<
   });
   _treeViewProps.sx = treeViewSx;
 
-  const TreeItemComponent =
-    CustomTreeItem || TreeItemWithSeparateExpansionClick;
-
   return (
     <TreeView
       aria-label="links"
@@ -297,7 +286,7 @@ export const TreeMenuWithNextLinks: FunctionComponent<
       {Object.values(topTreeNodes).map(node =>
         renderTreeNode(
           node,
-          TreeItemComponent,
+          TreeItemWithSeparateExpansionClick,
           improveLabels,
           basePath,
           TreeItemProps

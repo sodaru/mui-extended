@@ -119,7 +119,10 @@ export const demoPage = (
 
   if (!noLayout) {
     pageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
-    pageComponent.propsDistribution = { page: ["docs"], layout: ["pages"] };
+    pageComponent.propsDistribution = {
+      page: ["docs", "pages"],
+      layout: ["pages"]
+    };
   }
 
   return pageComponent;
