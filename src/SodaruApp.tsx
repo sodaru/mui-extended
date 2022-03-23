@@ -2,7 +2,7 @@ import { Box, CssBaseline } from "@mui/material";
 import { AppProps } from "next/app";
 import Head from "next/head";
 import { FunctionComponent } from "react";
-import { SodaruTheme } from "./SodaruTheme";
+import { ThemeOptionsProvider } from "./ThemeOptionsContext";
 import { NextComponentType, NextPageContext } from "next";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
@@ -60,11 +60,23 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <CssBaseline enableColorScheme />
-      <SodaruTheme>
+      <ThemeOptionsProvider
+        defaultThemeOptions={{
+          palette: {
+            primary: { main: "#004b89" },
+            secondary: { main: "#ffb476" }
+          },
+          components: {
+            MuiTextField: {
+              defaultProps: { variant: "outlined", size: "small" }
+            }
+          }
+        }}
+      >
         <Layout {...layoutProps}>
           <Component {...componentProps} />
         </Layout>
-      </SodaruTheme>
+      </ThemeOptionsProvider>
     </>
   );
 };
