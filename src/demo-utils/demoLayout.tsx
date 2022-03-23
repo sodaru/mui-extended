@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Tooltip, Typography, Divider } from "@mui/material";
 import getConfig from "next/config";
 import { FunctionComponent, ReactNode } from "react";
 import {
@@ -7,6 +7,8 @@ import {
   Layout,
   SodaruAppBar
 } from "..";
+import { SodaruImage } from "../SodaruImage";
+import { SodaruLogo } from "../SodaruLogo";
 import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
@@ -79,12 +81,37 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
       pages
     }) => {
       const menu = noMenu ? undefined : (
-        <TreeMenuWithNextLinksSessionPersisted
-          {...convertDemoPagesToTreeMenuProps(pages)}
-        />
+        <span>
+          <Box p={1}>
+            <Typography variant="subtitle2" sx={{ display: "flex" }}>
+              <SodaruLogo width={32} height={32} />
+              <Box p={0.5}>@solib/ui-components</Box>
+            </Typography>
+          </Box>
+          <Divider />
+          <TreeMenuWithNextLinksSessionPersisted
+            {...convertDemoPagesToTreeMenuProps(pages)}
+          />
+        </span>
       );
       const appBar = noAppBar ? undefined : (
-        <SodaruAppBar hideMenuBtn={noMenu}>{title}</SodaruAppBar>
+        <SodaruAppBar hideMenuBtn={noMenu}>
+          <Box flexGrow={1}>{title}</Box>
+          <Tooltip title="Source" arrow>
+            <a
+              href="https://gitlab.com/sodaru/solib/ui-components"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <SodaruImage
+                src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
+                alt="Git Repo"
+                width={54}
+                height={54}
+              />
+            </a>
+          </Tooltip>
+        </SodaruAppBar>
       );
       return (
         <HideMenuProvider>
