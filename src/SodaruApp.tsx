@@ -3,7 +3,8 @@ import { AppProps } from "next/app";
 import Head from "next/head";
 import { FunctionComponent } from "react";
 import { ThemeOptionsProvider } from "./ThemeOptionsContext";
-import { NextComponentType, NextPageContext } from "next";
+import { NextComponentType, NextConfig, NextPageContext } from "next";
+import getConfig from "next/config";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type PropsDistribution<P = {}> = {
@@ -20,6 +21,8 @@ export type SodaruPageComponentType<P = {}, IP = {}> = NextComponentType<
   layout?: FunctionComponent;
   propsDistribution?: PropsDistribution<P>;
 };
+
+const nextConfig: NextConfig = getConfig();
 
 /**
  * export this as default component from _app.ts
@@ -54,25 +57,16 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
     pagePropNames.map(propName => [propName, pageProps[propName]])
   );
 
+  const defaultThemeOptions =
+    nextConfig.publicRuntimeConfig.defaultThemeOptions;
+
   return (
     <>
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <CssBaseline enableColorScheme />
-      <ThemeOptionsProvider
-        defaultThemeOptions={{
-          palette: {
-            primary: { main: "#004b89" },
-            secondary: { main: "#ffb476" }
-          },
-          components: {
-            MuiTextField: {
-              defaultProps: { variant: "outlined", size: "small" }
-            }
-          }
-        }}
-      >
+      <ThemeOptionsProvider defaultThemeOptions={defaultThemeOptions}>
         <Layout {...layoutProps}>
           <Component {...componentProps} />
         </Layout>
