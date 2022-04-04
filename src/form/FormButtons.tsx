@@ -6,7 +6,7 @@ import {
 } from "react";
 import { useFormContext } from "./Context";
 
-export const withClearButton = <T extends { onClick?: MouseEventHandler }>(
+export const withResetButton = <T extends { onClick?: MouseEventHandler }>(
   Button: FunctionComponent<T>
 ): FunctionComponent<T> => {
   const DecoratedButton = forwardRef<Element, T>(function ClearButton(
@@ -32,7 +32,9 @@ export const withClearButton = <T extends { onClick?: MouseEventHandler }>(
   return DecoratedButton as FunctionComponent<T>;
 };
 
-export const withSubmitButton = <T extends { onClick?: MouseEventHandler }>(
+export const withSubmitButton = <
+  T extends { onClick?: MouseEventHandler; disabled?: boolean }
+>(
   Button: FunctionComponent<T>
 ): FunctionComponent<T> => {
   const DecoratedButton = forwardRef<Element, T>(function ClearButton(
@@ -52,7 +54,19 @@ export const withSubmitButton = <T extends { onClick?: MouseEventHandler }>(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    return <Button {...(props as T)} onClick={onClick} ref={ref} />;
+    return (
+      <Button
+        {...(props as T)}
+        onClick={onClick}
+        disabled={
+          !formContext.isDirty ||
+          !formContext.isValid ||
+          formContext.isValidating ||
+          formContext.isSubmitting
+        }
+        ref={ref}
+      />
+    );
   });
 
   return DecoratedButton as FunctionComponent<T>;

@@ -70,7 +70,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
     this.validateField(name);
   }
 
-  onFieldChange(name: keyof T, value: unknown) {
+  onFieldChange(name: keyof T, value: T[keyof T]) {
     const values = cloneDeep(this.state.values);
     values[name] = value as T[keyof T];
     this.setState({ values });

@@ -1,3 +1,4 @@
+import { isString } from "lodash";
 import {
   ChangeEvent,
   ChangeEventHandler,
@@ -35,11 +36,21 @@ export const withFormField = <T extends FormFieldProps>(
 
     const name = props.name;
 
-    const value = formContext.values[name];
+    const value = useMemo(() => {
+      const v = formContext.values[name];
+      return isString(v) ? v : JSON.stringify(v);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [formContext.values[name]]);
 
     const onChange = useMemo(
       () => (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        formContext.onFieldChange(event.target.name, event.target.value);
+        let value = event.target.value;
+        try {
+          value = JSON.parse(value);
+        } catch (e) {
+          // don't do anything
+        }
+        formContext.onFieldChange(event.target.name, value);
         if (props.onChange) {
           props.onChange(event);
         }

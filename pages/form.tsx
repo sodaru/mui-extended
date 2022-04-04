@@ -1,30 +1,26 @@
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 import { MarkdownPreview } from "../src/markdown";
-import { Form, withFormField, withClearButton, withSubmitButton } from "../src";
 import {
-  TextField,
-  Button,
-  Typography,
-  Grid,
-  MenuItem,
-  Switch
-} from "@mui/material";
-import { useState } from "react";
+  Form,
+  withFormField,
+  withResetButton,
+  withSubmitButton,
+  SwitchField
+} from "../src";
+import { TextField, Button, Typography, Grid, MenuItem } from "@mui/material";
+import { FunctionComponent, useState } from "react";
 
 const FormTextField = withFormField(TextField);
+const FormSwitchField = withFormField(SwitchField);
 
-const ClearButton = withClearButton(Button);
+const ResetButton = withResetButton(Button);
 const SubmitButton = withSubmitButton(Button);
 
-const FormDemo = demoPage(({ docs }) => {
+const FormDemoComponent: FunctionComponent = () => {
   const [values, setValues] = useState<Record<string, unknown>>({});
   return (
     <>
-      <MarkdownPreview>{docs["form"]}</MarkdownPreview>
-      <hr />
-      <Typography variant="h5">Demo</Typography>
-
       <Grid container>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6">Form</Typography>
@@ -33,15 +29,26 @@ const FormDemo = demoPage(({ docs }) => {
               text: "",
               select: "v1",
               textarea: "",
-              switch: "on"
+              switch: true
             }}
-            onSubmit={async values => {
-              setValues(values);
+            onSubmit={values => {
+              return new Promise<void>(resolve => {
+                setTimeout(() => {
+                  setValues(values);
+                  resolve();
+                }, 1000);
+              });
             }}
           >
             <FormTextField name="text" label="Text" margin="normal" />
             <br />
-            <FormTextField name="select" label="Select" margin="normal" select>
+            <FormTextField
+              name="select"
+              label="Select"
+              margin="normal"
+              select
+              sx={{ width: 210 }}
+            >
               <MenuItem value="v1">Value 1</MenuItem>
               <MenuItem value="v2">Value 2</MenuItem>
               <MenuItem value="v3">Value 3</MenuItem>
@@ -55,18 +62,14 @@ const FormDemo = demoPage(({ docs }) => {
               minRows={3}
             />
             <br />
-            <FormTextField
+            <FormSwitchField
               name="switch"
-              InputProps={{ components: { Root: Switch } }}
-              InputLabelProps={{ shrink: true }}
               label="Switch"
+              controlLabelProps={{ label: "Enabled", labelPlacement: "start" }}
               margin="normal"
-              variant="standard"
-              helperText="this is error"
-              error
             />
             <br />
-            <ClearButton color="secondary">Clear</ClearButton>
+            <ResetButton color="secondary">Reset</ResetButton>
             <SubmitButton>Submit</SubmitButton>
           </Form>
         </Grid>
@@ -77,6 +80,17 @@ const FormDemo = demoPage(({ docs }) => {
           </MarkdownPreview>
         </Grid>
       </Grid>
+    </>
+  );
+};
+
+const FormDemo = demoPage(({ docs }) => {
+  return (
+    <>
+      <MarkdownPreview>{docs["form"]}</MarkdownPreview>
+      <hr />
+      <Typography variant="h5">Demo</Typography>
+      <FormDemoComponent />
     </>
   );
 });

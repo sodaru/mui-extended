@@ -10,7 +10,7 @@ export type FormContextType<
   isValid: boolean;
   isSubmitting: boolean;
   isValidating: boolean;
-  onFieldChange: (name: keyof T, value: unknown) => void;
+  onFieldChange: (name: keyof T, value: T[keyof T]) => void;
   onFieldBlur: (name: keyof T) => void;
   submit: () => void;
   clear: () => void;
