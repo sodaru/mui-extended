@@ -32,7 +32,7 @@ pages:
       - public
   only:
     - tags
-    - develop # remove this later
+    - develop # TODO: remove this later
 
 publish:
   stage: publish

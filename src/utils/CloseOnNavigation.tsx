@@ -108,7 +108,7 @@ export const withCloseOnNavigation = <T extends CloseOnNavigationProps>(
   Modal: FunctionComponent<T> | JSXElementConstructor<T>
 ): FunctionComponent<T> => {
   const ImprovedModal = forwardRef<HTMLDivElement, T>(
-    function ModalWithBackButtonClose({ children, ...props }, ref) {
+    function ModalWithNavigationClose({ children, ...props }, ref) {
       useEffect(() => {
         const history = SodaruReplaceableHistory.getInstanse();
         if (props.open) {
