@@ -1,29 +1,35 @@
-import { isString } from "lodash";
 import {
-  ChangeEvent,
-  ChangeEventHandler,
-  FocusEvent,
-  FocusEventHandler,
   forwardRef,
   FunctionComponent,
   ReactNode,
+  RefAttributes,
   useMemo
 } from "react";
 import { useFormContext } from "./Context";
 
-export type FormFieldProps = {
-  name?: string;
+export type ControlledInputAttributes = {
+  name: string;
+  value: unknown;
+  onChange: (name: string, value: unknown) => void;
+  onBlur: (name: string) => void;
+};
+
+export type FormFieldAttributes = ControlledInputAttributes & {
   error?: boolean;
   disabled?: boolean;
   helperText?: ReactNode;
-  onChange?: ChangeEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  onBlur?: FocusEventHandler<HTMLTextAreaElement | HTMLInputElement>;
-  value?: unknown;
 };
 
-export const withFormField = <T extends FormFieldProps>(
+export type FormFieldProps<T extends FormFieldAttributes> = Omit<
+  T,
+  keyof ControlledInputAttributes
+> &
+  Pick<ControlledInputAttributes, "name"> &
+  RefAttributes<HTMLDivElement>;
+
+export const withFormField = <T extends FormFieldAttributes>(
   FormFieldComponent: FunctionComponent<T>
-): FunctionComponent<T & { name: string }> => {
+): FunctionComponent<FormFieldProps<T>> => {
   const DecoratedFormField = forwardRef<
     HTMLTextAreaElement | HTMLInputElement,
     T
@@ -36,23 +42,13 @@ export const withFormField = <T extends FormFieldProps>(
 
     const name = props.name;
 
-    const value = useMemo(() => {
-      const v = formContext.values[name];
-      return isString(v) ? v : JSON.stringify(v);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [formContext.values[name]]);
+    const value = formContext.values[name];
 
     const onChange = useMemo(
-      () => (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        let value = event.target.value;
-        try {
-          value = JSON.parse(value);
-        } catch (e) {
-          // don't do anything
-        }
-        formContext.onFieldChange(event.target.name, value);
+      () => (name: string, value: unknown) => {
+        formContext.onFieldChange(name, value);
         if (props.onChange) {
-          props.onChange(event);
+          props.onChange(name, value);
         }
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -60,10 +56,10 @@ export const withFormField = <T extends FormFieldProps>(
     );
 
     const onBlur = useMemo(
-      () => (event: FocusEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-        formContext.onFieldBlur(event.target.name);
+      () => (name: string) => {
+        formContext.onFieldBlur(name);
         if (props.onBlur) {
-          props.onBlur(event);
+          props.onBlur(name);
         }
       },
       // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -92,5 +88,5 @@ export const withFormField = <T extends FormFieldProps>(
       </FormFieldComponent>
     );
   });
-  return DecoratedFormField as FunctionComponent<T & { name: string }>;
+  return DecoratedFormField as FunctionComponent<FormFieldProps<T>>;
 };

@@ -16,8 +16,8 @@ const defaultThemeOptions = {
     secondary: { main: "#ffb476" }
   },
   components: {
-    MuiTextField: {
-      defaultProps: { size: "small" }
+    MuiFormControl: {
+      defaultProps: { variant: "outlined", size: "small", margin: "normal" }
     },
     MuiSwitch: {
       defaultProps: { size: "small" }
