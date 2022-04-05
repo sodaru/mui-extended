@@ -4,24 +4,23 @@ import {
   ListItem,
   MenuItem,
   TextField,
-  Typography,
   useTheme
 } from "@mui/material";
 import { ChangeEventHandler, useState } from "react";
-import { MarkdownPreview, useThemeOptions } from "../src";
+import { useThemeOptions } from "../src";
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const TextFieldDemo = demoPage(({ docs }) => {
+const ThemeOptionsDemoComponent = () => {
   const setTheme = useThemeOptions();
   const theme = useTheme();
 
   const [color, setColor] = useState(theme.palette.primary.main);
   const [variant, setVariant] = useState<"standard" | "outlined" | "filled">(
-    theme.components?.MuiTextField?.defaultProps?.variant
+    theme.components?.MuiFormControl?.defaultProps?.variant
   );
   const [size, setSize] = useState<"small" | "medium">(
-    theme.components?.MuiTextField?.defaultProps?.size
+    theme.components?.MuiFormControl?.defaultProps?.size
   );
 
   const setPrimaryColor: ChangeEventHandler<HTMLInputElement> = event => {
@@ -44,12 +43,8 @@ const TextFieldDemo = demoPage(({ docs }) => {
   };
   return (
     <>
-      <MarkdownPreview>{docs["theme-options"]}</MarkdownPreview>
-      <hr />
-      <Typography variant="h5">Demo</Typography>
-
       <List>
-        <ListItem sx={{ padding: 2 }}>
+        <ListItem>
           <TextField
             onChange={setPrimaryColor}
             label="Primary Color"
@@ -59,28 +54,28 @@ const TextFieldDemo = demoPage(({ docs }) => {
             helperText="palette.primary.main"
           ></TextField>
         </ListItem>
-        <ListItem sx={{ padding: 2 }}>
+        <ListItem>
           <TextField
             onChange={setVariantValue}
-            label="TextField Variant"
+            label="FormControl Variant"
             select
             value={variant}
             sx={{ width: "200px" }}
-            helperText="components.MuiTextField.defaultProps.variant"
+            helperText="components.MuiFormControl.defaultProps.variant"
           >
             <MenuItem value="standard">standard</MenuItem>
             <MenuItem value="outlined">outlined</MenuItem>
             <MenuItem value="filled">filled</MenuItem>
           </TextField>
         </ListItem>
-        <ListItem sx={{ padding: 2 }}>
+        <ListItem>
           <TextField
             onChange={setSizeValue}
-            label="TextField Size"
+            label="FormControl Size"
             select
             value={size}
             sx={{ width: "200px" }}
-            helperText="components.MuiTextField.defaultProps.size"
+            helperText="components.MuiFormControl.defaultProps.size"
           >
             <MenuItem value="small">small</MenuItem>
             <MenuItem value="medium">medium</MenuItem>
@@ -94,8 +89,13 @@ const TextFieldDemo = demoPage(({ docs }) => {
       </List>
     </>
   );
-});
+};
 
-export default TextFieldDemo;
+const ThemeOptionsDemo = demoPage(
+  <ThemeOptionsDemoComponent />,
+  "theme-options"
+);
+
+export default ThemeOptionsDemo;
 
 export const getStaticProps = getStaticPropsFactory(["theme-options"]);

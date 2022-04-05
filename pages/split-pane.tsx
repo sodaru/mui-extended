@@ -1,15 +1,12 @@
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { MarkdownPreview } from "../src/markdown";
 import { Typography, Box } from "@mui/material";
 import { SplitPane } from "../src";
+import { FunctionComponent } from "react";
 
-const SplitPaneDemo = demoPage(({ docs }) => {
+const SplitPaneDemoComponent: FunctionComponent = () => {
   return (
     <>
-      <MarkdownPreview>{docs["split-pane"]}</MarkdownPreview>
-      <hr />
-      <Typography variant="h5">Demo</Typography>
       <Typography variant="h6">
         Horizonal Split with second child as primary pane
       </Typography>
@@ -37,7 +34,9 @@ const SplitPaneDemo = demoPage(({ docs }) => {
       </Box>
     </>
   );
-});
+};
+
+const SplitPaneDemo = demoPage(<SplitPaneDemoComponent />, "split-pane");
 
 export default SplitPaneDemo;
 

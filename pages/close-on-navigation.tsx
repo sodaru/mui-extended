@@ -1,6 +1,5 @@
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { MarkdownPreview } from "../src/markdown";
 import {
   Typography,
   Button,
@@ -13,18 +12,15 @@ import {
   ListItemText,
   Divider
 } from "@mui/material";
-import { useState } from "react";
+import { FunctionComponent, useState } from "react";
 import { withCloseOnNavigation } from "../src";
 import Link from "next/link";
 
-const BackClosableModalDemo = demoPage(({ docs }) => {
+const CloseOnNavigationDemoComponent: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
   const BackClosableDialog = withCloseOnNavigation(Dialog);
   return (
     <>
-      <MarkdownPreview>{docs["close-on-navigation"]}</MarkdownPreview>
-      <hr />
-      <Typography variant="h5">Demo</Typography>
       <Button
         onClick={() => {
           setOpen(true);
@@ -80,8 +76,13 @@ const BackClosableModalDemo = demoPage(({ docs }) => {
       </BackClosableDialog>
     </>
   );
-});
+};
 
-export default BackClosableModalDemo;
+const CloseOnNavigationDemo = demoPage(
+  <CloseOnNavigationDemoComponent />,
+  "close-on-navigation"
+);
+
+export default CloseOnNavigationDemo;
 
 export const getStaticProps = getStaticPropsFactory(["close-on-navigation"]);

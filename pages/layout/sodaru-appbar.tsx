@@ -1,11 +1,9 @@
-import { MarkdownPreview } from "../../src";
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
 const SodaruAppBarDemo = demoPage(
-  ({ docs }) => {
-    return <MarkdownPreview>{docs["layout/sodaru-appbar"]}</MarkdownPreview>;
-  },
+  undefined,
+  "layout/sodaru-appbar",
   false,
   false,
   false,

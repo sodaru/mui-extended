@@ -1,10 +1,7 @@
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { MarkdownPreview } from "../src/markdown";
 
-const WebStorageDemo = demoPage(({ docs }) => {
-  return <MarkdownPreview>{docs["web-storage"]}</MarkdownPreview>;
-});
+const WebStorageDemo = demoPage(undefined, "web-storage");
 
 export default WebStorageDemo;
 

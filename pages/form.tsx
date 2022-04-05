@@ -1,18 +1,15 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { MarkdownPreview } from "../src/markdown";
+import { Button, Grid, MenuItem, Typography } from "@mui/material";
+import { FunctionComponent, useState } from "react";
 import {
   Form,
-  withFormField,
+  FormSwitch,
+  FormTextField,
+  MarkdownPreview,
   withResetButton,
-  withSubmitButton,
-  SwitchField
+  withSubmitButton
 } from "../src";
-import { TextField, Button, Typography, Grid, MenuItem } from "@mui/material";
-import { FunctionComponent, useState } from "react";
-
-const FormTextField = withFormField(TextField);
-const FormSwitchField = withFormField(SwitchField);
+import { demoPage } from "../src/demo-utils/demoLayout";
+import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
 const ResetButton = withResetButton(Button);
 const SubmitButton = withSubmitButton(Button);
@@ -40,12 +37,11 @@ const FormDemoComponent: FunctionComponent = () => {
               });
             }}
           >
-            <FormTextField name="text" label="Text" margin="normal" />
+            <FormTextField name="text" label="Text" />
             <br />
             <FormTextField
               name="select"
               label="Select"
-              margin="normal"
               select
               sx={{ width: 210 }}
             >
@@ -57,16 +53,19 @@ const FormDemoComponent: FunctionComponent = () => {
             <FormTextField
               name="textarea"
               label="Text Area"
-              margin="normal"
               multiline
               minRows={3}
             />
             <br />
-            <FormSwitchField
+            <FormSwitch
               name="switch"
               label="Switch"
-              controlLabelProps={{ label: "Enabled", labelPlacement: "start" }}
-              margin="normal"
+              InputProps={{
+                formControlLabelProps: {
+                  label: "Enabled",
+                  labelPlacement: "start"
+                }
+              }}
             />
             <br />
             <ResetButton color="secondary">Reset</ResetButton>
@@ -84,16 +83,7 @@ const FormDemoComponent: FunctionComponent = () => {
   );
 };
 
-const FormDemo = demoPage(({ docs }) => {
-  return (
-    <>
-      <MarkdownPreview>{docs["form"]}</MarkdownPreview>
-      <hr />
-      <Typography variant="h5">Demo</Typography>
-      <FormDemoComponent />
-    </>
-  );
-});
+const FormDemo = demoPage(<FormDemoComponent />, "form");
 
 export default FormDemo;
 

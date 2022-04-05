@@ -1,6 +1,14 @@
-import { Box, Tooltip, Typography, Divider } from "@mui/material";
+import {
+  Box,
+  Tooltip,
+  Typography,
+  Divider,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails
+} from "@mui/material";
 import getConfig from "next/config";
-import { FunctionComponent, ReactNode } from "react";
+import { FunctionComponent, ReactNode, useState } from "react";
 import {
   SodaruPageComponentType,
   HideMenuProvider,
@@ -14,6 +22,8 @@ import {
   TreeMenuWithNextLinksProps
 } from "../TreeMenuWithNextLinks";
 import { useStateWithSessionStorage } from "../utils";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { MarkdownPreview } from "../markdown";
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
@@ -132,7 +142,8 @@ type DemoPageProps = {
 };
 
 export const demoPage = (
-  demo: FunctionComponent<Partial<DemoPageProps>>,
+  demo: ReactNode | undefined,
+  ref: string,
   noMenu = false,
   noAppBar = false,
   noLayout = false,
@@ -142,15 +153,46 @@ export const demoPage = (
     </Typography>
   )
 ): SodaruPageComponentType<DemoPageProps> => {
-  const pageComponent = demo as SodaruPageComponentType<DemoPageProps>;
+  const PageComponent: SodaruPageComponentType<DemoPageProps> = ({ docs }) => {
+    const [referenceExpanded, setReferenceExpanded] = useState(!demo);
+    const [demoExpanded, setDemoExpanded] = useState(!!demo);
+    return (
+      <>
+        <Accordion
+          expanded={referenceExpanded}
+          onChange={() => {
+            setReferenceExpanded(!referenceExpanded);
+          }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            Reference
+          </AccordionSummary>
+          <AccordionDetails>
+            <MarkdownPreview>{docs[ref]}</MarkdownPreview>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={demoExpanded}
+          onChange={() => {
+            setDemoExpanded(!demoExpanded);
+          }}
+        >
+          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+            Demo
+          </AccordionSummary>
+          <AccordionDetails>{demo}</AccordionDetails>
+        </Accordion>
+      </>
+    );
+  };
 
   if (!noLayout) {
-    pageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
-    pageComponent.propsDistribution = {
+    PageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
+    PageComponent.propsDistribution = {
       page: ["docs", "pages"],
       layout: ["pages"]
     };
   }
 
-  return pageComponent;
+  return PageComponent;
 };

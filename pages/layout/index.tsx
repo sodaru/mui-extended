@@ -1,10 +1,7 @@
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 import { demoPage } from "../../src/demo-utils/demoLayout";
-import { MarkdownPreview } from "../../src";
 
-const LayoutDemo = demoPage(({ docs }) => {
-  return <MarkdownPreview>{docs["layout/index"]}</MarkdownPreview>;
-});
+const LayoutDemo = demoPage(undefined, "layout/index");
 
 export default LayoutDemo;
 

@@ -1,10 +1,7 @@
-import { MarkdownPreview } from "../../src";
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const LayoutWithoutMenuDemo = demoPage(({ docs }) => {
-  return <MarkdownPreview>{docs["layout/without-menu"]}</MarkdownPreview>;
-}, true);
+const LayoutWithoutMenuDemo = demoPage(undefined, "layout/without-menu", true);
 
 export default LayoutWithoutMenuDemo;
 
