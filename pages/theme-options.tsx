@@ -17,7 +17,7 @@ const ThemeOptionsDemoComponent = () => {
 
   const [color, setColor] = useState(theme.palette.primary.main);
   const [variant, setVariant] = useState<"standard" | "outlined" | "filled">(
-    theme.components?.MuiFormControl?.defaultProps?.variant
+    theme.components?.MuiTextField?.defaultProps?.variant
   );
   const [size, setSize] = useState<"small" | "medium">(
     theme.components?.MuiFormControl?.defaultProps?.size
@@ -38,7 +38,10 @@ const ThemeOptionsDemoComponent = () => {
   const applyTheme = () => {
     setTheme({
       palette: { primary: { main: color } },
-      components: { MuiTextField: { defaultProps: { variant, size } } }
+      components: {
+        MuiTextField: { defaultProps: { variant } },
+        MuiFormControl: { defaultProps: { size } }
+      }
     });
   };
   return (
@@ -57,11 +60,11 @@ const ThemeOptionsDemoComponent = () => {
         <ListItem>
           <TextField
             onChange={setVariantValue}
-            label="FormControl Variant"
+            label="TextField Variant"
             select
             value={variant}
             sx={{ width: "200px" }}
-            helperText="components.MuiFormControl.defaultProps.variant"
+            helperText="components.MuiTextField.defaultProps.variant"
           >
             <MenuItem value="standard">standard</MenuItem>
             <MenuItem value="outlined">outlined</MenuItem>

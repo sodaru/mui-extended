@@ -3,4 +3,4 @@ export { useFormContext } from "./Context";
 export * from "./FormField";
 export * from "./FormButtons";
 export * from "./Form";
-export * from "./FormInputs";
+export * from "./inputs";

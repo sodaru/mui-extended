@@ -25,6 +25,7 @@ export type FormFieldProps<T extends FormFieldAttributes> = Omit<
   keyof ControlledInputAttributes
 > &
   Pick<ControlledInputAttributes, "name"> &
+  Partial<Omit<ControlledInputAttributes, "name" | "value">> &
   RefAttributes<HTMLDivElement>;
 
 export const withFormField = <T extends FormFieldAttributes>(

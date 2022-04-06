@@ -17,7 +17,7 @@ const defaultThemeOptions = {
   },
   components: {
     MuiFormControl: {
-      defaultProps: { variant: "outlined", size: "small", margin: "normal" }
+      defaultProps: { size: "small", margin: "normal" }
     },
     MuiSwitch: {
       defaultProps: { size: "small" }

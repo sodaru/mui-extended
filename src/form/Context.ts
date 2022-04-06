@@ -4,8 +4,8 @@ export type FormContextType<
   T extends Record<string, unknown> = Record<string, unknown>
 > = {
   values: T;
-  touched: Record<keyof T, boolean>;
-  errors: Record<keyof T, string>;
+  touched: Partial<Record<keyof T, boolean>>;
+  errors: Partial<Record<keyof T, string>>;
   isDirty: boolean;
   isValid: boolean;
   isSubmitting: boolean;

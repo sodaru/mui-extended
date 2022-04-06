@@ -11,10 +11,10 @@ export type FormFieldValidatorType = (
 
 export type FormProps<T extends Record<string, unknown>> = {
   initialValues: T;
-  initialErrors?: Record<keyof T, string>;
+  initialErrors?: Partial<Record<keyof T, string>>;
   onSubmit: (values: T) => Promise<void>;
-  schemas?: Record<keyof T, JSONSchema7>;
-  validators?: Record<keyof T, FormFieldValidatorType>;
+  schemas?: Partial<Record<keyof T, JSONSchema7>>;
+  validators?: Partial<Record<keyof T, FormFieldValidatorType>>;
 };
 
 const getDefaultValidator = (schema: JSONSchema7): FormFieldValidatorType => {
@@ -47,9 +47,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
   private _getInitialState(): typeof this.state {
     return {
       values: cloneDeep(this.props.initialValues),
-      errors: cloneDeep(
-        this.props.initialErrors || ({} as Record<keyof T, string>)
-      ),
+      errors: cloneDeep(this.props.initialErrors || {}),
       touched: {} as Record<keyof T, boolean>,
       isDirty: false,
       isSubmitting: false,
@@ -85,7 +83,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
         : undefined;
 
     if (validator) {
-      let newErrors: Record<keyof T, string>;
+      let newErrors: Partial<Record<keyof T, string>>;
       try {
         await validator(name as string, this.state.values[name]);
         newErrors = { ...this.state.errors };
