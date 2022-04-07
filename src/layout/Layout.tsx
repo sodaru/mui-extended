@@ -31,7 +31,10 @@ const MenuBox: FunctionComponent<PaperProps> = ({ children, ...props }) => {
         width: "100%",
         height: "100%",
         overflow: "auto",
-        backgroundColor: (theme: Theme) => theme.palette.grey[50]
+        backgroundColor: (theme: Theme) =>
+          theme.palette.mode == "light"
+            ? theme.palette.grey[100]
+            : theme.palette.grey[800]
       }}
       square
       variant="outlined"
