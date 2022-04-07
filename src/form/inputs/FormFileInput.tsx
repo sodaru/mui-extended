@@ -17,7 +17,7 @@ const DefaultFileRenderer: FunctionComponent<{ files: File[] }> = ({
   );
 };
 
-export const ControlledFileButton: FunctionComponent<
+const ControlledFileInput: FunctionComponent<
   ButtonProps &
     ControlledInputAttributes &
     Pick<
@@ -86,5 +86,5 @@ export const ControlledFileButton: FunctionComponent<
 };
 
 export const FormFileInput = withFormField(
-  withFormInputControl(ControlledFileButton)
+  withFormInputControl(ControlledFileInput)
 );

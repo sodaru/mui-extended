@@ -13,7 +13,7 @@ export type FormContextType<
   onFieldChange: (name: keyof T, value: T[keyof T]) => void;
   onFieldBlur: (name: keyof T) => void;
   submit: () => void;
-  clear: () => void;
+  reset: () => void;
 };
 
 export const FormContext = createContext<FormContextType>(null);

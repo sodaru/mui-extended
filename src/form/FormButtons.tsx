@@ -21,7 +21,7 @@ export const withResetButton = <T extends { onClick?: MouseEventHandler }>(
 
     const onClick = useMemo(() => {
       return () => {
-        formContext.clear();
+        formContext.reset();
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

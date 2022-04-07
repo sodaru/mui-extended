@@ -21,9 +21,10 @@ import "@fontsource/roboto/700.css";
   - Reason: https://nextjs.org/docs/messages/css-npm
 - Configures [Responsive Meta Tag](https://mui.com/getting-started/usage/#responsive-meta-tag)
 - Adds [CSSBaseline](https://mui.com/getting-started/usage/#cssbaseline)
+- Adds [DateFns Adaptor](https://mui.com/components/pickers/#setup) for Date/Time Pickers
 - Wraps the Page Component with [`ThemeOptionsProvider`](./theme-options)
   - defaultThemeOptions are read from nextJs [publicRuntimeConfig](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration)  
-    `next.config.js` in this demo is
+     `next.config.js` in this demo is
     ```js
     module.exports = {
       publicRuntimeConfig: {
@@ -33,7 +34,16 @@ import "@fontsource/roboto/700.css";
             secondary: { main: "#ffb476" }
           },
           components: {
-            MuiTextField: {
+            MuiFormControl: {
+              defaultProps: { size: "small", margin: "normal" }
+            },
+            MuiSwitch: {
+              defaultProps: { size: "small" }
+            },
+            MuiRadio: {
+              defaultProps: { size: "small" }
+            },
+            MuiCheckbox: {
               defaultProps: { size: "small" }
             }
           }

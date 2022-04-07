@@ -8,7 +8,7 @@ import { ChangeEvent, FocusEvent, FunctionComponent, useMemo } from "react";
 import { ControlledInputAttributes, withFormField } from "../FormField";
 import { withFormInputControl } from "./FormInputControl";
 
-export const ControlledSwitch: FunctionComponent<
+const ControlledSwitch: FunctionComponent<
   SwitchProps &
     ControlledInputAttributes & {
       formControlLabelProps: Omit<FormControlLabelProps, "control">;

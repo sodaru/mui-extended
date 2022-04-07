@@ -2,7 +2,7 @@ import { TextField, TextFieldProps } from "@mui/material";
 import { ChangeEvent, FocusEvent, forwardRef, useMemo } from "react";
 import { ControlledInputAttributes, withFormField } from "../FormField";
 
-export const ControlledTextField = forwardRef<
+const ControlledTextField = forwardRef<
   HTMLDivElement,
   TextFieldProps & ControlledInputAttributes
 >(function ControlledTextField({ onChange, onBlur, ...props }, ref) {

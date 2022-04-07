@@ -63,7 +63,7 @@ export const CheckboxGroup: FunctionComponent<CheckboxGroupProps> = ({
   );
 };
 
-export const CheckboxWithGroup = forwardRef<
+export const FormCheckbox = forwardRef<
   HTMLInputElement,
   Omit<CheckboxProps, "checked" | "onChange" | "indeterminate"> &
     Required<Pick<CheckboxProps, "value">>
@@ -71,7 +71,7 @@ export const CheckboxWithGroup = forwardRef<
   const groupContext = useCheckboxGroup();
 
   if (!groupContext) {
-    throw new Error("CheckboxWithGroup is used without CheckboxGroup");
+    throw new Error("FormCheckbox is used without CheckboxGroup");
   }
   const checked = groupContext.values?.filter(v => v == value).length > 0;
 
@@ -86,7 +86,7 @@ export const CheckboxWithGroup = forwardRef<
   );
 });
 
-export const ControlledCheckboxGroup: FunctionComponent<
+const ControlledCheckboxGroup: FunctionComponent<
   Omit<CheckboxGroupProps, "values" | "onChange"> & ControlledInputAttributes
 > = ({ name, value, onChange, onBlur, children, ...props }) => {
   const _onChange = useMemo(() => {

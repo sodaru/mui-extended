@@ -3,7 +3,7 @@ import { ChangeEvent, FunctionComponent, useMemo } from "react";
 import { ControlledInputAttributes, withFormField } from "../FormField";
 import { withFormInputControl } from "./FormInputControl";
 
-export const ControlledRadioGroup: FunctionComponent<
+const ControlledRadioGroup: FunctionComponent<
   RadioGroupProps & ControlledInputAttributes
 > = ({ name, value, onChange, onBlur, children, ...props }) => {
   const _onChange = useMemo(() => {

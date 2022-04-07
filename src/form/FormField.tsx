@@ -16,8 +16,8 @@ export type ControlledInputAttributes = {
 
 export type FormFieldAttributes = ControlledInputAttributes & {
   error?: boolean;
-  disabled?: boolean;
   helperText?: ReactNode;
+  disabled?: boolean;
 };
 
 export type FormFieldProps<T extends FormFieldAttributes> = Omit<

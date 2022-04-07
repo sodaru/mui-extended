@@ -56,7 +56,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
       onFieldBlur: this.onFieldBlur,
       onFieldChange: this.onFieldChange,
       submit: this.submit,
-      clear: this.clear
+      reset: this.clear
     };
   }
 

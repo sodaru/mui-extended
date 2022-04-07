@@ -11,7 +11,7 @@ import {
   withFormField
 } from "../FormField";
 
-export const AutocompleteEnabledForFormField = forwardRef(
+const ControlledAutocomplete = forwardRef(
   function AutocompleteEnabledForFormField<
     T,
     Multiple extends boolean,
@@ -66,9 +66,7 @@ export const AutocompleteEnabledForFormField = forwardRef(
   }
 );
 
-export const FormAutocomplete = withFormField(
-  AutocompleteEnabledForFormField
-) as <
+export const FormAutocomplete = withFormField(ControlledAutocomplete) as <
   T,
   Multiple extends boolean | undefined = undefined,
   DisableClearable extends boolean | undefined = undefined,
