@@ -137,6 +137,8 @@ Start numbering with offset:
 
 - Autoconverted link https://github.com/nodeca/pica
 
+- Links are wrapped with `next/link` to utilise next routing for relative links . [Go back to home](./)
+
 ### 10. Images
 
 Use query parameters syntax in title field to provide more attributes to img tag `![minion](https://octodex.github.com/images/minion.png `**`"?width=200"`**`)`

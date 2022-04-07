@@ -1,96 +1,95 @@
+import { Button, List, ListItem, MenuItem, useTheme } from "@mui/material";
 import {
-  Button,
-  List,
-  ListItem,
-  MenuItem,
-  TextField,
-  useTheme
-} from "@mui/material";
-import { ChangeEventHandler, useState } from "react";
-import { useThemeOptions } from "../src";
+  Form,
+  FormTextField,
+  useThemeOptions,
+  withResetButton,
+  withSubmitButton
+} from "../src";
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+
+const ApplyThemeButton = withSubmitButton(Button);
+const ResetThemeButton = withResetButton(Button);
 
 const ThemeOptionsDemoComponent = () => {
   const setTheme = useThemeOptions();
   const theme = useTheme();
 
-  const [color, setColor] = useState(theme.palette.primary.main);
-  const [variant, setVariant] = useState<"standard" | "outlined" | "filled">(
-    theme.components?.MuiTextField?.defaultProps?.variant
-  );
-  const [size, setSize] = useState<"small" | "medium">(
-    theme.components?.MuiFormControl?.defaultProps?.size
-  );
-
-  const setPrimaryColor: ChangeEventHandler<HTMLInputElement> = event => {
-    setColor(event.target.value);
-  };
-
-  const setVariantValue: ChangeEventHandler<HTMLInputElement> = event => {
-    setVariant(event.target.value as "standard" | "outlined" | "filled");
-  };
-
-  const setSizeValue: ChangeEventHandler<HTMLInputElement> = event => {
-    setSize(event.target.value as "small" | "medium");
-  };
-
-  const applyTheme = () => {
-    setTheme({
-      palette: { primary: { main: color } },
-      components: {
-        MuiTextField: { defaultProps: { variant } },
-        MuiFormControl: { defaultProps: { size } }
-      }
-    });
-  };
   return (
-    <>
+    <Form
+      initialValues={{
+        primary: theme.palette.primary.main,
+        variant:
+          theme.components?.MuiTextField?.defaultProps?.variant || "outlined",
+        size: theme.components?.MuiFormControl?.defaultProps?.size || "medium",
+        mode: theme.palette.mode || "light"
+      }}
+      onSubmit={async values => {
+        setTheme({
+          palette: { primary: { main: values.primary }, mode: values.mode },
+          components: {
+            MuiTextField: { defaultProps: { variant: values.variant } },
+            MuiFormControl: { defaultProps: { size: values.size } }
+          }
+        });
+      }}
+    >
       <List>
         <ListItem>
-          <TextField
-            onChange={setPrimaryColor}
+          <FormTextField
+            name="mode"
+            label="Mode"
+            select
+            sx={{ width: "200px" }}
+            helperText="pallete.mode"
+          >
+            <MenuItem value="light">Light</MenuItem>
+            <MenuItem value="dark">Dark</MenuItem>
+          </FormTextField>
+        </ListItem>
+
+        <ListItem>
+          <FormTextField
+            name="primary"
             label="Primary Color"
             placeholder="#004b89"
-            InputLabelProps={{ shrink: true }}
-            value={color}
             helperText="palette.primary.main"
-          ></TextField>
+          />
         </ListItem>
         <ListItem>
-          <TextField
-            onChange={setVariantValue}
+          <FormTextField
+            name="variant"
             label="TextField Variant"
             select
-            value={variant}
             sx={{ width: "200px" }}
             helperText="components.MuiTextField.defaultProps.variant"
           >
             <MenuItem value="standard">standard</MenuItem>
             <MenuItem value="outlined">outlined</MenuItem>
             <MenuItem value="filled">filled</MenuItem>
-          </TextField>
+          </FormTextField>
         </ListItem>
         <ListItem>
-          <TextField
-            onChange={setSizeValue}
+          <FormTextField
+            name="size"
             label="FormControl Size"
             select
-            value={size}
             sx={{ width: "200px" }}
             helperText="components.MuiFormControl.defaultProps.size"
           >
             <MenuItem value="small">small</MenuItem>
             <MenuItem value="medium">medium</MenuItem>
-          </TextField>
+          </FormTextField>
         </ListItem>
         <ListItem>
-          <Button color="primary" onClick={applyTheme}>
+          <ResetThemeButton color="secondary">Reset</ResetThemeButton>
+          <ApplyThemeButton color="primary" variant="outlined">
             Apply
-          </Button>
+          </ApplyThemeButton>
         </ListItem>
       </List>
-    </>
+    </Form>
   );
 };
 

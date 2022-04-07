@@ -1,7 +1,8 @@
-export const VsCodeDarkThemeStyle = {
+// copied from https://github.com/react-syntax-highlighter/react-syntax-highlighter/blob/master/src/styles/prism/vsc-dark-plus.js
+export const darkThemeStyle = {
   'pre[class*="language-"]': {
     color: "#d4d4d4",
-    fontSize: "14px",
+    fontSize: "0.9em",
     textShadow: "none",
     fontFamily:
       'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace',
@@ -21,11 +22,12 @@ export const VsCodeDarkThemeStyle = {
     padding: "1em",
     margin: ".5em 0",
     overflow: "auto",
-    background: "#1e1e1e"
+    background: "#1e1e1e",
+    borderRadius: "0.3em",
+    border: "1px sold #eeeeee"
   },
   'code[class*="language-"]': {
     color: "#d4d4d4",
-    fontSize: "14px",
     textShadow: "none",
     fontFamily:
       'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace',

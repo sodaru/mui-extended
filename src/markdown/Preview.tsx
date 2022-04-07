@@ -8,14 +8,17 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Typography
+  Typography,
+  useTheme
 } from "@mui/material";
 import { FunctionComponent } from "react";
 import ReactMarkdown, { Components } from "react-markdown";
 import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
 import typescript from "refractor/lang/typescript";
-import { VsCodeDarkThemeStyle } from "./vsc-dark-theme";
+import { darkThemeStyle } from "./styles/dark";
+import { lightThemeStyle } from "./styles/light";
+import Link from "next/link";
 
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 
@@ -27,10 +30,13 @@ const SyntaxHighLightedCodeComponent: Components["code"] = ({
   children,
   ...props
 }) => {
+  const theme = useTheme();
+  const style =
+    theme.palette.mode == "light" ? lightThemeStyle : darkThemeStyle;
   const match = /language-(\w+)/.exec(className || "");
   return !inline ? (
     <SyntaxHighlighter
-      style={VsCodeDarkThemeStyle}
+      style={style}
       language={match ? match[1] : "javascript"}
       PreTag="div"
       wrapLongLines={true}
@@ -96,6 +102,14 @@ const Img = props => {
   return <img {...props} {...propsFromTitle} alt={props.alt} />;
 };
 
+const A = props => {
+  return (
+    <Link href={props.href}>
+      <a {...props} />
+    </Link>
+  );
+};
+
 export const MarkdownPreview: FunctionComponent = ({ children }) => {
   return (
     <ReactMarkdown
@@ -115,7 +129,8 @@ export const MarkdownPreview: FunctionComponent = ({ children }) => {
         th: TableCell as unknown as Components["th"],
         tr: TableRow,
         td: TableCell as unknown as Components["td"],
-        code: SyntaxHighLightedCodeComponent
+        code: SyntaxHighLightedCodeComponent,
+        a: A
       }}
       remarkPlugins={[remarkGfm]}
     >
