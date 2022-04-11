@@ -8,7 +8,13 @@ import {
   AccordionDetails
 } from "@mui/material";
 import getConfig from "next/config";
-import { FunctionComponent, ReactNode, useState } from "react";
+import {
+  createElement,
+  FunctionComponent,
+  isValidElement,
+  ReactNode,
+  useState
+} from "react";
 import {
   SodaruPageComponentType,
   HideMenuProvider,
@@ -136,13 +142,13 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
   return demoLayouts[index];
 };
 
-type DemoPageProps = {
+export type DemoPageProps = {
   docs: Record<string, string>;
   pages: string[];
 };
 
 export const demoPage = (
-  demo: ReactNode | undefined,
+  demo: FunctionComponent<DemoPageProps> | ReactNode | undefined,
   ref: string,
   noMenu = false,
   noAppBar = false,
@@ -153,9 +159,16 @@ export const demoPage = (
     </Typography>
   )
 ): SodaruPageComponentType<DemoPageProps> => {
-  const PageComponent: SodaruPageComponentType<DemoPageProps> = ({ docs }) => {
-    const [referenceExpanded, setReferenceExpanded] = useState(!demo);
-    const [demoExpanded, setDemoExpanded] = useState(!!demo);
+  const PageComponent: SodaruPageComponentType<DemoPageProps> = props => {
+    const _demo = demo
+      ? isValidElement(demo)
+        ? demo
+        : createElement(demo as FunctionComponent<DemoPageProps>, props)
+      : undefined;
+
+    const [referenceExpanded, setReferenceExpanded] = useState(!_demo);
+    const [demoExpanded, setDemoExpanded] = useState(!!_demo);
+
     return (
       <>
         <Accordion
@@ -168,7 +181,7 @@ export const demoPage = (
             Reference
           </AccordionSummary>
           <AccordionDetails>
-            <MarkdownPreview>{docs[ref]}</MarkdownPreview>
+            <MarkdownPreview>{props.docs[ref]}</MarkdownPreview>
           </AccordionDetails>
         </Accordion>
         <Accordion
@@ -180,7 +193,7 @@ export const demoPage = (
           <AccordionSummary expandIcon={<ExpandMoreIcon />}>
             Demo
           </AccordionSummary>
-          <AccordionDetails>{demo}</AccordionDetails>
+          <AccordionDetails>{_demo}</AccordionDetails>
         </Accordion>
       </>
     );

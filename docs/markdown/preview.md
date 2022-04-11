@@ -85,6 +85,12 @@ Start numbering with offset:
 57. foo
 1. bar
 
+#### Todos
+
+- [x] Task 1
+- [x] Task 2
+- [ ] Task 3
+
 ### 7. Code
 
 - Inline `code`

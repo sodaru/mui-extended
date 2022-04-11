@@ -27,6 +27,15 @@ const defaultThemeOptions = {
     },
     MuiCheckbox: {
       defaultProps: { size: "small" }
+    },
+    MuiButton: {
+      defaultProps: { size: "small" }
+    },
+    MuiIconButton: {
+      defaultProps: { size: "small" }
+    },
+    MuiSvgIcon: {
+      defaultProps: { fontSize: "small" }
     }
   }
 };
