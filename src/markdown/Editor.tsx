@@ -40,7 +40,10 @@ import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
 import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
 import FormatIndentIncreaseIcon from "@mui/icons-material/FormatIndentIncrease";
 import FormatIndentDecreaseIcon from "@mui/icons-material/FormatIndentDecrease";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
 import { MarkdownPreview } from "./Preview";
+import { format } from "prettier";
+import markdownParser from "prettier/parser-markdown";
 
 export type MarkdownEditorMenuButtonAction = (
   name: string,
@@ -72,7 +75,8 @@ const defaultMenu: string[][] = [
   ["code", "inlineCode"],
   ["unorderedList", "orderedList", "taskList"],
   ["indentIncrease", "indentDecrease"],
-  ["table"]
+  ["table"],
+  ["format"]
 ];
 
 const DefaultButtons: Record<
@@ -152,6 +156,11 @@ const DefaultButtons: Record<
   table: props => (
     <MarkdownEditorMenuButton title="Table" {...props}>
       <CalendarViewMonthIcon />
+    </MarkdownEditorMenuButton>
+  ),
+  format: props => (
+    <MarkdownEditorMenuButton title="Format" {...props}>
+      <AutoFixHighIcon />
     </MarkdownEditorMenuButton>
   )
 };
@@ -455,6 +464,22 @@ const defaultActions: Record<string, MarkdownEditorMenuButtonAction> = {
       selectionStart: selectionStart,
       selectionEnd: selectionStart
     };
+  },
+  format: (name, content) => {
+    const newContent = format(content, {
+      parser: "markdown",
+      plugins: [markdownParser],
+      arrowParens: "avoid",
+      endOfLine: "lf",
+      trailingComma: "none",
+      tabWidth: 2
+    });
+
+    return {
+      content: newContent,
+      selectionStart: 0,
+      selectionEnd: 0
+    };
   }
 };
 
@@ -685,6 +710,7 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
           textareaRef.current.selectionStart,
           textareaRef.current.selectionEnd
         );
+
         textareaRef.current.value = content;
         textareaRef.current.setSelectionRange(selectionStart, selectionEnd);
         if (props.onChange) {
@@ -697,23 +723,26 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
     const _onBlur: FocusEventHandler<
       HTMLDivElement | HTMLTextAreaElement
     > = event => {
-      let propagate = true;
-      let relatedTarget = event.relatedTarget;
-      if (relatedTarget) {
-        while (relatedTarget.tagName != "BODY") {
-          relatedTarget = relatedTarget.parentElement;
-          if (relatedTarget == event.currentTarget) {
-            propagate = false; // don't propagate blur event , if clicked within the editor widget
-            break;
+      if (!props.disabled) {
+        let propagate = true;
+        let relatedTarget = event.relatedTarget;
+        if (relatedTarget) {
+          while (relatedTarget.tagName != "BODY") {
+            relatedTarget = relatedTarget.parentElement;
+            if (relatedTarget == event.currentTarget) {
+              propagate = false; // don't propagate blur event , if clicked within the editor widget
+              break;
+            }
           }
         }
-      }
 
-      if (propagate) {
-        if (event.target != textareaRef.current) {
-          event.target = textareaRef.current;
+        if (propagate) {
+          if (event.target != textareaRef.current) {
+            event.target = textareaRef.current;
+          }
+          onMenuButtonClick("format");
+          onBlur(event as FocusEvent<HTMLTextAreaElement>);
         }
-        onBlur(event as FocusEvent<HTMLTextAreaElement>);
       }
     };
 

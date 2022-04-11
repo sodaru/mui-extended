@@ -1,11 +1,12 @@
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
-  Box,
-  Tooltip,
-  Typography,
-  Divider,
   Accordion,
+  AccordionDetails,
   AccordionSummary,
-  AccordionDetails
+  Box,
+  Divider,
+  Tooltip,
+  Typography
 } from "@mui/material";
 import getConfig from "next/config";
 import {
@@ -15,12 +16,9 @@ import {
   ReactNode,
   useState
 } from "react";
-import {
-  SodaruPageComponentType,
-  HideMenuProvider,
-  Layout,
-  SodaruAppBar
-} from "..";
+import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
+import { MarkdownPreview } from "../markdown/Preview";
+import { SodaruPageComponentType } from "../SodaruApp";
 import { SodaruImage } from "../SodaruImage";
 import { SodaruLogo } from "../SodaruLogo";
 import {
@@ -28,8 +26,6 @@ import {
   TreeMenuWithNextLinksProps
 } from "../TreeMenuWithNextLinks";
 import { useStateWithSessionStorage } from "../utils";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { MarkdownPreview } from "../markdown";
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
