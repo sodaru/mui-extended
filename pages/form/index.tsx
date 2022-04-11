@@ -25,7 +25,8 @@ import {
   FormFileInput,
   FormDatePicker,
   FormTimePicker,
-  FormDateTimePicker
+  FormDateTimePicker,
+  MarkdownEditor
 } from "../../src";
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
@@ -53,6 +54,7 @@ const FormDemoComponent: FunctionComponent = () => {
               text: "",
               select: "blr",
               textarea: "",
+              markdown: "",
               file: [],
               switch: true,
               radioGroup: "blr",
@@ -66,6 +68,7 @@ const FormDemoComponent: FunctionComponent = () => {
               text: validator,
               select: validator,
               textarea: validator,
+              markdown: validator,
               file: validator,
               switch: validator,
               radioGroup: validator,
@@ -101,6 +104,7 @@ const FormDemoComponent: FunctionComponent = () => {
                   "text",
                   "select",
                   "textarea",
+                  "markdown",
                   "file",
                   "switch",
                   "radioGroup",
@@ -133,6 +137,14 @@ const FormDemoComponent: FunctionComponent = () => {
                 label="Text Area"
                 multiline
                 minRows={3}
+              />
+
+              <FormTextField
+                name="markdown"
+                label="MarkDown"
+                InputProps={{ inputComponent: MarkdownEditor }}
+                fullWidth
+                InputLabelProps={{ shrink: true }}
               />
 
               <FormFileInput

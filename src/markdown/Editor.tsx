@@ -22,7 +22,8 @@ import {
   forwardRef,
   createRef,
   FocusEventHandler,
-  MouseEventHandler
+  MouseEventHandler,
+  FocusEvent
 } from "react";
 import FormatBoldIcon from "@mui/icons-material/FormatBold";
 import FormatItalicIcon from "@mui/icons-material/FormatItalic";
@@ -57,7 +58,9 @@ export const MarkdownEditorMenuButton: FunctionComponent<
 > = ({ children, title, ...props }) => {
   return (
     <Tooltip title={title} arrow placement="top">
-      <IconButton {...props}>{children}</IconButton>
+      <span>
+        <IconButton {...props}>{children}</IconButton>
+      </span>
     </Tooltip>
   );
 };
@@ -456,18 +459,20 @@ const defaultActions: Record<string, MarkdownEditorMenuButtonAction> = {
 };
 
 export type MarkdownEditorMenuProps = {
+  onClick: (name: string) => void;
   menu?: string[][];
   menuButtons?: Record<
     string,
     FunctionComponent<MarkdownEditorMenuButtonProps>
   >;
-  onClick: (name: string) => void;
+  disabled?: boolean;
 };
 
 export const MarkdownEditorMenu: FunctionComponent<MarkdownEditorMenuProps> = ({
   onClick,
   menu,
-  menuButtons
+  menuButtons,
+  disabled
 }) => {
   const _menu = menu || defaultMenu;
   const _menuButtons = { ...DefaultButtons, ...menuButtons };
@@ -482,9 +487,17 @@ export const MarkdownEditorMenu: FunctionComponent<MarkdownEditorMenuProps> = ({
             {menuGroup.map((menuItem, j) => {
               const MenuItemComponent = _menuButtons[menuItem];
               const _onClick = () => {
-                onClick(menuItem);
+                if (!disabled) {
+                  onClick(menuItem);
+                }
               };
-              return <MenuItemComponent key={j} onClick={_onClick} />;
+              return (
+                <MenuItemComponent
+                  key={j}
+                  onClick={_onClick}
+                  disabled={disabled}
+                />
+              );
             })}
           </ButtonGroup>
         </Fragment>
@@ -548,18 +561,16 @@ export const MarkdownEditorContent = forwardRef<
   } as TextareaAutosizeProps["style"];
   return (
     <Grid container>
-      {write ? (
-        <Grid item xs={12}>
-          <TextareaAutosize
-            minRows={10}
-            maxRows={20}
-            {...props}
-            value={value}
-            style={style}
-            ref={ref}
-          />
-        </Grid>
-      ) : null}
+      <Grid item xs={12} sx={{ display: write ? "initial" : "none" }}>
+        <TextareaAutosize
+          minRows={10}
+          maxRows={20}
+          {...props}
+          value={value}
+          style={style}
+          ref={ref}
+        />
+      </Grid>
       {preview ? (
         <Grid item xs={12}>
           <MarkdownPreview>{value}</MarkdownPreview>
@@ -683,15 +694,15 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
       }
     };
 
-    const _onBlur: FocusEventHandler<HTMLDivElement> = ({
-      currentTarget,
-      relatedTarget
-    }) => {
+    const _onBlur: FocusEventHandler<
+      HTMLDivElement | HTMLTextAreaElement
+    > = event => {
       let propagate = true;
+      let relatedTarget = event.relatedTarget;
       if (relatedTarget) {
         while (relatedTarget.tagName != "BODY") {
           relatedTarget = relatedTarget.parentElement;
-          if (relatedTarget == currentTarget) {
+          if (relatedTarget == event.currentTarget) {
             propagate = false; // don't propagate blur event , if clicked within the editor widget
             break;
           }
@@ -699,14 +710,19 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
       }
 
       if (propagate) {
-        onBlur(null);
+        if (event.target != textareaRef.current) {
+          event.target = textareaRef.current;
+        }
+        onBlur(event as FocusEvent<HTMLTextAreaElement>);
       }
     };
 
     const _onClick: MouseEventHandler<HTMLDivElement> = event => {
       event.preventDefault();
       event.stopPropagation();
-      textareaRef.current?.focus(); // keep textarea focused , when clicked within markdown widget
+      if (!props.disabled) {
+        textareaRef.current?.focus(); // keep textarea focused , when clicked within markdown widget
+      }
     };
 
     return (
@@ -725,6 +741,7 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
             onViewChange={setSelectedView}
             menu={menu}
             menuButtons={menuButtons}
+            disabled={props.disabled}
           />
         </Grid>
         <Grid item xs={12}>
