@@ -53,6 +53,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
       isSubmitting: false,
       isValid: true,
       isValidating: false,
+      isFieldValidating: {},
       onFieldBlur: this.onFieldBlur,
       onFieldChange: this.onFieldChange,
       submit: this.submit,
@@ -96,27 +97,40 @@ export class Form<T extends Record<string, unknown>> extends Component<
   }
 
   private async _validateWrapper<T>(validator: () => Promise<T>): Promise<T> {
-    this.setState({ isValidating: true });
     const result = await validator();
     const isValid = Object.keys(this.state.errors).length == 0;
-    this.setState({ isValid, isValidating: false });
+    this.setState({ isValid });
     return result;
   }
 
   async validateField(name: keyof T) {
-    await this._validateWrapper(async () => {
-      await this._validateField(name);
+    this.setState({
+      isFieldValidating: { ...this.state.isFieldValidating, [name]: true }
     });
+    try {
+      await this._validateWrapper(async () => {
+        await this._validateField(name);
+      });
+    } finally {
+      this.setState({
+        isFieldValidating: { ...this.state.isFieldValidating, [name]: false }
+      });
+    }
   }
 
   async validate() {
-    await this._validateWrapper(async () => {
-      await Promise.allSettled(
-        Object.keys(this.state.values).map(async name => {
-          await this._validateField(name);
-        })
-      );
-    });
+    this.setState({ isValidating: true });
+    try {
+      await this._validateWrapper(async () => {
+        await Promise.allSettled(
+          Object.keys(this.state.values).map(async name => {
+            await this._validateField(name);
+          })
+        );
+      });
+    } finally {
+      this.setState({ isValidating: false });
+    }
   }
 
   clear() {

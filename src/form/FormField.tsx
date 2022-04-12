@@ -70,7 +70,10 @@ export const withFormField = <T extends FormFieldAttributes>(
     const error = formContext.errors[name];
 
     const disabled =
-      props.disabled || formContext.isSubmitting || formContext.isValidating;
+      props.disabled ||
+      formContext.isSubmitting ||
+      formContext.isValidating ||
+      formContext.isFieldValidating[name];
 
     const helperText = error || props.helperText;
 
