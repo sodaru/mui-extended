@@ -1,3 +1,18 @@
+import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
+import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
+import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
+import CodeIcon from "@mui/icons-material/Code";
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatIndentDecreaseIcon from "@mui/icons-material/FormatIndentDecrease";
+import FormatIndentIncreaseIcon from "@mui/icons-material/FormatIndentIncrease";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
+import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
+import LinkIcon from "@mui/icons-material/Link";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
+import StrikethroughSIcon from "@mui/icons-material/StrikethroughS";
+import TitleIcon from "@mui/icons-material/Title";
 import {
   Box,
   ButtonGroup,
@@ -9,41 +24,25 @@ import {
   Tabs,
   TextareaAutosize,
   TextareaAutosizeProps,
-  Theme,
-  Tooltip,
-  useMediaQuery
+  Tooltip
 } from "@mui/material";
-import {
-  FunctionComponent,
-  ReactNode,
-  Fragment,
-  SyntheticEvent,
-  useState,
-  forwardRef,
-  createRef,
-  FocusEventHandler,
-  MouseEventHandler,
-  FocusEvent
-} from "react";
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-import FormatItalicIcon from "@mui/icons-material/FormatItalic";
-import StrikethroughSIcon from "@mui/icons-material/StrikethroughS";
-import FormatQuoteIcon from "@mui/icons-material/FormatQuote";
-import CodeIcon from "@mui/icons-material/Code";
-import TitleIcon from "@mui/icons-material/Title";
-import InlineCodeIcon from "./icons/inlineCode";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
-import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
-import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
-import LinkIcon from "@mui/icons-material/Link";
-import CalendarViewMonthIcon from "@mui/icons-material/CalendarViewMonth";
-import AddPhotoAlternateIcon from "@mui/icons-material/AddPhotoAlternate";
-import FormatIndentIncreaseIcon from "@mui/icons-material/FormatIndentIncrease";
-import FormatIndentDecreaseIcon from "@mui/icons-material/FormatIndentDecrease";
-import AutoFixHighIcon from "@mui/icons-material/AutoFixHigh";
-import { MarkdownPreview } from "./Preview";
 import { format } from "prettier";
 import markdownParser from "prettier/parser-markdown";
+import {
+  createRef,
+  FocusEvent,
+  FocusEventHandler,
+  forwardRef,
+  Fragment,
+  FunctionComponent,
+  MouseEventHandler,
+  ReactNode,
+  SyntheticEvent,
+  useState
+} from "react";
+import { useMobile } from "../utils/useMobile";
+import InlineCodeIcon from "./icons/inlineCode";
+import { MarkdownPreview } from "./Preview";
 
 export type MarkdownEditorMenuButtonAction = (
   name: string,
@@ -695,9 +694,7 @@ export const MarkdownEditor = forwardRef<HTMLDivElement, MarkdownEditorProps>(
 
     const textareaRef = createRef<HTMLTextAreaElement>();
 
-    const isMobile = useMediaQuery<Theme>(theme =>
-      theme.breakpoints.down("sm")
-    );
+    const isMobile = useMobile();
 
     const _menuActions = { ...defaultActions, ...menuActions };
 

@@ -7,7 +7,7 @@ The Sodaru Logo Component
 ## Usage
 
 ```typescript
-import { SodaruLogo } from "../src";
+import { SodaruLogo } from "@solib/ui-components";
 
 const sodaruLogo = <SodaruLogo />;
 ```

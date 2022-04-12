@@ -1,4 +1,3 @@
-import { FunctionComponent, ReactNode, useEffect } from "react";
 import {
   Box,
   BoxProps,
@@ -8,13 +7,14 @@ import {
   SwipeableDrawer,
   SwipeableDrawerProps,
   Theme,
-  Toolbar,
-  useMediaQuery
+  Toolbar
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
+import { FunctionComponent, ReactNode, useEffect } from "react";
 import { SplitPane, SplitPaneProps } from "../splitPane/SplitPane";
-import { useHideMenu } from "./HideMenu";
 import { withCloseOnNavigation } from "../utils";
+import { useMobile } from "../utils/useMobile";
+import { useHideMenu } from "./HideMenu";
 
 type BaseLayoutProps = {
   menu: ReactNode;
@@ -144,7 +144,7 @@ export const Layout: FunctionComponent<LayoutProps> = ({
 }) => {
   const _menu = menu || "";
   const _appBar = appBar || "";
-  const isMobile = useMediaQuery<Theme>(theme => theme.breakpoints.down("sm"));
+  const isMobile = useMobile();
 
   const BaseLayout = isMobile ? MobileLayout : WebLayout;
   const baseLayoutProps = isMobile
