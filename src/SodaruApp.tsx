@@ -5,8 +5,8 @@ import { FunctionComponent } from "react";
 import { ThemeOptionsProvider } from "./ThemeOptionsContext";
 import { NextComponentType, NextConfig, NextPageContext } from "next";
 import getConfig from "next/config";
-import { LocalizationProvider } from "@mui/lab";
-import DateAdapter from "@mui/lab/AdapterDateFns";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type PropsDistribution<P = {}> = {
@@ -68,7 +68,7 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
       <CssBaseline enableColorScheme />
-      <LocalizationProvider dateAdapter={DateAdapter}>
+      <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider defaultThemeOptions={defaultThemeOptions}>
           <Layout {...layoutProps}>
             <Component {...componentProps} />
