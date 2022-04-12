@@ -5,7 +5,7 @@ import {
   RefAttributes,
   useMemo
 } from "react";
-import { useFormContext } from "./Context";
+import { useFormContext } from "./FormContext";
 
 export type ControlledInputAttributes = {
   name: string;

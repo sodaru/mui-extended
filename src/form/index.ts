@@ -1,5 +1,5 @@
-export type { FormContextType } from "./Context";
-export { useFormContext } from "./Context";
+export type { FormContextType } from "./FormContext";
+export { useFormContext } from "./FormContext";
 export * from "./FormField";
 export * from "./FormButtons";
 export * from "./Form";

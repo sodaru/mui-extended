@@ -4,19 +4,19 @@ import {
   MouseEventHandler,
   useMemo
 } from "react";
-import { useFormContext } from "./Context";
+import { useFormContext } from "./FormContext";
 
 export const withResetButton = <T extends { onClick?: MouseEventHandler }>(
   Button: FunctionComponent<T>
 ): FunctionComponent<T> => {
-  const DecoratedButton = forwardRef<Element, T>(function ClearButton(
+  const DecoratedButton = forwardRef<Element, T>(function ResetButton(
     props,
     ref
   ) {
     const formContext = useFormContext();
 
     if (!formContext) {
-      throw new Error("ClearButton is rendered with out Form");
+      throw new Error("ResetButton is rendered with out Form");
     }
 
     const onClick = useMemo(() => {
@@ -37,7 +37,7 @@ export const withSubmitButton = <
 >(
   Button: FunctionComponent<T>
 ): FunctionComponent<T> => {
-  const DecoratedButton = forwardRef<Element, T>(function ClearButton(
+  const DecoratedButton = forwardRef<Element, T>(function SubmitButton(
     props,
     ref
   ) {

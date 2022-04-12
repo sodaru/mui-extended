@@ -1,6 +1,6 @@
 import { cloneDeep } from "lodash";
 import { Component } from "react";
-import { FormContext, FormContextType } from "./Context";
+import { FormContext, FormContextType } from "./FormContext";
 import { JSONSchema7 } from "json-schema";
 import { validate } from "@solib/json-validator";
 
