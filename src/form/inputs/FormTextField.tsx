@@ -1,11 +1,14 @@
 import { TextField, TextFieldProps } from "@mui/material";
 import { ChangeEvent, FocusEvent, forwardRef, useMemo } from "react";
+import { debugRender } from "../debug";
 import { ControlledInputAttributes, withFormField } from "../FormField";
 
 const ControlledTextField = forwardRef<
   HTMLDivElement,
   TextFieldProps & ControlledInputAttributes
 >(function ControlledTextField({ onChange, onBlur, ...props }, ref) {
+  debugRender(props.name);
+
   const _onChange = useMemo(
     () => (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       onChange(event.target.name, event.target.value);

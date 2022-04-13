@@ -5,6 +5,7 @@ import {
   AutocompleteValue
 } from "@mui/material";
 import { forwardRef, Ref, RefAttributes, SyntheticEvent, useMemo } from "react";
+import { debugRender } from "../debug";
 import {
   ControlledInputAttributes,
   FormFieldAttributes,
@@ -30,6 +31,8 @@ const ControlledAutocomplete = forwardRef(
       FormFieldAttributes,
     ref: Ref<HTMLDivElement>
   ) {
+    debugRender(name);
+
     const _onChange = useMemo(
       () =>
         (

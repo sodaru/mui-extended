@@ -4,6 +4,7 @@ import {
   TimePickerProps
 } from "@mui/x-date-pickers";
 import { FocusEvent, FunctionComponent, useMemo } from "react";
+import { debugRender } from "../../debug";
 import { FormFieldAttributes } from "../../FormField";
 
 export const withControlledDateTimePicker = <
@@ -21,6 +22,8 @@ export const withControlledDateTimePicker = <
     DialogProps = {},
     ...props
   }) => {
+    debugRender(name);
+
     const _onChange = useMemo(
       () => value => {
         onChange(name, value);

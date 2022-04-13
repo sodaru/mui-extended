@@ -3,6 +3,7 @@ import { Component } from "react";
 import { FormContext, FormContextType } from "./FormContext";
 import { JSONSchema7 } from "json-schema";
 import { validate } from "@solib/json-validator";
+import { debugEvent } from "./debug";
 
 export type FormFieldValidatorType = (
   name: string,
@@ -33,7 +34,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
     this.onFieldBlur = this.onFieldBlur.bind(this);
     this.onFieldChange = this.onFieldChange.bind(this);
     this.submit = this.submit.bind(this);
-    this.clear = this.clear.bind(this);
+    this.reset = this.reset.bind(this);
     this._validateField = this._validateField.bind(this);
     this._validateWrapper = this._validateWrapper.bind(this);
     this.validateField = this.validateField.bind(this);
@@ -52,12 +53,10 @@ export class Form<T extends Record<string, unknown>> extends Component<
       isDirty: false,
       isSubmitting: false,
       isValid: true,
-      isValidating: false,
-      isFieldValidating: {},
       onFieldBlur: this.onFieldBlur,
       onFieldChange: this.onFieldChange,
       submit: this.submit,
-      reset: this.clear
+      reset: this.reset
     };
   }
 
@@ -66,7 +65,10 @@ export class Form<T extends Record<string, unknown>> extends Component<
     touched[name] = true;
     this.setState({ isDirty: true, touched });
 
-    this.validateField(name);
+    setTimeout(() => {
+      // delay the validation
+      this.validateField(name);
+    }, 10);
   }
 
   onFieldChange(name: keyof T, value: T[keyof T]) {
@@ -76,6 +78,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
   }
 
   private async _validateField(name: keyof T) {
+    debugEvent("_validateField", "start " + name);
     const validator =
       this.props.validators && this.props.validators[name]
         ? this.props.validators[name]
@@ -94,58 +97,54 @@ export class Form<T extends Record<string, unknown>> extends Component<
       }
       this.setState({ errors: newErrors });
     }
+    debugEvent("_validateField", "end " + name);
   }
 
   private async _validateWrapper<T>(validator: () => Promise<T>): Promise<T> {
+    debugEvent("_validateWrapper", "start");
     const result = await validator();
     const isValid = Object.keys(this.state.errors).length == 0;
     this.setState({ isValid });
+    debugEvent("_validateWrapper", "end");
     return result;
   }
 
   async validateField(name: keyof T) {
-    this.setState({
-      isFieldValidating: { ...this.state.isFieldValidating, [name]: true }
+    await this._validateWrapper(async () => {
+      await this._validateField(name);
     });
-    try {
-      await this._validateWrapper(async () => {
-        await this._validateField(name);
-      });
-    } finally {
-      this.setState({
-        isFieldValidating: { ...this.state.isFieldValidating, [name]: false }
-      });
-    }
   }
 
   async validate() {
-    this.setState({ isValidating: true });
-    try {
-      await this._validateWrapper(async () => {
-        await Promise.allSettled(
-          Object.keys(this.state.values).map(async name => {
-            await this._validateField(name);
-          })
-        );
-      });
-    } finally {
-      this.setState({ isValidating: false });
-    }
+    debugEvent("validate", "start");
+    await this._validateWrapper(async () => {
+      await Promise.allSettled(
+        Object.keys(this.state.values).map(async name => {
+          await this._validateField(name);
+        })
+      );
+    });
+    debugEvent("validate", "end");
   }
 
-  clear() {
+  reset() {
     this.setState(this._getInitialState());
   }
 
   submit() {
-    this.validate().then(() => {
-      if (this.state.isValid) {
-        this.setState({ isSubmitting: true });
-        this.props.onSubmit(this.state.values).finally(() => {
+    setTimeout(() => {
+      // delay the submit
+      this.setState({ isSubmitting: true });
+      this.validate()
+        .then(() => {
+          if (this.state.isValid) {
+            return this.props.onSubmit(this.state.values);
+          }
+        })
+        .finally(() => {
           this.setState({ isSubmitting: false });
         });
-      }
-    });
+    }, 10);
   }
 
   render() {

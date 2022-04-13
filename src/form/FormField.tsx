@@ -1,10 +1,13 @@
+import { isEqualWith } from "lodash";
 import {
   forwardRef,
   FunctionComponent,
+  memo,
   ReactNode,
   RefAttributes,
   useMemo
 } from "react";
+import { debugPropChanges } from "./debug";
 import { useFormContext } from "./FormContext";
 
 export type ControlledInputAttributes = {
@@ -31,6 +34,18 @@ export type FormFieldProps<T extends FormFieldAttributes> = Omit<
 export const withFormField = <T extends FormFieldAttributes>(
   FormFieldComponent: FunctionComponent<T>
 ): FunctionComponent<FormFieldProps<T>> => {
+  const PureFormFieldComponent = memo(
+    FormFieldComponent,
+    (prevProps, nextProps) => {
+      debugPropChanges(prevProps, nextProps);
+      return isEqualWith(prevProps, nextProps, (value, other, propName) => {
+        if (propName == "onChange" || propName == "onBlur") {
+          return true;
+        }
+      });
+    }
+  );
+
   const DecoratedFormField = forwardRef<
     HTMLTextAreaElement | HTMLInputElement,
     T
@@ -69,16 +84,12 @@ export const withFormField = <T extends FormFieldAttributes>(
 
     const error = formContext.errors[name];
 
-    const disabled =
-      props.disabled ||
-      formContext.isSubmitting ||
-      formContext.isValidating ||
-      formContext.isFieldValidating[name];
+    const disabled = props.disabled || formContext.isSubmitting;
 
     const helperText = error || props.helperText;
 
     return (
-      <FormFieldComponent
+      <PureFormFieldComponent
         {...(props as T)}
         value={value}
         onChange={onChange}
@@ -89,7 +100,7 @@ export const withFormField = <T extends FormFieldAttributes>(
         ref={ref}
       >
         {children}
-      </FormFieldComponent>
+      </PureFormFieldComponent>
     );
   });
   return DecoratedFormField as FunctionComponent<FormFieldProps<T>>;

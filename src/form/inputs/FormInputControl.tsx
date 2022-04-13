@@ -7,6 +7,7 @@ import {
   FormLabelProps
 } from "@mui/material";
 import { forwardRef, FunctionComponent, ReactNode } from "react";
+import { debugRender } from "../debug";
 import { ControlledInputAttributes, FormFieldAttributes } from "../FormField";
 
 export type FormInputAttributes = {
@@ -53,6 +54,8 @@ export const withFormInputControl = <T extends ControlledInputAttributes>(
       },
       ref
     ) {
+      debugRender(name);
+
       return (
         <FormControl
           {...props}

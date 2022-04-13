@@ -9,8 +9,6 @@ export type FormContextType<
   isDirty: boolean;
   isValid: boolean;
   isSubmitting: boolean;
-  isValidating: boolean;
-  isFieldValidating: Partial<Record<keyof T, boolean>>;
   onFieldChange: (name: keyof T, value: T[keyof T]) => void;
   onFieldBlur: (name: keyof T) => void;
   submit: () => void;
