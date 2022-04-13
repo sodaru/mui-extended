@@ -216,7 +216,6 @@ const FormDemoComponent: FunctionComponent = () => {
                   />
                 )}
                 multiple
-                freeSolo
                 options={[
                   { key: "blr", value: "Bengaluru" },
                   { key: "mum", value: "Mumbai" },
@@ -226,6 +225,9 @@ const FormDemoComponent: FunctionComponent = () => {
                 componentsProps={{ paper: { elevation: 4 } }}
                 ChipProps={{ size: "small" }}
                 sx={{ width: "100%" }}
+                isOptionEqualToValue={(option, value) => {
+                  return option.key == value.key && option.value == value.value;
+                }}
               />
 
               <FormDatePicker

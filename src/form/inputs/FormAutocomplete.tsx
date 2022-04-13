@@ -80,5 +80,6 @@ export const FormAutocomplete = withFormField(ControlledAutocomplete) as <
     keyof ControlledInputAttributes
   > &
     Pick<ControlledInputAttributes, "name"> &
+    Partial<Omit<ControlledInputAttributes, "name" | "value">> &
     RefAttributes<HTMLDivElement>
 ) => JSX.Element;
