@@ -76,7 +76,6 @@ value contains
 - `isDirty` - true if atleast one field is touched after the Form is mounted
 - `isValid` - true if all fields are valid
 - `isSubmitting` - true if form is submitting
-- `isValidating` - true if form is validating
 - `onFieldChange` - function to change the field value. type = `(name: string, value: unknown) => void`
 - `onFieldBlur` - function to indicate a field is blurred, helps to start the validation. type = `(name: string) => void`
 - `submit`: function to submit the form. validation for all fields is run before submitting;
@@ -90,6 +89,7 @@ Following props of any Input component are used to control Input with in the For
 - `value` - set the value from context to input
 - `onChange` - set the value from input to context. to invoke `onFieldChange` on context
 - `onBlur` - to invoke `onFieldBlur` on context
+- `label` - to set the label of the input, generated from _name_ if not provided
 - `error` - set the state of the input to error
 - `helperText` - set the error message in the helperText of the input
 - `disabled` - disable the input when form is validating ot submitting

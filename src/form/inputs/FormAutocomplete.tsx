@@ -23,6 +23,7 @@ const ControlledAutocomplete = forwardRef(
       name,
       onChange,
       onBlur,
+      label,
       error,
       helperText,
       renderInput,
@@ -57,6 +58,7 @@ const ControlledAutocomplete = forwardRef(
         renderInput={params => {
           return renderInput({
             ...params,
+            label,
             error,
             helperText
           } as AutocompleteRenderInputParams);

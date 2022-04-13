@@ -134,14 +134,13 @@ const FormDemoComponent: FunctionComponent = () => {
 
               <FormTextField
                 name="textarea"
-                label="Text Area"
                 multiline
                 minRows={3}
+                helperText="label is auto generated from name"
               />
 
               <FormTextField
                 name="markdown"
-                label="MarkDown"
                 InputProps={{ inputComponent: MarkdownEditor }}
                 fullWidth
                 InputLabelProps={{ shrink: true }}
@@ -149,7 +148,6 @@ const FormDemoComponent: FunctionComponent = () => {
 
               <FormFileInput
                 name="file"
-                label="File"
                 InputProps={{
                   multiple: true,
                   accept: "image/*",
@@ -169,7 +167,10 @@ const FormDemoComponent: FunctionComponent = () => {
                 }}
               />
 
-              <FormRadioGroup name="radioGroup" label="Radio Group">
+              <FormRadioGroup
+                name="radioGroup"
+                helperText="label is auto generated from name"
+              >
                 <FormControlLabel
                   value="blr"
                   label="Bengaluru"
@@ -211,7 +212,6 @@ const FormDemoComponent: FunctionComponent = () => {
                 renderInput={params => (
                   <TextField
                     {...params}
-                    label="Auto Complete"
                     placeholder="Select a city by typing in ...."
                   />
                 )}

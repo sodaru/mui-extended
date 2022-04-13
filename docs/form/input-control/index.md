@@ -9,7 +9,6 @@ Some Controls from `material-ui` does not include _error_ or _helperText_ props
 ## Props
 
 - All [_`FormControlProps`_](https://mui.com/api/form-control/#props)
-- `label`
 - `labelProps` - [_`FormLabelProps`_](https://mui.com/api/form-label/#props)
 - `helperTextProps` - [_`FormHelperTextProps`_](https://mui.com/api/form-helper-text/#props)
 - All Props required by `withFormField` HOC

@@ -6,12 +6,11 @@ import {
   FormLabel,
   FormLabelProps
 } from "@mui/material";
-import { forwardRef, FunctionComponent, ReactNode } from "react";
+import { forwardRef, FunctionComponent } from "react";
 import { debugRender } from "../debug";
 import { ControlledInputAttributes, FormFieldAttributes } from "../FormField";
 
 export type FormInputAttributes = {
-  label?: ReactNode;
   labelProps?: FormLabelProps;
   helperTextProps?: FormHelperTextProps;
 };
@@ -30,11 +29,11 @@ export const withFormInputControl = <T extends ControlledInputAttributes>(
     function FormInputControl(
       {
         // FormControlAttributes
-        label,
         labelProps,
         helperTextProps,
 
         // FormFieldProps
+        label,
         error,
         disabled,
         helperText,

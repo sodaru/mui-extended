@@ -1,4 +1,4 @@
-import { isEqualWith } from "lodash";
+import { capitalize, isEqualWith, snakeCase, words } from "lodash";
 import {
   forwardRef,
   FunctionComponent,
@@ -10,6 +10,10 @@ import {
 import { debugPropChanges } from "./debug";
 import { useFormContext } from "./FormContext";
 
+const labelFromName = (name: string) => {
+  return words(snakeCase(name)).map(capitalize).join(" ");
+};
+
 export type ControlledInputAttributes = {
   name: string;
   value: unknown;
@@ -18,6 +22,7 @@ export type ControlledInputAttributes = {
 };
 
 export type FormFieldAttributes = ControlledInputAttributes & {
+  label?: ReactNode;
   error?: boolean;
   helperText?: ReactNode;
   disabled?: boolean;
@@ -49,14 +54,14 @@ export const withFormField = <T extends FormFieldAttributes>(
   const DecoratedFormField = forwardRef<
     HTMLTextAreaElement | HTMLInputElement,
     T
-  >(function FormField({ children, ...props }, ref) {
+  >(function FormField({ children, name, label, ...props }, ref) {
     const formContext = useFormContext();
 
     if (!formContext) {
       throw new Error("FormField is rendered with out Form");
     }
 
-    const name = props.name;
+    const _label = label || labelFromName(name);
 
     const value = formContext.values[name];
 
@@ -91,6 +96,8 @@ export const withFormField = <T extends FormFieldAttributes>(
     return (
       <PureFormFieldComponent
         {...(props as T)}
+        name={name}
+        label={_label}
         value={value}
         onChange={onChange}
         onBlur={onBlur}
