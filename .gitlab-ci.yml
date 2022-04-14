@@ -2,8 +2,8 @@ image: registry.gitlab.com/sodaru/container/sodaru/ci-nodejs
 
 stages:
   - test
-  - deploy-pages
   - publish
+  - deploy-pages
 
 cache:
   key: "$CI_COMMIT_REF_SLUG"
@@ -32,7 +32,6 @@ pages:
       - public
   only:
     - tags
-    - develop # TODO: remove this later
 
 publish:
   stage: publish
