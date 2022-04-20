@@ -8,3 +8,4 @@ export * from "./SodaruImage";
 export * from "./SodaruLogo";
 export * from "./form";
 export * from "./ResponsiveDialog";
+export * from "./AspectRatioContainer";
