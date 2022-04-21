@@ -4,7 +4,7 @@ import { AspectRatioContainer } from "../src/AspectRatioContainer";
 import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const AspectRationContainerDemoComponent: FunctionComponent = () => {
+const AspectRatioContainerDemoComponent: FunctionComponent = () => {
   const [width, setWidth] = useState(16);
   const [height, setHeight] = useState(9);
   return (
@@ -44,11 +44,11 @@ const AspectRationContainerDemoComponent: FunctionComponent = () => {
   );
 };
 
-const AspectRationContainerDemo = demoPage(
-  <AspectRationContainerDemoComponent />,
+const AspectRatioContainerDemo = demoPage(
+  <AspectRatioContainerDemoComponent />,
   "aspect-ratio-container"
 );
 
-export default AspectRationContainerDemo;
+export default AspectRatioContainerDemo;
 
 export const getStaticProps = getStaticPropsFactory(["aspect-ratio-container"]);

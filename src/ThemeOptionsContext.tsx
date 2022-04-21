@@ -1,4 +1,9 @@
-import { createTheme, ThemeOptions, ThemeProvider } from "@mui/material";
+import {
+  createTheme,
+  ThemeOptions,
+  ThemeProvider,
+  responsiveFontSizes
+} from "@mui/material";
 import {
   createContext,
   FunctionComponent,
@@ -28,7 +33,9 @@ export const ThemeOptionsProvider: FunctionComponent<
   const [themeOptions, setThemeOptions] = useState<ThemeOptions>({});
 
   const theme = useMemo(() => {
-    return createTheme(deepmerge(defaultThemeOptions || {}, themeOptions));
+    return responsiveFontSizes(
+      createTheme(deepmerge(defaultThemeOptions || {}, themeOptions))
+    );
   }, [themeOptions, defaultThemeOptions]);
 
   const setTheme = useMemo(

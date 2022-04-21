@@ -6,6 +6,8 @@ Uses React context to update the global [MUI theme](https://mui.com/customizatio
 
 MUI `theme` created using [`createTheme`](https://mui.com/customization/theming/#createtheme-options-args-theme) is passsed as prop to [`ThemeProvider`](https://mui.com/customization/theming/#theme-provider)
 
+Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customization/typography/#responsive-font-sizes)
+
 `ThemeOptions` provides a way to update the outer theme deep inside a child component using context
 
 ## Usage
