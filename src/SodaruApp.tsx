@@ -60,7 +60,7 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
   );
 
   const defaultThemeOptions =
-    nextConfig.publicRuntimeConfig.defaultThemeOptions;
+    nextConfig?.publicRuntimeConfig?.defaultThemeOptions || {};
 
   return (
     <>
