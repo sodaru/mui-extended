@@ -9,7 +9,8 @@ import {
   FunctionComponent,
   useContext,
   useMemo,
-  useState
+  useState,
+  PropsWithChildren
 } from "react";
 import { deepmerge } from "@mui/utils";
 
@@ -29,9 +30,9 @@ export const useThemeOptions = () => {
   return useContext(ThemeOptionsContext);
 };
 
-export type ThemeOptionsProviderProps = {
+export type ThemeOptionsProviderProps = PropsWithChildren<{
   themeOptions?: ThemeOptions;
-};
+}>;
 
 export const ThemeOptionsProvider: FunctionComponent<
   ThemeOptionsProviderProps

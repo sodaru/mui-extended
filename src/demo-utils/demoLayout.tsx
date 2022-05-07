@@ -13,6 +13,7 @@ import {
   createElement,
   FunctionComponent,
   isValidElement,
+  PropsWithChildren,
   ReactNode,
   useState
 } from "react";
@@ -88,10 +89,9 @@ const demoLayouts: Record<string, FunctionComponent> = {};
 const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
   const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title;
   if (!demoLayouts[index]) {
-    const DemoLayout: FunctionComponent<{ pages?: string[] }> = ({
-      children,
-      pages
-    }) => {
+    const DemoLayout: FunctionComponent<
+      PropsWithChildren<{ pages?: string[] }>
+    > = ({ children, pages }) => {
       const menu = noMenu ? undefined : (
         <span>
           <Box p={1}>

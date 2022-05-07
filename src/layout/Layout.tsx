@@ -10,15 +10,20 @@ import {
   Toolbar
 } from "@mui/material";
 import { deepmerge } from "@mui/utils";
-import { FunctionComponent, ReactNode, useEffect } from "react";
+import {
+  FunctionComponent,
+  PropsWithChildren,
+  ReactNode,
+  useEffect
+} from "react";
 import { SplitPane, SplitPaneProps } from "../splitPane/SplitPane";
 import { withCloseOnNavigation } from "../utils";
 import { useMobile } from "../utils/useMobile";
 import { useHideMenu } from "./HideMenu";
 
-type BaseLayoutProps = {
+type BaseLayoutProps = PropsWithChildren<{
   menu: ReactNode;
-};
+}>;
 
 const MenuBox: FunctionComponent<PaperProps> = ({ children, ...props }) => {
   return (
@@ -53,7 +58,7 @@ const ContentBox: FunctionComponent<BoxProps> = ({ children, ...props }) => {
 };
 
 const WebLayout: FunctionComponent<
-  BaseLayoutProps & { splitPaneProps?: SplitPaneProps }
+  BaseLayoutProps & { splitPaneProps?: Omit<SplitPaneProps, "children"> }
 > = ({ menu, splitPaneProps, children }) => {
   const hideMenu = useHideMenu();
   return (
@@ -128,12 +133,12 @@ const MobileLayout: FunctionComponent<
   );
 };
 
-export type LayoutProps = {
+export type LayoutProps = PropsWithChildren<{
   appBar?: ReactNode;
   menu?: ReactNode;
-  splitPaneProps?: SplitPaneProps;
+  splitPaneProps?: Omit<SplitPaneProps, "children">;
   swipeableDrawerProps?: SwipeableDrawerProps;
-};
+}>;
 
 export const Layout: FunctionComponent<LayoutProps> = ({
   appBar,
