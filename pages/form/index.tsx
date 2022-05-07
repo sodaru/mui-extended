@@ -221,7 +221,7 @@ const FormDemoComponent: FunctionComponent = () => {
                   { key: "mum", value: "Mumbai" },
                   { key: "chn", value: "Chennai" }
                 ]}
-                getOptionLabel={o => o.value}
+                getOptionLabel={o => (typeof o == "string" ? o : o.value)}
                 componentsProps={{ paper: { elevation: 4 } }}
                 ChipProps={{ size: "small" }}
                 sx={{ width: "100%" }}

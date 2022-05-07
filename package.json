@@ -15,7 +15,7 @@
     "tsc": "npx tsc --project tsconfig.build.json",
     "build": "npm run prettier && npm run eslint && npm run clean && npm run tsc",
     "pretest": "npm run build",
-    "test": "echo 'no tests'",
+    "test": "npx next build",
     "prepack": "npm run test",
     "postversion": "git push --follow-tags",
     "dev": "next dev",
