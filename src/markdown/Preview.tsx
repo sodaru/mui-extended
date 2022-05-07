@@ -110,7 +110,9 @@ const A = props => {
   );
 };
 
-export const MarkdownPreview: FunctionComponent = ({ children }) => {
+export const MarkdownPreview: FunctionComponent<{ children: string }> = ({
+  children
+}) => {
   return (
     <ReactMarkdown
       components={{
@@ -134,7 +136,7 @@ export const MarkdownPreview: FunctionComponent = ({ children }) => {
       }}
       remarkPlugins={[remarkGfm]}
     >
-      {children as string}
+      {children}
     </ReactMarkdown>
   );
 };

@@ -1,5 +1,5 @@
 import { cloneDeep } from "lodash";
-import { Component } from "react";
+import { Component, PropsWithChildren } from "react";
 import { FormContext, FormContextType } from "./FormContext";
 import { JSONSchema7 } from "json-schema";
 import { validate } from "@solib/json-validator";
@@ -10,13 +10,13 @@ export type FormFieldValidatorType = (
   value: unknown
 ) => Promise<void>;
 
-export type FormProps<T extends Record<string, unknown>> = {
+export type FormProps<T extends Record<string, unknown>> = PropsWithChildren<{
   initialValues: T;
   initialErrors?: Partial<Record<keyof T, string>>;
   onSubmit: (values: T) => Promise<void>;
   schemas?: Partial<Record<keyof T, JSONSchema7>>;
   validators?: Partial<Record<keyof T, FormFieldValidatorType>>;
-};
+}>;
 
 const getDefaultValidator = (schema: JSONSchema7): FormFieldValidatorType => {
   return async (name, value) => {

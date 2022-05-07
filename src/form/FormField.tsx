@@ -3,6 +3,7 @@ import {
   forwardRef,
   FunctionComponent,
   memo,
+  PropsWithChildren,
   ReactNode,
   RefAttributes,
   useMemo
@@ -36,7 +37,7 @@ export type FormFieldProps<T extends FormFieldAttributes> = Omit<
   Partial<Omit<ControlledInputAttributes, "name" | "value">> &
   RefAttributes<HTMLDivElement>;
 
-export const withFormField = <T extends FormFieldAttributes>(
+export const withFormField = <T extends PropsWithChildren<FormFieldAttributes>>(
   FormFieldComponent: FunctionComponent<T>
 ): FunctionComponent<FormFieldProps<T>> => {
   const PureFormFieldComponent = memo(

@@ -13,7 +13,7 @@ const ApplyThemeButton = withSubmitButton(Button);
 const ResetThemeButton = withResetButton(Button);
 
 const ThemeOptionsDemoComponent = () => {
-  const setTheme = useThemeOptions();
+  const { setThemeOptions } = useThemeOptions();
   const theme = useTheme();
 
   return (
@@ -26,7 +26,7 @@ const ThemeOptionsDemoComponent = () => {
         mode: theme.palette.mode || "light"
       }}
       onSubmit={async values => {
-        setTheme({
+        setThemeOptions({
           palette: { primary: { main: values.primary }, mode: values.mode },
           components: {
             MuiTextField: { defaultProps: { variant: values.variant } },

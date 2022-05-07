@@ -9,19 +9,16 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-type PropsDistribution<P = {}> = {
-  layout?: (keyof P)[];
-  page?: (keyof P)[];
-};
+type EmptyObject = {};
 
-// eslint-disable-next-line @typescript-eslint/ban-types
-export type SodaruPageComponentType<P = {}, IP = {}> = NextComponentType<
-  NextPageContext,
-  IP,
-  P
-> & {
-  layout?: FunctionComponent;
-  propsDistribution?: PropsDistribution<P>;
+export type SodaruPageComponentType<
+  P = EmptyObject,
+  LP = EmptyObject,
+  IP = EmptyObject
+> = NextComponentType<NextPageContext, IP, P> & {
+  layout?: FunctionComponent<LP>;
+  layoutProps?: (keyof LP)[];
+  pageProps?: (keyof P)[];
 };
 
 const nextConfig: NextConfig = getConfig();
@@ -40,16 +37,13 @@ const nextConfig: NextConfig = getConfig();
  * page components in SodaruApp may contain a layout property to have same layout between pages. type `SodaruPageComponentType` comes handy
  *
  */
-export const SodaruApp: FunctionComponent<AppProps> = ({
-  Component,
-  pageProps
-}) => {
-  const Layout = (Component as SodaruPageComponentType).layout || Box;
-  const propsDistribution: PropsDistribution =
-    (Component as SodaruPageComponentType).propsDistribution || {};
+export const SodaruApp: FunctionComponent<
+  AppProps & { Component: SodaruPageComponentType }
+> = ({ Component, pageProps }) => {
+  const Layout = Component.layout || Box;
 
-  const layoutPropNames = propsDistribution.layout || Object.keys(pageProps);
-  const pagePropNames = propsDistribution.page || Object.keys(pageProps);
+  const layoutPropNames = Component.layoutProps || Object.keys(pageProps);
+  const pagePropNames = Component.pageProps || Object.keys(pageProps);
 
   const layoutProps = Object.fromEntries(
     layoutPropNames.map(propName => [propName, pageProps[propName]])
@@ -69,7 +63,7 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
       </Head>
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeOptionsProvider defaultThemeOptions={defaultThemeOptions}>
+        <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
           <Layout {...layoutProps}>
             <Component {...componentProps} />
           </Layout>

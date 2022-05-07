@@ -2,6 +2,7 @@ import {
   forwardRef,
   FunctionComponent,
   JSXElementConstructor,
+  PropsWithChildren,
   ReactEventHandler,
   useEffect
 } from "react";
@@ -104,7 +105,9 @@ class SodaruReplaceableHistory {
   }
 }
 
-export const withCloseOnNavigation = <T extends CloseOnNavigationProps>(
+export const withCloseOnNavigation = <
+  T extends PropsWithChildren<CloseOnNavigationProps>
+>(
   Modal: FunctionComponent<T> | JSXElementConstructor<T>
 ): FunctionComponent<T> => {
   const ImprovedModal = forwardRef<HTMLDivElement, T>(

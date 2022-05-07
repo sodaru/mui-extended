@@ -597,7 +597,7 @@ export const MarkdownEditorContent = forwardRef<
       </Grid>
       {preview ? (
         <Grid item xs={12}>
-          <MarkdownPreview>{value}</MarkdownPreview>
+          <MarkdownPreview>{value as string}</MarkdownPreview>
         </Grid>
       ) : null}
     </Grid>

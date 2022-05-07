@@ -13,6 +13,7 @@ import {
   createElement,
   FunctionComponent,
   isValidElement,
+  PropsWithChildren,
   ReactNode,
   useState
 } from "react";
@@ -88,10 +89,9 @@ const demoLayouts: Record<string, FunctionComponent> = {};
 const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
   const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title;
   if (!demoLayouts[index]) {
-    const DemoLayout: FunctionComponent<{ pages?: string[] }> = ({
-      children,
-      pages
-    }) => {
+    const DemoLayout: FunctionComponent<
+      PropsWithChildren<{ pages?: string[] }>
+    > = ({ children, pages }) => {
       const menu = noMenu ? undefined : (
         <span>
           <Box p={1}>
@@ -154,8 +154,11 @@ export const demoPage = (
       Sodaru UI Components
     </Typography>
   )
-): SodaruPageComponentType<DemoPageProps> => {
-  const PageComponent: SodaruPageComponentType<DemoPageProps> = props => {
+): SodaruPageComponentType<DemoPageProps, Pick<DemoPageProps, "pages">> => {
+  const PageComponent: SodaruPageComponentType<
+    DemoPageProps,
+    Pick<DemoPageProps, "pages">
+  > = props => {
     const _demo = demo
       ? isValidElement(demo)
         ? demo
@@ -197,10 +200,8 @@ export const demoPage = (
 
   if (!noLayout) {
     PageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
-    PageComponent.propsDistribution = {
-      page: ["docs", "pages"],
-      layout: ["pages"]
-    };
+    PageComponent.layoutProps = ["pages"];
+    PageComponent.pageProps = ["docs", "pages"];
   }
 
   return PageComponent;

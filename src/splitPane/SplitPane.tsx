@@ -49,6 +49,7 @@ export type SplitPaneProps = {
   step?: number;
   primary?: "first" | "second";
   hidePrimary?: boolean;
+  children: [ReactNode, ReactNode];
 };
 
 type SplitPaneState = {

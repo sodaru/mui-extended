@@ -1,6 +1,7 @@
 import {
   createContext,
   FunctionComponent,
+  ReactNode,
   useContext,
   useMemo,
   useState
@@ -22,7 +23,9 @@ export const useHideMenu = () => {
   return useContext(HideMenuContext);
 };
 
-export const HideMenuProvider: FunctionComponent = ({ children }) => {
+export const HideMenuProvider: FunctionComponent<{
+  children?: ReactNode | ReactNode[];
+}> = ({ children }) => {
   const [hide, setHide] = useState(false);
   const value = useMemo(
     () => ({
