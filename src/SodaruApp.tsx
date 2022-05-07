@@ -69,7 +69,7 @@ export const SodaruApp: FunctionComponent<AppProps> = ({
       </Head>
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <ThemeOptionsProvider defaultThemeOptions={defaultThemeOptions}>
+        <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
           <Layout {...layoutProps}>
             <Component {...componentProps} />
           </Layout>

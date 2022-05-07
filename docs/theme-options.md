@@ -2,24 +2,29 @@
 
 ---
 
-Uses React context to update the global [MUI theme](https://mui.com/customization/theming/)
+MUI's default [`ThemeProvider`](https://mui.com/material-ui/customization/theming/#theme-provider) always expects complete `theme` object to override at any child level.
 
-MUI `theme` created using [`createTheme`](https://mui.com/customization/theming/#createtheme-options-args-theme) is passsed as prop to [`ThemeProvider`](https://mui.com/customization/theming/#theme-provider)
+### With `ThemeOptionsProvider`
+
+- set the only required `ThemeOptions` at each level in Component Tree
+- change the themeOptions at runtime using the hook `useThemeOptions().setThemeOptions()`
 
 Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customization/typography/#responsive-font-sizes)
 
-`ThemeOptions` provides a way to update the outer theme deep inside a child component using context
+> ### At each level of `ThemeOptionsProvider`
+>
+> a new `theme` is created by deep merging ThemeOptions from 1. parentContext, 2. prop, 3. state
 
 ## Usage
 
-- `ThemeOptionsProvider` must be used to wrap all child components
+- `ThemeOptionsProvider`
 
   ```typescript
   import { ThemeOptionsProvider } from "@solib/ui-components";
 
   // wrap all child components
-  const rootComponent = (
-    <ThemeOptionsProvider defaultThemeOptions={themeOptions}>
+  const component = (
+    <ThemeOptionsProvider themeOptions={themeOptions}>
       {children}
     </ThemeOptionsProvider>
   );
@@ -27,7 +32,7 @@ Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customizat
 
   #### Props :
 
-  - **defaultThemeOptions**_(Optional)_ theme options to be overrided
+  - **themeOptions**_(Optional)_ theme options to be overrided
 
 - `useThemeOptions` to update the theme from inside the child components
 
@@ -36,10 +41,12 @@ Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customizat
   import { ThemeOptions } from "@mui/material";
 
   // within the child component
-  const setTheme = useThemeOptions();
+  const { setThemeOptions } = useThemeOptions();
 
-  const newTheme: ThemeOptions = { palette: { primary: { main: "#0000ff" } } };
-  setTheme(newTheme); // updates primary main color to "#0000ff"
+  const newThemeOptions: ThemeOptions = {
+    palette: { primary: { main: "#0000ff" } }
+  };
+  setThemeOptions(newThemeOptions); // updates primary main color to "#0000ff"
   ```
 
 _[`SodaruApp`](./sodaru-app) wraps All pages of nextJs in `ThemeOptionsProvider`_
