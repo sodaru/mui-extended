@@ -154,8 +154,11 @@ export const demoPage = (
       Sodaru UI Components
     </Typography>
   )
-): SodaruPageComponentType<DemoPageProps> => {
-  const PageComponent: SodaruPageComponentType<DemoPageProps> = props => {
+): SodaruPageComponentType<DemoPageProps, Pick<DemoPageProps, "pages">> => {
+  const PageComponent: SodaruPageComponentType<
+    DemoPageProps,
+    Pick<DemoPageProps, "pages">
+  > = props => {
     const _demo = demo
       ? isValidElement(demo)
         ? demo
@@ -197,10 +200,8 @@ export const demoPage = (
 
   if (!noLayout) {
     PageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
-    PageComponent.propsDistribution = {
-      page: ["docs", "pages"],
-      layout: ["pages"]
-    };
+    PageComponent.layoutProps = ["pages"];
+    PageComponent.pageProps = ["docs", "pages"];
   }
 
   return PageComponent;
