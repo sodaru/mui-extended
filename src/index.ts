@@ -9,3 +9,4 @@ export * from "./SodaruLogo";
 export * from "./form";
 export * from "./ResponsiveDialog";
 export * from "./AspectRatioContainer";
+export * from "./ReCaptcha";
