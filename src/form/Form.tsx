@@ -3,6 +3,7 @@ import { Component, PropsWithChildren } from "react";
 import { FormContext, FormContextType } from "./FormContext";
 import { JSONSchema7 } from "json-schema";
 import { validate } from "@solib/json-validator";
+import { DataValidationError } from "@solib/errors";
 import { debugEvent } from "./debug";
 
 export type FormFieldValidatorType = (
@@ -93,7 +94,13 @@ export class Form<T extends Record<string, unknown>> extends Component<
         newErrors = { ...this.state.errors };
         delete newErrors[name];
       } catch (e) {
-        newErrors = { ...this.state.errors, [name]: e.message as string };
+        let errorMessage: string = e.message;
+        if (e instanceof DataValidationError) {
+          errorMessage = e.violations
+            .map(v => `${v.path} ${v.message}`.trim())
+            .join("\n");
+        }
+        newErrors = { ...this.state.errors, [name]: errorMessage };
       }
       this.setState({ errors: newErrors });
     }

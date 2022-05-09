@@ -12,7 +12,7 @@ import {
   useTheme
 } from "@mui/material";
 import { FunctionComponent } from "react";
-import ReactMarkdown, { Components } from "react-markdown";
+import ReactMarkdown, { Components, Options } from "react-markdown";
 import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
 import typescript from "refractor/lang/typescript";
@@ -110,32 +110,33 @@ const A = props => {
   );
 };
 
-export const MarkdownPreview: FunctionComponent<{ children: string }> = ({
-  children
-}) => {
+export const MarkdownPreview: FunctionComponent<{
+  children: string;
+  components?: Options["components"];
+}> = ({ children, components = {} }) => {
+  const _components: Options["components"] = {
+    h1: H1,
+    h2: H2,
+    h3: H3,
+    h4: H4,
+    h5: H5,
+    h6: H6,
+    p: P,
+    blockquote: Blockquote,
+    table: TableComponent,
+    img: Img,
+    thead: TableHead,
+    tbody: TableBody,
+    th: TableCell as unknown as Components["th"],
+    tr: TableRow,
+    td: TableCell as unknown as Components["td"],
+    code: SyntaxHighLightedCodeComponent,
+    a: A,
+    ...components
+  };
+
   return (
-    <ReactMarkdown
-      components={{
-        h1: H1,
-        h2: H2,
-        h3: H3,
-        h4: H4,
-        h5: H5,
-        h6: H6,
-        p: P,
-        blockquote: Blockquote,
-        table: TableComponent,
-        img: Img,
-        thead: TableHead,
-        tbody: TableBody,
-        th: TableCell as unknown as Components["th"],
-        tr: TableRow,
-        td: TableCell as unknown as Components["td"],
-        code: SyntaxHighLightedCodeComponent,
-        a: A
-      }}
-      remarkPlugins={[remarkGfm]}
-    >
+    <ReactMarkdown components={_components} remarkPlugins={[remarkGfm]}>
       {children}
     </ReactMarkdown>
   );
