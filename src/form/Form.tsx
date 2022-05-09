@@ -1,8 +1,7 @@
 import { cloneDeep } from "lodash";
 import { Component, PropsWithChildren } from "react";
 import { FormContext, FormContextType } from "./FormContext";
-import { JSONSchema7 } from "json-schema";
-import { validate } from "@solib/json-validator";
+import { validate, JSONSchema7 } from "@solib/json-validator";
 import { DataValidationError } from "@solib/errors";
 import { debugEvent } from "./debug";
 
