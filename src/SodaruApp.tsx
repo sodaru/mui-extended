@@ -7,6 +7,7 @@ import { NextComponentType, NextConfig, NextPageContext } from "next";
 import getConfig from "next/config";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { GoogleAnalytics } from "./GoogleAnalytics";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyObject = {};
@@ -58,6 +59,7 @@ export const SodaruApp: FunctionComponent<
 
   return (
     <>
+      <GoogleAnalytics />
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>

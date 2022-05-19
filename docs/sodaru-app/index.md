@@ -17,6 +17,7 @@ import "@fontsource/roboto/700.css";
 
 ## Features
 
+- Embedded support for [Google Analytics](./google-analytics)
 - `Roboto` or any Font must be included by the consumer of `SodaruApp` in their `_app.tsx` page
   - Reason: https://nextjs.org/docs/messages/css-npm
 - Configures [Responsive Meta Tag](https://mui.com/getting-started/usage/#responsive-meta-tag)

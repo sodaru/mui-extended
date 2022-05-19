@@ -11,3 +11,4 @@ export * from "./ResponsiveDialog";
 export * from "./AspectRatioContainer";
 export * from "./ReCaptcha";
 export * from "./ThemeModeSwitch";
+export * from "./GoogleAnalytics";

@@ -3,6 +3,7 @@ import {
   forwardRef,
   FunctionComponent,
   memo,
+  MouseEvent,
   MouseEventHandler,
   useMemo
 } from "react";
@@ -31,8 +32,11 @@ export const withResetButton = <T extends { onClick?: MouseEventHandler }>(
     }
 
     const onClick = useMemo(() => {
-      return () => {
+      return (event: MouseEvent) => {
         formContext.reset();
+        if (props.onClick) {
+          props.onClick(event);
+        }
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
@@ -71,8 +75,11 @@ export const withSubmitButton = <
     }
 
     const onClick = useMemo(() => {
-      return () => {
+      return (event: MouseEvent) => {
         formContext.submit();
+        if (props.onClick) {
+          props.onClick(event);
+        }
       };
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
