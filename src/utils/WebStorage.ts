@@ -7,17 +7,20 @@ const useStateWithWebStorage = <T>(
   webStorageKey: string,
   initialValue: T
 ): UseStateReturnType<T> => {
-  const getItem = (key: string): T => {
-    let value =
-      typeof webStorage !== "undefined" ? webStorage.getItem(key) : undefined;
+  const [value, setValue] = useState<T>(initialValue);
 
-    if (typeof value === "string") {
-      value = JSON.parse(value);
-    }
-    return value as unknown as T;
-  };
+  useEffect(() => {
+    const getItem = (key: string): T => {
+      let value =
+        typeof webStorage !== "undefined" ? webStorage.getItem(key) : undefined;
 
-  const [value, setValue] = useState<T>(getItem(webStorageKey) || initialValue);
+      if (typeof value === "string") {
+        value = JSON.parse(value);
+      }
+      return value as unknown as T;
+    };
+    setValue(getItem(webStorageKey));
+  }, [webStorage, webStorageKey, setValue]);
 
   useEffect(() => {
     if (typeof webStorage !== "undefined") {
