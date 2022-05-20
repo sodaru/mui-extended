@@ -1,3 +1,4 @@
+import { isEqual } from "lodash";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 type UseStateReturnType<T> = [T, Dispatch<SetStateAction<T>>];
@@ -10,26 +11,33 @@ const useStateWithWebStorage = <T>(
   const [value, setValue] = useState<T>(initialValue);
 
   useEffect(() => {
-    const getItem = (key: string): T => {
+    if (isEqual(value, initialValue)) {
+      // update value from storage to state during mount
       let value =
-        typeof webStorage !== "undefined" ? webStorage.getItem(key) : undefined;
+        typeof webStorage !== "undefined"
+          ? webStorage.getItem(webStorageKey)
+          : undefined;
 
       if (typeof value === "string") {
         value = JSON.parse(value);
       }
-      return value as unknown as T;
-    };
-    setValue(getItem(webStorageKey));
-  }, [webStorage, webStorageKey, setValue]);
 
-  useEffect(() => {
-    if (typeof webStorage !== "undefined") {
-      webStorage.setItem(webStorageKey, JSON.stringify(value));
+      if (value !== null) {
+        setValue(value as unknown as T);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [value, webStorageKey]);
+  }, []);
 
-  return [value, setValue];
+  const decoratedSetValue: Dispatch<SetStateAction<T>> = newValue => {
+    if (typeof webStorage !== "undefined") {
+      // update storage when value changes
+      webStorage.setItem(webStorageKey, JSON.stringify(newValue));
+    }
+    return setValue(newValue);
+  };
+
+  return [value, decoratedSetValue];
 };
 
 export const useStateWithSessionStorage = <T>(

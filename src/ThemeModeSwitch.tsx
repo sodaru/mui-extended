@@ -1,91 +1,84 @@
-import { Switch, styled, useMediaQuery, SwitchProps } from "@mui/material";
+import {
+  useMediaQuery,
+  ButtonGroup,
+  Button,
+  ButtonGroupProps
+} from "@mui/material";
 import { FunctionComponent, useEffect } from "react";
 import { useThemeOptions } from "./ThemeOptionsContext";
 import { useStateWithLocalStorage } from "./utils/WebStorage";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import InvertColorsIcon from "@mui/icons-material/InvertColors";
 
-const MaterialUISwitch = styled(Switch)(({ theme }) => ({
-  width: 62,
-  height: 34,
-  padding: 0,
-  margin: 7,
-  boxSizing: "content-box",
-  "& .MuiSwitch-switchBase": {
-    margin: 1,
-    padding: 0,
-    "&.Mui-checked": {
-      color: "#fff",
-      transform: "translateX(28px)",
-      "& .MuiSwitch-thumb:before": {
-        backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-          "#fff"
-        )}" d="M4.2 2.5l-.7 1.8-1.8.7 1.8.7.7 1.8.6-1.8L6.7 5l-1.9-.7-.6-1.8zm15 8.3a6.7 6.7 0 11-6.6-6.6 5.8 5.8 0 006.6 6.6z"/></svg>')`
-      },
-      "& + .MuiSwitch-track": {
-        opacity: 1,
-        backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be"
-      }
-    }
-  },
-  "& .MuiSwitch-thumb": {
-    backgroundColor: theme.palette.mode === "dark" ? "#003892" : "#001e3c",
-    width: 32,
-    height: 32,
-    "&:before": {
-      content: "''",
-      position: "absolute",
-      width: "100%",
-      height: "100%",
-      left: 0,
-      backgroundRepeat: "no-repeat",
-      backgroundPosition: "center",
-      backgroundImage: `url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 20 20"><path fill="${encodeURIComponent(
-        "#fff"
-      )}" d="M9.305 1.667V3.75h1.389V1.667h-1.39zm-4.707 1.95l-.982.982L5.09 6.072l.982-.982-1.473-1.473zm10.802 0L13.927 5.09l.982.982 1.473-1.473-.982-.982zM10 5.139a4.872 4.872 0 00-4.862 4.86A4.872 4.872 0 0010 14.862 4.872 4.872 0 0014.86 10 4.872 4.872 0 0010 5.139zm0 1.389A3.462 3.462 0 0113.471 10a3.462 3.462 0 01-3.473 3.472A3.462 3.462 0 016.527 10 3.462 3.462 0 0110 6.528zM1.665 9.305v1.39h2.083v-1.39H1.666zm14.583 0v1.39h2.084v-1.39h-2.084zM5.09 13.928L3.616 15.4l.982.982 1.473-1.473-.982-.982zm9.82 0l-.982.982 1.473 1.473.982-.982-1.473-1.473zM9.305 16.25v2.083h1.389V16.25h-1.39z"/></svg>')`
-    }
-  },
-  "& .MuiSwitch-track": {
-    opacity: 1,
-    backgroundColor: theme.palette.mode === "dark" ? "#8796A5" : "#aab4be",
-    borderRadius: 34 / 2
+const resolveThemeMode = (
+  themeMode: "system" | "dark" | "light",
+  systemPrefersDarkMode: boolean
+): "light" | "dark" => {
+  if (themeMode == "system") {
+    return systemPrefersDarkMode ? "dark" : "light";
+  } else if (themeMode == "dark") {
+    return "dark";
+  } else {
+    return "light";
   }
-}));
+};
 
-export const ThemeModeSwitch: FunctionComponent<
-  Omit<SwitchProps, "checked">
-> = props => {
+export const ThemeModeSwitch: FunctionComponent<ButtonGroupProps> = props => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
-  const [themeMode, setThemeMode] = useStateWithLocalStorage<{
-    setBy: "system" | "user";
-    mode: "dark" | "light";
-  }>("theme-mode", { setBy: "system", mode: "light" });
-
-  useEffect(() => {
-    if (themeMode.setBy == "system") {
-      setThemeMode({
-        setBy: "system",
-        mode: prefersDarkMode ? "dark" : "light"
-      });
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prefersDarkMode, setThemeMode]);
+  const [themeMode, setThemeMode] = useStateWithLocalStorage<
+    "system" | "dark" | "light"
+  >("theme-mode", "system");
 
   const { setThemeOptions } = useThemeOptions();
 
   useEffect(() => {
-    setThemeOptions({ palette: { mode: themeMode.mode } });
-  }, [themeMode, setThemeOptions]);
+    setThemeOptions({
+      palette: {
+        mode: resolveThemeMode(themeMode, prefersDarkMode)
+      }
+    });
+  }, [themeMode, prefersDarkMode, setThemeOptions]);
 
   return (
-    <MaterialUISwitch
+    <ButtonGroup
       {...props}
-      checked={themeMode.mode == "dark"}
-      onChange={(event, checked) => {
-        setThemeMode({ setBy: "user", mode: checked ? "dark" : "light" });
-        if (props.onChange) {
-          props.onChange(event, checked);
-        }
-      }}
-    />
+      variant="outlined"
+      aria-label="theme-chooser"
+      color={
+        resolveThemeMode(themeMode, prefersDarkMode) == "light"
+          ? "primary"
+          : "secondary"
+      }
+    >
+      <Button
+        onClick={() => {
+          setThemeMode("system");
+        }}
+        startIcon={<InvertColorsIcon />}
+        disabled={themeMode == "system"}
+      >
+        System
+      </Button>
+      <Button
+        onClick={() => {
+          setThemeMode("dark");
+        }}
+        startIcon={<DarkModeIcon />}
+        disabled={themeMode == "dark"}
+      >
+        Dark
+      </Button>
+      <Button
+        onClick={() => {
+          setThemeMode("light");
+        }}
+        startIcon={<LightModeIcon />}
+        disabled={themeMode == "light"}
+      >
+        Light
+      </Button>
+    </ButtonGroup>
   );
 };
