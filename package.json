@@ -1,6 +1,6 @@
 {
   "name": "@solib/ui-components",
-  "version": "1.1.5",
+  "version": "1.2.0",
   "description": "Basic UI Components for Sodaru Projects",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
