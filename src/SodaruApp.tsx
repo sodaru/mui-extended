@@ -27,16 +27,7 @@ const nextConfig: NextConfig = getConfig();
 /**
  * export this as default component from _app.ts
  *
- * optionally import roboto font in _app.ts
- * ```
- * import "@fontsource/roboto/300.css";
- * import "@fontsource/roboto/400.css";
- * import "@fontsource/roboto/500.css";
- * import "@fontsource/roboto/700.css";
- * ```
- *
  * page components in SodaruApp may contain a layout property to have same layout between pages. type `SodaruPageComponentType` comes handy
- *
  */
 export const SodaruApp: FunctionComponent<
   AppProps & { Component: SodaruPageComponentType }

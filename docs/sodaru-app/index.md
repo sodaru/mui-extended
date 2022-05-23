@@ -8,18 +8,12 @@ NextJs [`Custom App`](https://nextjs.org/docs/advanced-features/custom-app) for 
 
 ```typescript
 // pages/_app.tsx
-export { SodaruApp as default } from "../src/SodaruApp";
-import "@fontsource/roboto/300.css";
-import "@fontsource/roboto/400.css";
-import "@fontsource/roboto/500.css";
-import "@fontsource/roboto/700.css";
+export { SodaruApp as default } from "@solib/ui-components";
 ```
 
 ## Features
 
 - Embedded support for [Google Analytics](./google-analytics)
-- `Roboto` or any Font must be included by the consumer of `SodaruApp` in their `_app.tsx` page
-  - Reason: https://nextjs.org/docs/messages/css-npm
 - Configures [Responsive Meta Tag](https://mui.com/getting-started/usage/#responsive-meta-tag)
 - Adds [CSSBaseline](https://mui.com/getting-started/usage/#cssbaseline)
 - Adds [DateFns Adaptor](https://mui.com/components/pickers/#setup) for Date/Time Pickers
@@ -46,6 +40,15 @@ import "@fontsource/roboto/700.css";
             },
             MuiCheckbox: {
               defaultProps: { size: "small" }
+            },
+            MuiButton: {
+              defaultProps: { size: "small" }
+            },
+            MuiIconButton: {
+              defaultProps: { size: "small" }
+            },
+            MuiSvgIcon: {
+              defaultProps: { fontSize: "small" }
             }
           }
         }
