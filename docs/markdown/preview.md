@@ -137,13 +137,14 @@ Start numbering with offset:
 
 ### 9. Links
 
-- [link text](http://dev.nodeca.com)
+- [link text](https://sodaru.com)
 
-- [link with title](http://nodeca.github.io/pica/demo/ "title text!")
+- [link with title](https://sodaru.com "title text!")
 
-- Autoconverted link https://github.com/nodeca/pica
+- Autoconverted link https://sodaru.com/platform
 
 - Links are wrapped with `next/link` to utilise next routing for relative links . [Go back to home](./)
+- Links use Mui's `Link` Component for styling
 
 ### 10. Images
 

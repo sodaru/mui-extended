@@ -9,7 +9,8 @@ import {
   TableHead,
   TableRow,
   Typography,
-  useTheme
+  useTheme,
+  Link as MuiLink
 } from "@mui/material";
 import { FunctionComponent } from "react";
 import ReactMarkdown, { Components, Options } from "react-markdown";
@@ -105,7 +106,7 @@ const Img = props => {
 const A = props => {
   return (
     <Link href={props.href}>
-      <a {...props} />
+      <MuiLink {...props} />
     </Link>
   );
 };
