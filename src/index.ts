@@ -14,3 +14,4 @@ export * from "./ReCaptcha";
 export * from "./ThemeModeSwitch";
 export * from "./GoogleAnalytics";
 export * from "./animations";
+export * from "./ResizableBox";
