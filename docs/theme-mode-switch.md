@@ -15,4 +15,5 @@ const themeModeSwitch = <ThemeModeSwitch />;
 ## Features
 
 - Saves the user preference in LocalStorage
-- initial preference is loaded from [System preference](https://mui.com/material-ui/customization/dark-mode/#system-preference)
+- Default Mode is `light` until the preferense is read from `localStorage`
+- if localStorage is `null`, preference is loaded from [System preference](https://mui.com/material-ui/customization/dark-mode/#system-preference)

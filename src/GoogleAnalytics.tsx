@@ -1,10 +1,18 @@
 import Script from "next/script";
+import { useStateWithLocalStorage } from "./utils";
 
 /**
  * Adds Google Analytics to Webpage , if NEXT_PUBLIC_GOOGLE_ANALYTICS_ID is set
  */
 export const GoogleAnalytics = (): JSX.Element => {
-  if (process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID) {
+  // eslint-disable-next-line
+  const [cookiePreference, setCookiePreference, checked] =
+    useStateWithLocalStorage("cookie-preference", { performance: true });
+  if (
+    process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS_ID &&
+    checked &&
+    cookiePreference.performance
+  ) {
     return (
       <>
         <Script

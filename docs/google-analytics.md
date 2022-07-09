@@ -26,7 +26,11 @@ Adds Google Analytics to a WebPage
   Refer [Google Support](https://support.google.com/analytics/answer/9304153?hl=en&ref_topic=12156336) for help.
 
 - Step 3.  
-  set environmental variable `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` to id obtained from Google Analytics.  
-  **Note**: _This component will have no effect if this environmental variable is not set._
+  set environmental variable `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` to id obtained from Google Analytics.
+
+> **Note**:
+>
+> - This component will have no effect if this environmental variable is not set.
+> - to Support GDPR, This component uses localStorage key `cookie-preference.performance` to switch of the Google Analytics
 
 _[SodaruApp](../sodaru-app) component embeds `GoogleAnalytics`_
