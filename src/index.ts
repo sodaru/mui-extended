@@ -15,3 +15,4 @@ export * from "./ThemeModeSwitch";
 export * from "./GoogleAnalytics";
 export * from "./animations";
 export * from "./ResizableBox";
+export * from "./CookiePreference";
