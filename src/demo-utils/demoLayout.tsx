@@ -9,6 +9,7 @@ import {
   Typography
 } from "@mui/material";
 import getConfig from "next/config";
+import { NextConfig } from "next";
 import {
   createElement,
   FunctionComponent,
@@ -27,6 +28,8 @@ import {
   TreeMenuWithNextLinksProps
 } from "../TreeMenuWithNextLinks";
 import { useStateWithSessionStorage } from "../utils";
+
+const nextConfig: NextConfig = getConfig();
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
@@ -64,7 +67,7 @@ export const convertDemoPagesToTreeMenuProps = (
       }
       return link;
     }),
-    basePath: getConfig().basePath,
+    basePath: nextConfig.basePath,
     improveLabels: true
   };
 
@@ -86,13 +89,8 @@ export const convertDemoPagesToTreeMenuProps = (
 
 const demoLayouts: Record<string, FunctionComponent> = {};
 
-const getDemoLayout = (
-  noMenu = false,
-  noAppBar = false,
-  title: ReactNode,
-  sourceRepo: string
-) => {
-  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title + sourceRepo;
+const getDemoLayout = (noMenu = false, noAppBar = false) => {
+  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "";
   if (!demoLayouts[index]) {
     const DemoLayout: FunctionComponent<
       PropsWithChildren<{ pages?: string[] }>
@@ -107,12 +105,20 @@ const getDemoLayout = (
       );
       const appBar = noAppBar ? undefined : (
         <SodaruAppBar hideMenuBtn={noMenu}>
-          <Box flexGrow={1}>{title}</Box>
+          <Box flexGrow={1}>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {nextConfig.publicRuntimeConfig?.demo?.title || ""}
+            </Typography>
+          </Box>
           <Paper sx={{ p: 0.5 }}>
             <ThemeModeSwitch />
           </Paper>
           <Tooltip title="Source" arrow>
-            <a href={sourceRepo} target="_blank" rel="noreferrer">
+            <a
+              href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
+              target="_blank"
+              rel="noreferrer"
+            >
               <SodaruImage
                 src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
                 alt="Git Repo"
@@ -144,12 +150,6 @@ export type DemoPageProps = {
 export const demoPage = (
   demo: FunctionComponent<DemoPageProps> | ReactNode | undefined,
   ref: string,
-  title: ReactNode = (
-    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-      Sodaru UI Components
-    </Typography>
-  ),
-  sourcerepo = "https://gitlab.com/sodaru/solib/ui-components",
   noMenu = false,
   noAppBar = false,
   noLayout = false
@@ -198,7 +198,7 @@ export const demoPage = (
   };
 
   if (!noLayout) {
-    PageComponent.layout = getDemoLayout(noMenu, noAppBar, title, sourcerepo);
+    PageComponent.layout = getDemoLayout(noMenu, noAppBar);
     PageComponent.layoutProps = ["pages"];
     PageComponent.pageProps = ["docs", "pages"];
   }

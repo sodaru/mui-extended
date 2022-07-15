@@ -43,6 +43,10 @@ const defaultThemeOptions = {
 module.exports = withBundleAnalyzer({
   images: images,
   publicRuntimeConfig: {
-    defaultThemeOptions: defaultThemeOptions
+    defaultThemeOptions: defaultThemeOptions,
+    demo: {
+      title: "Sodaru UI Components",
+      repoUrl: "https://gitlab.com/sodaru/solib/ui-components"
+    }
   }
 });

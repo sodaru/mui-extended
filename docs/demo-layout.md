@@ -67,10 +67,16 @@
    module.exports = {
      images: images,
      publicRuntimeConfig: {
-       defaultThemeOptions: defaultThemeOptions
+       defaultThemeOptions: defaultThemeOptions,
+       demo: {
+         title: "Sodaru UI Components",
+         repoUrl: "https://gitlab.com/sodaru/solib/ui-components"
+       }
      }
    };
    ```
+
+   > Note `publicRuntimeConfig.demo`
 
 5. Create Documentation in `docs` folder , (create `.md` files)
 
@@ -86,9 +92,7 @@
 
    const Index = demoPage(
      DemoComponent, // pass undefined , if there is no demo
-     "home", // home is the path to documentation md file, pass undefined if there is no documentation
-     "Sodaru UI Components", // Title
-     "https://gitlab.com/sodaru/solib/ui-components" // Repo home page link
+     "home" // home is the path to documentation md file, pass undefined if there is no documentation
    );
 
    export default Index; // Index is a PageName , can by any relavent to page name
