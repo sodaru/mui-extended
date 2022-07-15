@@ -1,7 +1,13 @@
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const LayoutWithoutMenuDemo = demoPage(undefined, "layout/without-menu", true);
+const LayoutWithoutMenuDemo = demoPage(
+  undefined,
+  "layout/without-menu",
+  "Sodaru UI Components",
+  "https://gitlab.com/sodaru/solib/ui-components",
+  true
+);
 
 export default LayoutWithoutMenuDemo;
 

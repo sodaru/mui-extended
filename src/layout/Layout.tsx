@@ -51,9 +51,11 @@ const MenuBox: FunctionComponent<PaperProps> = ({ children, ...props }) => {
 
 const ContentBox: FunctionComponent<BoxProps> = ({ children, ...props }) => {
   return (
-    <Box p={1} {...props}>
-      {children}
-    </Box>
+    <Paper square elevation={0} sx={{ minHeight: "100%" }}>
+      <Box p={1} {...props}>
+        {children}
+      </Box>
+    </Paper>
   );
 };
 

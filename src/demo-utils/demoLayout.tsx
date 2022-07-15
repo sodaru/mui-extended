@@ -4,7 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Divider,
+  Paper,
   Tooltip,
   Typography
 } from "@mui/material";
@@ -21,7 +21,7 @@ import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
 import { MarkdownPreview } from "../markdown/Preview";
 import { SodaruPageComponentType } from "../SodaruApp";
 import { SodaruImage } from "../SodaruImage";
-import { SodaruLogo } from "../SodaruLogo";
+import { ThemeModeSwitch } from "../ThemeModeSwitch";
 import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
@@ -86,21 +86,20 @@ export const convertDemoPagesToTreeMenuProps = (
 
 const demoLayouts: Record<string, FunctionComponent> = {};
 
-const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
-  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title;
+const getDemoLayout = (
+  noMenu = false,
+  noAppBar = false,
+  title: ReactNode,
+  sourceRepo: string
+) => {
+  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title + sourceRepo;
   if (!demoLayouts[index]) {
     const DemoLayout: FunctionComponent<
       PropsWithChildren<{ pages?: string[] }>
     > = ({ children, pages }) => {
       const menu = noMenu ? undefined : (
         <span>
-          <Box p={1}>
-            <Typography variant="subtitle2" sx={{ display: "flex" }}>
-              <SodaruLogo width={32} height={32} />
-              <Box p={0.5}>@solib/ui-components</Box>
-            </Typography>
-          </Box>
-          <Divider />
+          <Box p={1}></Box>
           <TreeMenuWithNextLinksSessionPersisted
             {...convertDemoPagesToTreeMenuProps(pages)}
           />
@@ -109,12 +108,11 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
       const appBar = noAppBar ? undefined : (
         <SodaruAppBar hideMenuBtn={noMenu}>
           <Box flexGrow={1}>{title}</Box>
+          <Paper sx={{ p: 0.5 }}>
+            <ThemeModeSwitch />
+          </Paper>
           <Tooltip title="Source" arrow>
-            <a
-              href="https://gitlab.com/sodaru/solib/ui-components"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={sourceRepo} target="_blank" rel="noreferrer">
               <SodaruImage
                 src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
                 alt="Git Repo"
@@ -146,14 +144,15 @@ export type DemoPageProps = {
 export const demoPage = (
   demo: FunctionComponent<DemoPageProps> | ReactNode | undefined,
   ref: string,
-  noMenu = false,
-  noAppBar = false,
-  noLayout = false,
   title: ReactNode = (
     <Typography variant="h6" sx={{ flexGrow: 1 }}>
       Sodaru UI Components
     </Typography>
-  )
+  ),
+  sourcerepo = "https://gitlab.com/sodaru/solib/ui-components",
+  noMenu = false,
+  noAppBar = false,
+  noLayout = false
 ): SodaruPageComponentType<DemoPageProps, Pick<DemoPageProps, "pages">> => {
   const PageComponent: SodaruPageComponentType<
     DemoPageProps,
@@ -199,7 +198,7 @@ export const demoPage = (
   };
 
   if (!noLayout) {
-    PageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
+    PageComponent.layout = getDemoLayout(noMenu, noAppBar, title, sourcerepo);
     PageComponent.layoutProps = ["pages"];
     PageComponent.pageProps = ["docs", "pages"];
   }
