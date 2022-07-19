@@ -49,7 +49,7 @@ export type TreeMenuWithNextLinksProps = {
 };
 
 type TreeNode = {
-  id: number;
+  id: string;
   link?: string;
   label: string;
   children: Record<string, TreeNode>;
@@ -67,19 +67,13 @@ const trimSlashes = (str: string): string => {
 
 const convertLinksToTreeNodes = (
   links: TreeMenuWithNextLinksProps["links"]
-): {
-  linkToNodeIdMap: Record<string, string>;
-  topTreeNodes: Record<string, TreeNode>;
-} => {
-  const linkToNodeIdMap: Record<string, string> = {};
+): Record<string, TreeNode> => {
   const rootTreeNode: TreeNode = {
-    id: -1,
+    id: "",
     link: "",
     label: "",
     children: {}
   };
-
-  let nodeId = 0;
 
   for (const link of links) {
     const _link: TreeLinkType = typeof link == "string" ? { link } : link;
@@ -109,7 +103,7 @@ const convertLinksToTreeNodes = (
       const labelSegment = labelSegments[i];
       if (!currentNode.children[linkSegment]) {
         currentNode.children[linkSegment] = {
-          id: nodeId++,
+          id: linkSegments.slice(0, i + 1).join("/"),
           label: labelSegment,
           children: {}
         };
@@ -120,10 +114,9 @@ const convertLinksToTreeNodes = (
       }
     }
     currentNode.link = _link.link;
-    linkToNodeIdMap[currentNode.link] = currentNode.id + "";
   }
 
-  return { linkToNodeIdMap, topTreeNodes: rootTreeNode.children };
+  return rootTreeNode.children;
 };
 
 /**
@@ -259,11 +252,10 @@ export const TreeMenuWithNextLinks: FunctionComponent<
 > = ({ links, basePath, improveLabels, TreeViewProps, TreeItemProps }) => {
   const router = useRouter();
 
-  const { linkToNodeIdMap, topTreeNodes } = convertLinksToTreeNodes(links);
+  const topTreeNodes = convertLinksToTreeNodes(links);
 
   const _treeViewProps = { ...TreeViewProps };
-  const selected = linkToNodeIdMap[router.asPath.substring(1)];
-  _treeViewProps.selected = selected;
+  _treeViewProps.selected = router.asPath.substring(1);
 
   const treeViewSx = deepmerge(TreeViewProps?.sx || {}, {
     "& .MuiTreeItem-content": {
