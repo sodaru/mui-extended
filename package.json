@@ -5,8 +5,7 @@
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
   "files": [
-    "dist",
-    "assets"
+    "dist"
   ],
   "scripts": {
     "clean": "npx rimraf dist",
@@ -35,14 +34,13 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@fontsource/roboto": "^4.5.3",
     "@mui/icons-material": "^5.6.1",
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.6.1",
     "@mui/x-date-pickers": "^5.0.0-alpha.0",
     "@next/bundle-analyzer": "^12.1.0",
-    "@sodev/eslint-config": "^1.1.0",
-    "@sodev/prettier-config": "^1.1.0",
+    "eslint-config-sodaru": "^1.0.0",
+    "prettier-config-sodaru": "^1.0.0",
     "@solib/json-validator": "^1.1.2",
     "@types/json-schema": "^7.0.11",
     "@types/lodash": "^4.14.181",
@@ -58,10 +56,10 @@
     "react-dom": "^17.0.2 || ^18.0.0",
     "rimraf": "^3.0.2"
   },
-  "prettier": "@sodev/prettier-config",
+  "prettier": "prettier-config-sodaru",
   "eslintConfig": {
     "extends": [
-      "@sodev/eslint-config",
+      "sodaru",
       "next"
     ]
   },
@@ -69,7 +67,6 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@fontsource/roboto": "^4.5.3",
     "@mui/icons-material": "^5.6.1",
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.6.1",

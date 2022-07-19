@@ -4,7 +4,6 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Paper,
   Tooltip,
   Typography
 } from "@mui/material";
@@ -101,6 +100,9 @@ const getDemoLayout = (noMenu = false, noAppBar = false) => {
           <TreeMenuWithNextLinksSessionPersisted
             {...convertDemoPagesToTreeMenuProps(pages)}
           />
+          <Box display="flex" p={1} justifyContent="center" alignItems="center">
+            <ThemeModeSwitch orientation="vertical" />
+          </Box>
         </span>
       );
       const appBar = noAppBar ? undefined : (
@@ -110,9 +112,7 @@ const getDemoLayout = (noMenu = false, noAppBar = false) => {
               {nextConfig.publicRuntimeConfig?.demo?.title || ""}
             </Typography>
           </Box>
-          <Paper sx={{ p: 0.5 }}>
-            <ThemeModeSwitch />
-          </Paper>
+
           <Tooltip title="Source" arrow>
             <a
               href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
