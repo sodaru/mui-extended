@@ -1,4 +1,4 @@
-import { ComponentType, forwardRef, FunctionComponent } from "react";
+import { forwardRef, FunctionComponent } from "react";
 import {
   TreeItem,
   TreeItemContentProps,
@@ -122,79 +122,94 @@ const convertLinksToTreeNodes = (
 /**
  * Prevents event from bubling up from icon component, So clicking on icon only provides expansion and collapse of childtree
  */
-const CustomTreeItemContent = forwardRef<HTMLDivElement, TreeItemContentProps>(
-  function CustomTreeItemContent(props, ref) {
-    const {
-      classes,
-      className,
-      label,
-      nodeId,
-      icon: iconProp,
-      expansionIcon,
-      displayIcon
-    } = props;
+const CustomTreeItemContent = forwardRef<
+  HTMLDivElement,
+  TreeItemContentProps & { link?: string }
+>(function CustomTreeItemContent(props, ref) {
+  const {
+    classes,
+    className,
+    label,
+    nodeId,
+    icon: iconProp,
+    expansionIcon,
+    displayIcon,
+    link
+  } = props;
 
-    const {
-      disabled,
-      expanded,
-      selected,
-      focused,
-      handleExpansion,
-      handleSelection,
-      preventSelection
-    } = useTreeItem(nodeId);
+  const {
+    disabled,
+    expanded,
+    selected,
+    focused,
+    handleExpansion,
+    handleSelection,
+    preventSelection
+  } = useTreeItem(nodeId);
 
-    const icon = iconProp || expansionIcon || displayIcon;
+  const router = useRouter();
 
-    const handleMouseDown = (
-      event: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
-      preventSelection(event);
-    };
+  const icon = iconProp || expansionIcon || displayIcon;
 
-    const handleExpansionClick = (
-      event: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
-      event.preventDefault();
-      event.stopPropagation();
+  const handleMouseDown = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    preventSelection(event);
+  };
+
+  const handleExpansionClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    event.preventDefault();
+    event.stopPropagation();
+    handleExpansion(event);
+  };
+
+  const handleSelectionClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>
+  ) => {
+    if (!expanded) {
       handleExpansion(event);
-    };
+    }
+    handleSelection(event);
+  };
 
-    const handleSelectionClick = (
-      event: React.MouseEvent<HTMLDivElement, MouseEvent>
-    ) => {
-      handleSelection(event);
-    };
+  let content = (
+    <Typography
+      onClick={handleSelectionClick}
+      component="div"
+      className={classes.label}
+    >
+      {label}
+    </Typography>
+  );
 
-    return (
-      <div
-        className={clsx(className, classes.root, {
-          [classes.expanded]: expanded,
-          [classes.selected]: selected,
-          [classes.focused]: focused,
-          [classes.disabled]: disabled
-        })}
-        onMouseDown={handleMouseDown}
-        ref={ref}
-      >
-        <div onClick={handleExpansionClick} className={classes.iconContainer}>
-          {icon}
-        </div>
-        <Typography
-          onClick={handleSelectionClick}
-          component="div"
-          className={classes.label}
-        >
-          {label}
-        </Typography>
-      </div>
+  if (link !== undefined) {
+    content = (
+      <Link href={(router.basePath || "") + "/" + link} passHref={true}>
+        <a style={{ width: "100%" }}>{content}</a>
+      </Link>
     );
   }
-);
 
-const TreeItemWithSeparateExpansionClick = (props: TreeItemProps) => (
-  <TreeItem ContentComponent={CustomTreeItemContent} {...props} />
-);
+  return (
+    <div
+      className={clsx(className, classes.root, {
+        [classes.expanded]: expanded,
+        [classes.selected]: selected,
+        [classes.focused]: focused,
+        [classes.disabled]: disabled
+      })}
+      onMouseDown={handleMouseDown}
+      ref={ref}
+    >
+      <div onClick={handleExpansionClick} className={classes.iconContainer}>
+        {icon}
+      </div>
+      {content}
+    </div>
+  );
+});
 
 const improveLabel = (label: string, improve?: boolean) => {
   if (improve) {
@@ -207,44 +222,34 @@ const improveLabel = (label: string, improve?: boolean) => {
   return label;
 };
 
+const getNearestLink = (node: TreeNode): string => {
+  while (node && !node.link) {
+    node = Object.values(node.children)?.[0];
+  }
+  return node?.link || "";
+};
+
 const renderTreeNode = (
   node: TreeNode,
-  TreeItemComponent: ComponentType<TreeItemProps>,
   improveLabels?: boolean,
   basePath?: string,
   TreeItemProps?: TreeItemProps
 ) => {
-  let treeItem = (
-    <TreeItemComponent
+  return (
+    <TreeItem
       nodeId={node.id + ""}
       label={improveLabel(node.label, improveLabels)}
       key={node.id}
+      ContentComponent={CustomTreeItemContent}
+      // @ts-expect-error CustomTreeItemContent expects link
+      ContentProps={{ link: getNearestLink(node) }}
       {...TreeItemProps}
     >
       {Object.values(node.children).map(_node =>
-        renderTreeNode(
-          _node,
-          TreeItemComponent,
-          improveLabels,
-          basePath,
-          TreeItemProps
-        )
+        renderTreeNode(_node, improveLabels, basePath, TreeItemProps)
       )}
-    </TreeItemComponent>
+    </TreeItem>
   );
-
-  if (node.link !== undefined) {
-    treeItem = (
-      <Link
-        href={(basePath || "") + "/" + node.link}
-        key={node.id}
-        passHref={true}
-      >
-        <a>{treeItem}</a>
-      </Link>
-    );
-  }
-  return treeItem;
 };
 
 export const TreeMenuWithNextLinks: FunctionComponent<
@@ -276,13 +281,7 @@ export const TreeMenuWithNextLinks: FunctionComponent<
       {..._treeViewProps}
     >
       {Object.values(topTreeNodes).map(node =>
-        renderTreeNode(
-          node,
-          TreeItemWithSeparateExpansionClick,
-          improveLabels,
-          basePath,
-          TreeItemProps
-        )
+        renderTreeNode(node, improveLabels, basePath, TreeItemProps)
       )}
     </TreeView>
   );
