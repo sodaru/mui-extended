@@ -14,7 +14,9 @@ import {
   FunctionComponent,
   PropsWithChildren,
   ReactNode,
-  useEffect
+  useEffect,
+  createRef,
+  forwardRef
 } from "react";
 import { SplitPane, SplitPaneProps } from "../splitPane/SplitPane";
 import { withCloseOnNavigation } from "../utils";
@@ -49,15 +51,18 @@ const MenuBox: FunctionComponent<PaperProps> = ({ children, ...props }) => {
   );
 };
 
-const ContentBox: FunctionComponent<BoxProps> = ({ children, ...props }) => {
+const ContentBox = forwardRef<HTMLDivElement, BoxProps>(function ContentBox(
+  { children, ...props },
+  ref
+) {
   return (
     <Paper square elevation={0} sx={{ minHeight: "100%" }}>
-      <Box p={1} {...props}>
+      <Box p={1} {...props} ref={ref}>
         {children}
       </Box>
     </Paper>
   );
-};
+});
 
 const WebLayout: FunctionComponent<
   BaseLayoutProps & { splitPaneProps?: Omit<SplitPaneProps, "children"> }
@@ -99,6 +104,12 @@ const MobileLayout: FunctionComponent<
     }
   });
 
+  const contentRef = createRef<HTMLDivElement>();
+
+  useEffect(() => {
+    contentRef?.current?.scroll({ top: 0, left: 0 });
+  }, [contentRef, children]);
+
   return (
     <>
       {menu ? (
@@ -128,6 +139,7 @@ const MobileLayout: FunctionComponent<
           height: "100%",
           width: "100%"
         }}
+        ref={contentRef}
       >
         {children}
       </ContentBox>
