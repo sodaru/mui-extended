@@ -1,23 +1,13 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import {
-  Accordion,
-  AccordionDetails,
-  AccordionSummary,
-  Box,
-  Divider,
-  Tooltip,
-  Typography
-} from "@mui/material";
+import { Box, Divider, Tooltip, Typography } from "@mui/material";
 import getConfig from "next/config";
 import {
   createElement,
   FunctionComponent,
   isValidElement,
   PropsWithChildren,
-  ReactNode,
-  useState
+  ReactNode
 } from "react";
-import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
+import { HideMenuProvider, Layout, AppBarWithMenu } from "../layout";
 import { MarkdownPreview } from "../markdown/Preview";
 import { SodaruPageComponentType } from "../SodaruApp";
 import { SodaruImage } from "../SodaruImage";
@@ -107,7 +97,7 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
         </span>
       );
       const appBar = noAppBar ? undefined : (
-        <SodaruAppBar hideMenuBtn={noMenu}>
+        <AppBarWithMenu hideMenuBtn={noMenu}>
           <Box flexGrow={1}>{title}</Box>
           <Tooltip title="Source" arrow>
             <a
@@ -123,7 +113,7 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
               />
             </a>
           </Tooltip>
-        </SodaruAppBar>
+        </AppBarWithMenu>
       );
       return (
         <HideMenuProvider>
@@ -151,7 +141,7 @@ export const demoPage = (
   noLayout = false,
   title: ReactNode = (
     <Typography variant="h6" sx={{ flexGrow: 1 }}>
-      Sodaru UI Components
+      Mui-Extended
     </Typography>
   )
 ): SodaruPageComponentType<DemoPageProps, Pick<DemoPageProps, "pages">> => {
@@ -165,35 +155,18 @@ export const demoPage = (
         : createElement(demo as FunctionComponent<DemoPageProps>, props)
       : undefined;
 
-    const [referenceExpanded, setReferenceExpanded] = useState(!_demo);
-    const [demoExpanded, setDemoExpanded] = useState(!!_demo);
-
     return (
       <>
-        <Accordion
-          expanded={referenceExpanded}
-          onChange={() => {
-            setReferenceExpanded(!referenceExpanded);
-          }}
-        >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Reference
-          </AccordionSummary>
-          <AccordionDetails>
-            <MarkdownPreview>{props.docs[ref]}</MarkdownPreview>
-          </AccordionDetails>
-        </Accordion>
-        <Accordion
-          expanded={demoExpanded}
-          onChange={() => {
-            setDemoExpanded(!demoExpanded);
-          }}
-        >
-          <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-            Demo
-          </AccordionSummary>
-          <AccordionDetails>{_demo}</AccordionDetails>
-        </Accordion>
+        <div>
+          <MarkdownPreview>{props.docs[ref]}</MarkdownPreview>
+        </div>
+
+        {_demo && (
+          <div>
+            <h2>Demo</h2>
+            <div>{_demo}</div>
+          </div>
+        )}
       </>
     );
   };
