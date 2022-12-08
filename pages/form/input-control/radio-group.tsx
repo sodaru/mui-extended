@@ -1,12 +1,7 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
+import { demoPage } from "../../../utils/demoPage";
 import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
 
-const FormRadioGroupDemo = demoPage(
-  undefined,
-  "form/input-control/radio-group"
-);
-
-export default FormRadioGroupDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory([
   "form/input-control/radio-group"

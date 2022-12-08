@@ -1,8 +1,6 @@
-import { demoPage } from "../../src/demo-utils/demoLayout";
+import { demoPage } from "../../utils/demoPage";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const SodaruAppDemo = demoPage(undefined, "sodaru-app/index");
-
-export default SodaruAppDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory(["sodaru-app/index"]);

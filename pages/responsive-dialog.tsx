@@ -1,4 +1,3 @@
-import { demoPage } from "../utils/demoPage";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 import {
   Typography,
@@ -84,11 +83,6 @@ const ResponsiveDialogDemoComponent: FunctionComponent = () => {
   );
 };
 
-const ResponsiveDialogDemo = demoPage(
-  <ResponsiveDialogDemoComponent />,
-  "responsive-dialog"
-);
-
-export default ResponsiveDialogDemo;
+export default ResponsiveDialogDemoComponent;
 
 export const getStaticProps = getStaticPropsFactory(["responsive-dialog"]);

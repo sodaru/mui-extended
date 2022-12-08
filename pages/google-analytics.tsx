@@ -1,8 +1,6 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
+import { demoPage } from "../utils/demoPage";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const GoogleAnalyticsDemo = demoPage(undefined, "google-analytics");
-
-export default GoogleAnalyticsDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory(["google-analytics"]);

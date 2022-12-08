@@ -1,8 +1,6 @@
-import { demoPage } from "../../src/demo-utils/demoLayout";
+import { demoPage } from "../../utils/demoPage";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const LayoutWithoutMenuDemo = demoPage(undefined, "layout/without-menu", true);
-
-export default LayoutWithoutMenuDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory(["layout/without-menu"]);

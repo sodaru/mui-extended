@@ -1,12 +1,7 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
+import { demoPage } from "../../../utils/demoPage";
 import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
 
-const FormTimePickerDemo = demoPage(
-  undefined,
-  "form/date-time-pickers/time-picker"
-);
-
-export default FormTimePickerDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory([
   "form/date-time-pickers/time-picker"
