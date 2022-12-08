@@ -1,4 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
+import { demoPage } from "../utils/demoPage";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 import {
   Typography,

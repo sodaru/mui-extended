@@ -4,8 +4,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { NextConfig } from "next";
 import getConfig from "next/config";
 import Head from "next/head";
-import { GoogleAnalytics, ThemeOptionsProvider } from "../src";
-import { CustomLayout } from "../utils/customLayout";
+import { GoogleAnalytics, MarkdownPreview, ThemeOptionsProvider } from "../src";
+import { AppLayout } from "../utils/appLayout";
 
 const myApp = ({ Component, pageProps }) => {
   return WithLayoutParse({ Component, pageProps });
@@ -13,7 +13,9 @@ const myApp = ({ Component, pageProps }) => {
 
 const WithLayoutParse = ({ Component, pageProps }) => {
   const nextConfig: NextConfig = getConfig();
+  const pageName = Object.keys(pageProps.docs)[0];
 
+  pageProps.docs[pageName];
   const defaultThemeOptions =
     nextConfig?.publicRuntimeConfig?.defaultThemeOptions || {};
 
@@ -26,12 +28,17 @@ const WithLayoutParse = ({ Component, pageProps }) => {
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
-          <CustomLayout
-            layout={Component.layout}
-            layoutProps={Component.layoutProps}
-          >
-            <Component {...pageProps} />
-          </CustomLayout>
+          <AppLayout pages={pageProps.pages}>
+            <div>
+              <div>
+                <MarkdownPreview>{pageProps.docs[pageName]}</MarkdownPreview>
+              </div>
+              <div>
+                <h2>Demo</h2>
+                <div>{Component && <Component {...pageProps} />}</div>
+              </div>
+            </div>
+          </AppLayout>
         </ThemeOptionsProvider>
       </LocalizationProvider>
     </>
