@@ -21,36 +21,37 @@ type PageLayoutProps = {
   swipeableDrawerProps?: SwipeableDrawerProps | false;
 };
 
-type CustomLayout = PropsWithChildren<{
+type CustomLayoutProps = PropsWithChildren<{
   layout?: false | ComponentType;
   layoutProps: PageLayoutProps;
 }>;
 
 export const getAppBar = ({ hideMenuBtn }: { hideMenuBtn: boolean }) => {
   const nextConfig: NextConfig = getConfig();
+  return (
+    <AppBarWithMenu hideMenuBtn={hideMenuBtn}>
+      <Box flexGrow={1}>
+        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+          {nextConfig.publicRuntimeConfig?.demo?.title || ""}
+        </Typography>
+      </Box>
 
-  <AppBarWithMenu hideMenuBtn={hideMenuBtn}>
-    <Box flexGrow={1}>
-      <Typography variant="h6" sx={{ flexGrow: 1 }}>
-        {nextConfig.publicRuntimeConfig?.demo?.title || ""}
-      </Typography>
-    </Box>
-
-    <Tooltip title="Source" arrow>
-      <a
-        href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
-        target="_blank"
-        rel="noreferrer"
-      >
-        {/* <SodaruImage
+      <Tooltip title="Source" arrow>
+        <a
+          href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {/* <SodaruImage
           src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
           alt="Git Repo"
           width={54}
           height={54}
         /> */}
-      </a>
-    </Tooltip>
-  </AppBarWithMenu>;
+        </a>
+      </Tooltip>
+    </AppBarWithMenu>
+  );
 };
 
 export const getMenu = ({ pages }: { pages?: string[] }) => {
@@ -67,15 +68,58 @@ export const getMenu = ({ pages }: { pages?: string[] }) => {
   );
 };
 
-export const customLayout = (props: CustomLayout) => {
+export const CustomLayout = (props: CustomLayoutProps) => {
   let Layout = null;
 
   /**
    * TODO: implement pages
    */
-  const _pages = [];
-  const { appBar, menu, splitPaneProps, swipeableDrawerProps } =
-    props.layoutProps as PageLayoutProps;
+  const _pages = [
+    "close-on-navigation",
+    "aspect-ratio-container",
+    "index",
+    "resizable-box",
+    "recaptcha",
+    "responsive-dialog",
+    "google-analytics",
+    "sodaru-document",
+    "split-pane",
+    "sodaru-image",
+    "theme-mode-switch",
+    "theme-options",
+    "treemenu-with-nextlinks",
+    "sodaru-logo",
+    "web-storage",
+    "animations/marquee",
+    "animations/text-typing",
+    "form/autocomplete",
+    "form/index",
+    "form/textfield",
+    "layout/hide-menu",
+    "layout/index",
+    "layout/without-menu",
+    "layout/sodaru-appbar",
+    "layout/without-menu-appbar",
+    "markdown/editor",
+    "markdown/preview",
+    "sodaru-app/index",
+    "sodaru-app/page-component",
+    "form/input-control/index",
+    "form/input-control/switch",
+    "form/input-control/file",
+    "form/input-control/radio-group",
+    "form/input-control/checkbox-group",
+    "form/date-time-pickers/date-picker",
+    "form/date-time-pickers/date-time-picker",
+    "form/date-time-pickers/time-picker"
+  ];
+
+  // const { appBar, menu, splitPaneProps, swipeableDrawerProps } =
+  //   props.layoutProps as PageLayoutProps;
+  const appBar = props.layoutProps?.appBar;
+  const menu = props.layoutProps?.menu;
+  const splitPaneProps = props.layoutProps?.splitPaneProps;
+  const swipeableDrawerProps = props.layoutProps?.swipeableDrawerProps;
 
   if (props.layout === undefined) {
     Layout = muiExtLayout;

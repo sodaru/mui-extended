@@ -7,11 +7,9 @@ import {
   PropsWithChildren,
   ReactNode
 } from "react";
-import { HideMenuProvider, Layout, AppBarWithMenu } from "../layout";
+import { AppBarWithMenu, HideMenuProvider, Layout } from "../layout";
 import { MarkdownPreview } from "../markdown/Preview";
 import { SodaruPageComponentType } from "../SodaruApp";
-import { SodaruImage } from "../SodaruImage";
-import { SodaruLogo } from "../SodaruLogo";
 import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
@@ -86,7 +84,6 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
         <span>
           <Box p={1}>
             <Typography variant="subtitle2" sx={{ display: "flex" }}>
-              <SodaruLogo width={32} height={32} />
               <Box p={0.5}>@solib/ui-components</Box>
             </Typography>
           </Box>
@@ -104,14 +101,7 @@ const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
               href="https://gitlab.com/sodaru/solib/ui-components"
               target="_blank"
               rel="noreferrer"
-            >
-              <SodaruImage
-                src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
-                alt="Git Repo"
-                width={54}
-                height={54}
-              />
-            </a>
+            ></a>
           </Tooltip>
         </AppBarWithMenu>
       );

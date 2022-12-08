@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { existsSync } from "fs";
 import { readdir, readFile, stat } from "fs/promises";
 import { join, relative } from "path";
@@ -49,6 +50,8 @@ export const listDemoPages = async () => {
       );
     }
   }
+  console.log("pages is ");
+  console.log(pages);
   return pages;
 };
 

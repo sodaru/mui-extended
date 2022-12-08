@@ -1,7 +1,8 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
-const Index = demoPage(undefined, "home");
+const Index = () => {
+  return <h1>I am index</h1>;
+};
 
 export default Index;
 
