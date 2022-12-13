@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-import { MarkdownEditor, MarkdownEditorProps } from "@solib/ui-components";
+import { MarkdownEditor, MarkdownEditorProps } from "mui-extended";
 
 const props: MarkdownEditorProps;
 

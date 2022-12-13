@@ -9,7 +9,7 @@ Integrate [reCAPTCHA Enterprise](https://cloud.google.com/recaptcha-enterprise) 
 - **ReCaptchaProvider** - Enables a Component to capture recaptcha
 
   ```typescript
-  import { ReCaptchaProvider } from "@solib/ui-components";
+  import { ReCaptchaProvider } from "mui-extended";
 
   const reCaptchEnabledComponent = (
     <ReCaptchaProvider siteKey="<SITE_KEY>">{children}</ReCaptchaProvider>
@@ -23,7 +23,7 @@ Integrate [reCAPTCHA Enterprise](https://cloud.google.com/recaptcha-enterprise) 
 - **useReCaptchaContext** - get token on an action within the reCaptcha Enabled Component
 
   ```typescript
-  import { useReCaptchaContext } from "@solib/ui-components";
+  import { useReCaptchaContext } from "mui-extended";
 
   // with in a child component
 

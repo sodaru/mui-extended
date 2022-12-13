@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-import { Layout, SplitPaneProps } from "@solib/ui-components";
+import { Layout, SplitPaneProps } from "mui-extended";
 import { SwipeableDrawerProps } from "@mui/material";
 
 const menu: ReactNode;
@@ -32,7 +32,7 @@ Layout has 3 parts
 - **menu** _(Optional)_ - Closable Menu to be displayed on the left of the content
 - **appBar** _(Optional)_ - App Bar to be displayed on the top of the content
 
-_This Documentation Uses Layout component along with [`SodaruAppBar`](../layout/sodaru-appbar) and [`TreeMenuWithNextLinks`](./treemenu-with-nextlinks)_
+_This Documentation Uses Layout component along with [`TreeMenuWithNextLinks`](./treemenu-with-nextlinks)_
 
 ---
 

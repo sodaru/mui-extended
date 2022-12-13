@@ -1,7 +1,7 @@
 {
-  "name": "@solib/ui-components",
+  "name": "mui-extended",
   "version": "1.1.5",
-  "description": "Basic UI Components for Sodaru Projects",
+  "description": "Basic UI Components built on Material UI",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
   "files": [
@@ -23,27 +23,24 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@gitlab.com/sodaru/solib/ui-components.git"
+    "url": "git@gitlab.com:sodaru/solib/mui-extended.git"
   },
   "author": "Raghavendra K R <raghavendra@sodaru.com>",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://gitlab.com/sodaru/solib/ui-components/issues"
+    "url": "https://gitlab.com/sodaru/solib/mui-extended.git/issues"
   },
-  "homepage": "https://gitlab.com/sodaru/solib/ui-components#readme",
+  "homepage": "https://gitlab.com/sodaru/solib/mui-extended#readme",
   "devDependencies": {
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
     "@fontsource/roboto": "^4.5.3",
-    "@mui/icons-material": "^5.6.1",
-    "@mui/lab": "^5.0.0-alpha.73",
-    "@mui/material": "^5.6.1",
-    "@mui/x-date-pickers": "^5.0.0-alpha.0",
+    "@mui/icons-material": "^5.10.16",
+    "@mui/lab": "^5.0.0-alpha.111",
+    "@mui/material": "^5.10.17",
+    "@mui/x-date-pickers": "^5.0.10",
     "@next/bundle-analyzer": "^12.1.0",
-    "@sodev/eslint-config": "^1.1.0",
-    "@sodev/prettier-config": "^1.1.0",
-    "@solib/json-validator": "^1.1.2",
     "@types/json-schema": "^7.0.11",
     "@types/lodash": "^4.14.181",
     "@types/node": "^17.0.21",
@@ -58,10 +55,10 @@
     "react-dom": "^17.0.2 || ^18.0.0",
     "rimraf": "^3.0.2"
   },
-  "prettier": "@sodev/prettier-config",
+  "prettier": "prettier-config-sodaru",
   "eslintConfig": {
     "extends": [
-      "@sodev/eslint-config",
+      "eslint-config-sodaru",
       "next"
     ]
   },
@@ -74,7 +71,6 @@
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.6.1",
     "@mui/x-date-pickers": "^5.0.0-alpha.0",
-    "@solib/json-validator": "^1.1.2",
     "lodash": "^4.17.21",
     "next": "^12.1.0",
     "react": "^17.0.2 || ^18.0.0",
@@ -82,7 +78,10 @@
   },
   "dependencies": {
     "date-fns": "^2.28.0",
+    "decorated-ajv": "^1.1.0",
+    "eslint-config-sodaru": "^1.0.1",
     "prettier": "^2.6.2",
+    "prettier-config-sodaru": "^1.0.0",
     "react-markdown": "^8.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^3.0.1"

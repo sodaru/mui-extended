@@ -1,8 +1,7 @@
+import { JSONSchema7, validate } from "decorated-ajv";
 import { cloneDeep } from "lodash";
 import { Component, PropsWithChildren } from "react";
 import { FormContext, FormContextType } from "./FormContext";
-import { validate, JSONSchema7 } from "@solib/json-validator";
-import { DataValidationError } from "@solib/errors";
 import { debugEvent } from "./debug";
 
 export type FormFieldValidatorType = (
@@ -78,7 +77,7 @@ export class Form<T extends Record<string, unknown>> extends Component<
   }
 
   private async _validateField(name: keyof T) {
-    debugEvent("_validateField", "start " + name);
+    debugEvent("_validateField", "start " + (name && name.toLocaleString()));
     const validator =
       this.props.validators && this.props.validators[name]
         ? this.props.validators[name]
@@ -93,17 +92,15 @@ export class Form<T extends Record<string, unknown>> extends Component<
         newErrors = { ...this.state.errors };
         delete newErrors[name];
       } catch (e) {
-        let errorMessage: string = e.message;
-        if (e instanceof DataValidationError) {
-          errorMessage = e.violations
-            .map(v => `${v.path} ${v.message}`.trim())
-            .join("\n");
-        }
+        const errorMessage: string = e.message;
+        /***
+         * TODO: handle error message properly here, for better readability
+         */
         newErrors = { ...this.state.errors, [name]: errorMessage };
       }
       this.setState({ errors: newErrors });
     }
-    debugEvent("_validateField", "end " + name);
+    debugEvent("_validateField", "end " + (name && name.toLocaleString()));
   }
 
   private async _validateWrapper<T>(validator: () => Promise<T>): Promise<T> {

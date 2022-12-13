@@ -5,7 +5,7 @@ import { NextConfig } from "next";
 import getConfig from "next/config";
 import Head from "next/head";
 import { GoogleAnalytics, MarkdownPreview, ThemeOptionsProvider } from "../src";
-import { AppLayout } from "../utils/appLayout";
+import { DemoLayout } from "../demoUtils/demoLayout";
 
 const myApp = ({ Component, pageProps }) => {
   return WithLayoutParse({ Component, pageProps });
@@ -28,7 +28,7 @@ const WithLayoutParse = ({ Component, pageProps }) => {
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
-          <AppLayout pages={pageProps.pages}>
+          <DemoLayout pages={pageProps.pages}>
             <div>
               <div>
                 <MarkdownPreview>{pageProps.docs[pageName]}</MarkdownPreview>
@@ -38,7 +38,7 @@ const WithLayoutParse = ({ Component, pageProps }) => {
                 <div>{Component && <Component {...pageProps} />}</div>
               </div>
             </div>
-          </AppLayout>
+          </DemoLayout>
         </ThemeOptionsProvider>
       </LocalizationProvider>
     </>

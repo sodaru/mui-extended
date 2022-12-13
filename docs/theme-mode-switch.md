@@ -7,7 +7,7 @@ A Switch Component to toggle theme mode
 ## Usage
 
 ```typescript
-import { ThemeModeSwitch } from "@solib/ui-components";
+import { ThemeModeSwitch } from "mui-extended";
 
 const themeModeSwitch = <ThemeModeSwitch />;
 ```

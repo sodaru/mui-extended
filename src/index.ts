@@ -7,7 +7,6 @@ export * from "./markdown";
 export * from "./ReCaptcha";
 export * from "./ResizableBox";
 export * from "./ResponsiveDialog";
-export * from "./SodaruApp";
 export * from "./splitPane/SplitPane";
 export * from "./ThemeModeSwitch";
 export * from "./ThemeOptionsContext";

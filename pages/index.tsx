@@ -1,5 +1,5 @@
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { demoPage } from "../utils/demoPage";
+import { demoPage } from "../demoUtils/demoPage";
 
 export default demoPage(undefined);
 

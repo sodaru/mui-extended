@@ -2,9 +2,9 @@ import { AppBar, IconButton, Toolbar, AppBarProps } from "@mui/material";
 import { FunctionComponent } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuOpenIcon from "@mui/icons-material/MenuOpen";
-import { useHideMenu } from "./HideMenu";
+import { useHideMenu } from "../src/layout/HideMenu";
 
-export const AppBarWithMenu: FunctionComponent<
+export const DemoAppBar: FunctionComponent<
   AppBarProps & { hideMenuBtn?: boolean }
 > = ({ children, hideMenuBtn, ...props }) => {
   const hideMenu = useHideMenu();

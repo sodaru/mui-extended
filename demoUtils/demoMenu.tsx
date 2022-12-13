@@ -1,22 +1,12 @@
-import { Box, Tooltip, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import { NextConfig } from "next";
 import getConfig from "next/config";
-import { FunctionComponent, PropsWithChildren } from "react";
-import {
-  AppBarWithMenu,
-  HideMenuProvider,
-  Layout,
-  ThemeModeSwitch,
-  useStateWithSessionStorage
-} from "../src";
+import { FunctionComponent } from "react";
+import { ThemeModeSwitch, useStateWithSessionStorage } from "../src";
 import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
 } from "../src/TreeMenuWithNextLinks";
-
-type CustomLayoutProps = PropsWithChildren<{
-  pages: [];
-}>;
 
 const nextConfig: NextConfig = getConfig();
 
@@ -76,34 +66,7 @@ export const convertDemoPagesToTreeMenuProps = (
   return props;
 };
 
-export const getAppBar = ({ hideMenuBtn }: { hideMenuBtn: boolean }) => {
-  return (
-    <AppBarWithMenu hideMenuBtn={hideMenuBtn}>
-      <Box flexGrow={1}>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          {nextConfig.publicRuntimeConfig?.demo?.title || ""}
-        </Typography>
-      </Box>
-
-      <Tooltip title="Source" arrow>
-        <a
-          href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
-          target="_blank"
-          rel="noreferrer"
-        >
-          {/* <SodaruImage
-          src="https://about.gitlab.com/images/press/logo/png/gitlab-icon-rgb.png"
-          alt="Git Repo"
-          width={54}
-          height={54}
-        /> */}
-        </a>
-      </Tooltip>
-    </AppBarWithMenu>
-  );
-};
-
-export const getMenu = ({ pages }: { pages?: string[] }) => {
+export const DemoMenu = ({ pages }: { pages?: string[] }) => {
   return (
     <span>
       <Box p={1}></Box>
@@ -114,19 +77,5 @@ export const getMenu = ({ pages }: { pages?: string[] }) => {
         <ThemeModeSwitch orientation="vertical" />
       </Box>
     </span>
-  );
-};
-
-export const AppLayout = (props: CustomLayoutProps) => {
-  return (
-    <HideMenuProvider>
-      <Layout
-        menu={getMenu({ pages: props.pages })}
-        appBar={getAppBar({ hideMenuBtn: false })}
-        splitPaneProps={{ minSize: 250 }}
-      >
-        {props.children}
-      </Layout>
-    </HideMenuProvider>
   );
 };

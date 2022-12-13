@@ -9,7 +9,7 @@ Adds Google Analytics to a WebPage
 - Step 1
 
   ```typescript
-  import { GoogleAnalytics } from "@solib/ui-components";
+  import { GoogleAnalytics } from "mui-extended";
 
   const myPage = () => {
     return (
@@ -28,5 +28,3 @@ Adds Google Analytics to a WebPage
 - Step 3.  
   set environmental variable `NEXT_PUBLIC_GOOGLE_ANALYTICS_ID` to id obtained from Google Analytics.  
   **Note**: _This component will have no effect if this environmental variable is not set._
-
-_[SodaruApp](../sodaru-app) component embeds `GoogleAnalytics`_

@@ -9,7 +9,7 @@ Provides utilities for `localStorage` and `sessionStorage`
 - `useStateWithSessionStorage`
 
   ```typescript
-  import { useStateWithSessionStorage } from "@solib/ui-components";
+  import { useStateWithSessionStorage } from "mui-extended";
 
   // In a function component
   // ...
@@ -22,7 +22,7 @@ Provides utilities for `localStorage` and `sessionStorage`
 - `useStateWithLocalStorage`
 
   ```typescript
-  import { useStateWithLocalStorage } from "@solib/ui-components";
+  import { useStateWithLocalStorage } from "mui-extended";
 
   // In a function component
   // ...
