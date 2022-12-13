@@ -1,49 +1,44 @@
-import { isEqual } from "lodash";
-import { useState, useEffect, Dispatch, SetStateAction } from "react";
-
-type UseStateReturnType<T> = [T, Dispatch<SetStateAction<T>>];
+import { useState, useEffect } from "react";
 
 const useStateWithWebStorage = <T>(
   webStorage: Storage,
   webStorageKey: string,
   initialValue: T
-): UseStateReturnType<T> => {
-  const [value, setValue] = useState<T>(initialValue);
+): [T, (value: T) => void, boolean] => {
+  const [value, setValue] = useState<{ checked: boolean; value: T }>({
+    checked: false,
+    value: initialValue
+  });
 
   useEffect(() => {
-    if (isEqual(value, initialValue)) {
+    if (!value.checked && typeof webStorage !== "undefined") {
       // update value from storage to state during mount
-      let value =
-        typeof webStorage !== "undefined"
-          ? webStorage.getItem(webStorageKey)
-          : undefined;
+      let value = webStorage.getItem(webStorageKey);
 
       if (typeof value === "string") {
         value = JSON.parse(value);
       }
 
-      if (value !== null) {
-        setValue(value as unknown as T);
-      }
+      setValue({
+        checked: true,
+        value: value !== null ? (value as unknown as T) : initialValue
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const decoratedSetValue: Dispatch<SetStateAction<T>> = newValue => {
+  const decoratedSetValue = (newValue: T) => {
     if (typeof webStorage !== "undefined") {
       // update storage when value changes
       webStorage.setItem(webStorageKey, JSON.stringify(newValue));
     }
-    return setValue(newValue);
+    return setValue({ checked: value.checked, value: newValue });
   };
 
-  return [value, decoratedSetValue];
+  return [value.value, decoratedSetValue, value.checked];
 };
 
-export const useStateWithSessionStorage = <T>(
-  key: string,
-  initialValue: T
-): UseStateReturnType<T> => {
+export const useStateWithSessionStorage = <T>(key: string, initialValue: T) => {
   return useStateWithWebStorage(
     typeof sessionStorage !== "undefined" ? sessionStorage : undefined,
     key,
@@ -51,10 +46,7 @@ export const useStateWithSessionStorage = <T>(
   );
 };
 
-export const useStateWithLocalStorage = <T>(
-  key: string,
-  initialValue: T
-): UseStateReturnType<T> => {
+export const useStateWithLocalStorage = <T>(key: string, initialValue: T) => {
   return useStateWithWebStorage(
     typeof localStorage !== "undefined" ? localStorage : undefined,
     key,

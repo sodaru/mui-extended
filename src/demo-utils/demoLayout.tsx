@@ -4,11 +4,11 @@ import {
   AccordionDetails,
   AccordionSummary,
   Box,
-  Divider,
   Tooltip,
   Typography
 } from "@mui/material";
 import getConfig from "next/config";
+import { NextConfig } from "next";
 import {
   createElement,
   FunctionComponent,
@@ -21,12 +21,14 @@ import { HideMenuProvider, Layout, SodaruAppBar } from "../layout";
 import { MarkdownPreview } from "../markdown/Preview";
 import { SodaruPageComponentType } from "../SodaruApp";
 import { SodaruImage } from "../SodaruImage";
-import { SodaruLogo } from "../SodaruLogo";
+import { ThemeModeSwitch } from "../ThemeModeSwitch";
 import {
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
 } from "../TreeMenuWithNextLinks";
 import { useStateWithSessionStorage } from "../utils";
+
+const nextConfig: NextConfig = getConfig();
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
@@ -64,7 +66,7 @@ export const convertDemoPagesToTreeMenuProps = (
       }
       return link;
     }),
-    basePath: getConfig().basePath,
+    basePath: nextConfig.basePath,
     improveLabels: true
   };
 
@@ -86,32 +88,34 @@ export const convertDemoPagesToTreeMenuProps = (
 
 const demoLayouts: Record<string, FunctionComponent> = {};
 
-const getDemoLayout = (noMenu = false, noAppBar = false, title: ReactNode) => {
-  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "" + title;
+const getDemoLayout = (noMenu = false, noAppBar = false) => {
+  const index = (noMenu ? 2 : 0) + (noAppBar ? 1 : 0) + "";
   if (!demoLayouts[index]) {
     const DemoLayout: FunctionComponent<
       PropsWithChildren<{ pages?: string[] }>
     > = ({ children, pages }) => {
       const menu = noMenu ? undefined : (
         <span>
-          <Box p={1}>
-            <Typography variant="subtitle2" sx={{ display: "flex" }}>
-              <SodaruLogo width={32} height={32} />
-              <Box p={0.5}>@solib/ui-components</Box>
-            </Typography>
-          </Box>
-          <Divider />
+          <Box p={1}></Box>
           <TreeMenuWithNextLinksSessionPersisted
             {...convertDemoPagesToTreeMenuProps(pages)}
           />
+          <Box display="flex" p={1} justifyContent="center" alignItems="center">
+            <ThemeModeSwitch orientation="vertical" />
+          </Box>
         </span>
       );
       const appBar = noAppBar ? undefined : (
         <SodaruAppBar hideMenuBtn={noMenu}>
-          <Box flexGrow={1}>{title}</Box>
+          <Box flexGrow={1}>
+            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+              {nextConfig.publicRuntimeConfig?.demo?.title || ""}
+            </Typography>
+          </Box>
+
           <Tooltip title="Source" arrow>
             <a
-              href="https://gitlab.com/sodaru/solib/ui-components"
+              href={nextConfig.publicRuntimeConfig?.demo?.repoUrl || ""}
               target="_blank"
               rel="noreferrer"
             >
@@ -148,12 +152,7 @@ export const demoPage = (
   ref: string,
   noMenu = false,
   noAppBar = false,
-  noLayout = false,
-  title: ReactNode = (
-    <Typography variant="h6" sx={{ flexGrow: 1 }}>
-      Sodaru UI Components
-    </Typography>
-  )
+  noLayout = false
 ): SodaruPageComponentType<DemoPageProps, Pick<DemoPageProps, "pages">> => {
   const PageComponent: SodaruPageComponentType<
     DemoPageProps,
@@ -199,7 +198,7 @@ export const demoPage = (
   };
 
   if (!noLayout) {
-    PageComponent.layout = getDemoLayout(noMenu, noAppBar, title);
+    PageComponent.layout = getDemoLayout(noMenu, noAppBar);
     PageComponent.layoutProps = ["pages"];
     PageComponent.pageProps = ["docs", "pages"];
   }

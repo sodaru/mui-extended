@@ -13,8 +13,12 @@ import InvertColorsIcon from "@mui/icons-material/InvertColors";
 
 const resolveThemeMode = (
   themeMode: "system" | "dark" | "light",
-  systemPrefersDarkMode: boolean
+  systemPrefersDarkMode: boolean,
+  checkedPreference: boolean
 ): "light" | "dark" => {
+  if (!checkedPreference) {
+    return "light";
+  }
   if (themeMode == "system") {
     return systemPrefersDarkMode ? "dark" : "light";
   } else if (themeMode == "dark") {
@@ -27,7 +31,7 @@ const resolveThemeMode = (
 export const ThemeModeSwitch: FunctionComponent<ButtonGroupProps> = props => {
   const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
-  const [themeMode, setThemeMode] = useStateWithLocalStorage<
+  const [themeMode, setThemeMode, checked] = useStateWithLocalStorage<
     "system" | "dark" | "light"
   >("theme-mode", "system");
 
@@ -36,10 +40,10 @@ export const ThemeModeSwitch: FunctionComponent<ButtonGroupProps> = props => {
   useEffect(() => {
     setThemeOptions({
       palette: {
-        mode: resolveThemeMode(themeMode, prefersDarkMode)
+        mode: resolveThemeMode(themeMode, prefersDarkMode, checked)
       }
     });
-  }, [themeMode, prefersDarkMode, setThemeOptions]);
+  }, [themeMode, prefersDarkMode, setThemeOptions, checked]);
 
   return (
     <ButtonGroup
@@ -47,7 +51,7 @@ export const ThemeModeSwitch: FunctionComponent<ButtonGroupProps> = props => {
       variant="outlined"
       aria-label="theme-chooser"
       color={
-        resolveThemeMode(themeMode, prefersDarkMode) == "light"
+        resolveThemeMode(themeMode, prefersDarkMode, checked) == "light"
           ? "primary"
           : "secondary"
       }

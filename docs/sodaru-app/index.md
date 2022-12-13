@@ -19,7 +19,8 @@ export { SodaruApp as default } from "@solib/ui-components";
 - Adds [DateFns Adaptor](https://mui.com/components/pickers/#setup) for Date/Time Pickers
 - Wraps the Page Component with [`ThemeOptionsProvider`](./theme-options)
   - defaultThemeOptions are read from nextJs [publicRuntimeConfig](https://nextjs.org/docs/api-reference/next.config.js/runtime-configuration)  
-     `next.config.js` in this demo is
+    If defaultThemeOptions can be ThemeOptions Object or JSON encoded string  
+    `next.config.js` in this demo is
     ```js
     module.exports = {
       publicRuntimeConfig: {

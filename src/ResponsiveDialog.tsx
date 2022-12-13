@@ -3,7 +3,9 @@ import { FunctionComponent } from "react";
 import { withCloseOnNavigation } from "./utils";
 import { useMobile } from "./utils/useMobile";
 
-export type ResponsiveDialogProps = DialogProps;
+export type ResponsiveDialogProps = DialogProps & {
+  onClose: DialogProps["onClose"];
+};
 
 const CloseOnNavigateDialog = withCloseOnNavigation(
   Dialog

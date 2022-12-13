@@ -28,6 +28,8 @@ export class Form<T extends Record<string, unknown>> extends Component<
   FormProps<T>,
   FormContextType<T>
 > {
+  private validationErrors: Partial<Record<keyof T, string>> = {};
+
   constructor(props: FormProps<T>) {
     super(props);
 
@@ -87,11 +89,9 @@ export class Form<T extends Record<string, unknown>> extends Component<
         : undefined;
 
     if (validator) {
-      let newErrors: Partial<Record<keyof T, string>>;
       try {
         await validator(name as string, this.state.values[name]);
-        newErrors = { ...this.state.errors };
-        delete newErrors[name];
+        delete this.validationErrors[name];
       } catch (e) {
         let errorMessage: string = e.message;
         if (e instanceof DataValidationError) {
@@ -99,9 +99,8 @@ export class Form<T extends Record<string, unknown>> extends Component<
             .map(v => `${v.path} ${v.message}`.trim())
             .join("\n");
         }
-        newErrors = { ...this.state.errors, [name]: errorMessage };
+        this.validationErrors[name] = errorMessage;
       }
-      this.setState({ errors: newErrors });
     }
     debugEvent("_validateField", "end " + name);
   }
@@ -109,8 +108,11 @@ export class Form<T extends Record<string, unknown>> extends Component<
   private async _validateWrapper<T>(validator: () => Promise<T>): Promise<T> {
     debugEvent("_validateWrapper", "start");
     const result = await validator();
-    const isValid = Object.keys(this.state.errors).length == 0;
-    this.setState({ isValid });
+    this.setState({
+      errors: this.validationErrors,
+      isValid: Object.keys(this.validationErrors).length == 0
+    });
+
     debugEvent("_validateWrapper", "end");
     return result;
   }

@@ -8,6 +8,7 @@ import getConfig from "next/config";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { GoogleAnalytics } from "./GoogleAnalytics";
+import { isString } from "lodash";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type EmptyObject = {};
@@ -45,8 +46,12 @@ export const SodaruApp: FunctionComponent<
     pagePropNames.map(propName => [propName, pageProps[propName]])
   );
 
-  const defaultThemeOptions =
+  let defaultThemeOptions =
     nextConfig?.publicRuntimeConfig?.defaultThemeOptions || {};
+
+  if (isString(defaultThemeOptions)) {
+    defaultThemeOptions = JSON.parse(defaultThemeOptions);
+  }
 
   return (
     <>

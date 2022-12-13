@@ -1,14 +1,7 @@
 import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
-const SodaruAppBarDemo = demoPage(
-  undefined,
-  "layout/sodaru-appbar",
-  false,
-  false,
-  false,
-  "Sodaru UI Components : AppBar child Content"
-);
+const SodaruAppBarDemo = demoPage(undefined, "layout/sodaru-appbar");
 
 export default SodaruAppBarDemo;
 
