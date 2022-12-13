@@ -1,9 +1,7 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
+import { demoPage } from "../../../demoUtils/demoPage";
 import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
 
-const FormSwitchDemo = demoPage(undefined, "form/input-control/switch");
-
-export default FormSwitchDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory([
   "form/input-control/switch"

@@ -3,16 +3,21 @@ import {
   DateTimePickerProps,
   TimePickerProps
 } from "@mui/x-date-pickers";
+
 import { FocusEvent, FunctionComponent, useMemo } from "react";
 import { debugRender } from "../../debug";
 import { FormFieldAttributes } from "../../FormField";
 
 export const withControlledDateTimePicker = <
-  T extends DatePickerProps | DateTimePickerProps | TimePickerProps
+  T,
+  TD extends
+    | DatePickerProps<T, TD>
+    | DateTimePickerProps<T, TD>
+    | TimePickerProps<T, TD>
 >(
-  Picker: (props: T) => JSX.Element
-): FunctionComponent<T & FormFieldAttributes> => {
-  const DecoratedPicker: FunctionComponent<T & FormFieldAttributes> = ({
+  Picker: (props: T & TD) => JSX.Element
+): FunctionComponent<T & TD & FormFieldAttributes> => {
+  const DecoratedPicker: FunctionComponent<T & TD & FormFieldAttributes> = ({
     name,
     onChange,
     onBlur,
@@ -57,9 +62,8 @@ export const withControlledDateTimePicker = <
     );
 
     return (
-      // @ts-expect-error type error for props and T
       <Picker
-        {...(props as T)}
+        {...(props as T & TD)}
         renderInput={params => {
           return renderInput({
             ...params,

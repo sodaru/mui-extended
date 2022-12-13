@@ -6,7 +6,6 @@ import {
   withResetButton,
   withSubmitButton
 } from "../src";
-import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 
 const ApplyThemeButton = withSubmitButton(Button);
@@ -93,11 +92,6 @@ const ThemeOptionsDemoComponent = () => {
   );
 };
 
-const ThemeOptionsDemo = demoPage(
-  <ThemeOptionsDemoComponent />,
-  "theme-options"
-);
-
-export default ThemeOptionsDemo;
+export default ThemeOptionsDemoComponent;
 
 export const getStaticProps = getStaticPropsFactory(["theme-options"]);

@@ -7,7 +7,7 @@ Responsive Dialog which goes full screen on mobile
 ## Usage
 
 ```typescript
-import { ResponsiveDialog } from "@solib/ui-components";
+import { ResponsiveDialog } from "mui-extended";
 
 const responsiveDialog = <ResponsiveDialog></ResponsiveDialog>;
 ```

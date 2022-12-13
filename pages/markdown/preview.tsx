@@ -7,8 +7,13 @@ import {
 } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { CodeComponentContextProvider, MarkdownPreview } from "../../src";
-import { demoPage, DemoPageProps } from "../../src/demo-utils/demoLayout";
+
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+
+export type DemoPageProps = {
+  docs: Record<string, string>;
+  pages: string[];
+};
 
 const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
   docs
@@ -52,11 +57,6 @@ const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
   );
 };
 
-const MarkdownPreviewDemo = demoPage(
-  MarkdownPreviewDemoComponent,
-  "markdown/preview"
-);
-
-export default MarkdownPreviewDemo;
+export default MarkdownPreviewDemoComponent;
 
 export const getStaticProps = getStaticPropsFactory(["markdown/preview"]);

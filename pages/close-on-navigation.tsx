@@ -1,4 +1,3 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
 import {
   Typography,
@@ -78,11 +77,6 @@ const CloseOnNavigationDemoComponent: FunctionComponent = () => {
   );
 };
 
-const CloseOnNavigationDemo = demoPage(
-  <CloseOnNavigationDemoComponent />,
-  "close-on-navigation"
-);
-
-export default CloseOnNavigationDemo;
+export default CloseOnNavigationDemoComponent;
 
 export const getStaticProps = getStaticPropsFactory(["close-on-navigation"]);

@@ -1,12 +1,7 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
+import { demoPage } from "../../../demoUtils/demoPage";
 import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
 
-const FormCheckboxGroupDemo = demoPage(
-  undefined,
-  "form/input-control/checkbox-group"
-);
-
-export default FormCheckboxGroupDemo;
+export default demoPage(undefined);
 
 export const getStaticProps = getStaticPropsFactory([
   "form/input-control/checkbox-group"

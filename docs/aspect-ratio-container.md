@@ -7,7 +7,7 @@ Creates a Container component whose height is always relative to its width
 ## Usage
 
 ```typescript
-import { AspectRatioContainer } from "@solib/ui-components";
+import { AspectRatioContainer } from "mui-extended";
 
 const container = (
   <AspectRatioContainer ratio={[16, 9]} width="100%" maxWidth={800}>

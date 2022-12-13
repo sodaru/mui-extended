@@ -28,7 +28,6 @@ import {
   FormDateTimePicker,
   MarkdownEditor
 } from "../../src";
-import { demoPage } from "../../src/demo-utils/demoLayout";
 import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
 
 const ResetButton = withResetButton(Button);
@@ -266,8 +265,6 @@ const FormDemoComponent: FunctionComponent = () => {
   );
 };
 
-const FormDemo = demoPage(<FormDemoComponent />, "form/index");
-
-export default FormDemo;
+export default FormDemoComponent;
 
 export const getStaticProps = getStaticPropsFactory(["form/index"]);

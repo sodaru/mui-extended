@@ -17,7 +17,7 @@ Form is a controller for input fields
     FormTextField,
     FormSwitch,
     withSubmitButton
-  } from "@solib/ui-components";
+  } from "mui-extended";
   import { TextField, Button } from "@mui/material";
 
   const formProps: FormProps;

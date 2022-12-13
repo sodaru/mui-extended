@@ -81,7 +81,7 @@ const WebLayout: FunctionComponent<
   );
 };
 
-const SodaruSwipeableDrawer = withCloseOnNavigation(SwipeableDrawer);
+const MuiExtSwipeableDrawer = withCloseOnNavigation(SwipeableDrawer);
 
 const MobileLayout: FunctionComponent<
   BaseLayoutProps & { swipeableDrawerProps?: SwipeableDrawerProps }
@@ -113,7 +113,7 @@ const MobileLayout: FunctionComponent<
   return (
     <>
       {menu ? (
-        <SodaruSwipeableDrawer
+        <MuiExtSwipeableDrawer
           anchor="left"
           open={!hideMenu.hide}
           onClose={hideMenu.toggle}
@@ -126,7 +126,7 @@ const MobileLayout: FunctionComponent<
             <Toolbar />
             {menu}
           </MenuBox>
-        </SodaruSwipeableDrawer>
+        </MuiExtSwipeableDrawer>
       ) : (
         ""
       )}

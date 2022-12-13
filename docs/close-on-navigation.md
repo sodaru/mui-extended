@@ -7,7 +7,7 @@ HOC to enable components(especially the Material UI Modals) to close when browse
 ## Usage
 
 ```typescript
-import { withCloseOnNavigation } from "@solib/ui-components";
+import { withCloseOnNavigation } from "mui-extended";
 import { Dialog } from "@mui/material";
 
 const NavigationClasableDialog = withCloseOnNavigation(Dialog);

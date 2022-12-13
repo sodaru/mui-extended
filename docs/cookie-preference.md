@@ -59,10 +59,7 @@ Saves the preferences in LocalStorage with key = `cookie-preference`, value = Ma
     Overrides necessory preference section
   - `preferences` Object of Type
     ```typescript
-    Record<
-      string,
-      { default: boolean; title: string; description: ReactNode }
-    >;
+    Record<string, { default: boolean; title: string; description: ReactNode }>;
     ```
     Overrides preference section
 
