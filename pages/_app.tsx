@@ -1,4 +1,4 @@
-import { CssBaseline } from "@mui/material";
+import { Container, CssBaseline, Typography } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { NextConfig } from "next";
@@ -7,15 +7,9 @@ import Head from "next/head";
 import { GoogleAnalytics, MarkdownPreview, ThemeOptionsProvider } from "../src";
 import { DemoLayout } from "../demoUtils/demoLayout";
 
-const MyApp = ({ Component, pageProps }) => {
-  return WithLayoutParse({ Component, pageProps });
-};
-
-const WithLayoutParse = ({ Component, pageProps }) => {
+const MuiExtendedDemoApp = ({ Component, pageProps }) => {
   const nextConfig: NextConfig = getConfig();
-  const pageName = Object.keys(pageProps.docs)[0];
 
-  pageProps.docs[pageName];
   const defaultThemeOptions =
     nextConfig?.publicRuntimeConfig?.defaultThemeOptions || {};
 
@@ -29,15 +23,16 @@ const WithLayoutParse = ({ Component, pageProps }) => {
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
           <DemoLayout pages={pageProps.pages}>
-            <div>
-              <div>
-                <MarkdownPreview>{pageProps.docs[pageName]}</MarkdownPreview>
-              </div>
-              <div>
-                <h2>Demo</h2>
-                <div>{Component && <Component {...pageProps} />}</div>
-              </div>
-            </div>
+            <Container maxWidth="lg">
+              <MarkdownPreview>{pageProps.doc || ""}</MarkdownPreview>
+
+              {Component.noDemo === undefined ? (
+                <>
+                  <Typography variant="h5">Demo</Typography>
+                  <Component {...pageProps} />
+                </>
+              ) : null}
+            </Container>
           </DemoLayout>
         </ThemeOptionsProvider>
       </LocalizationProvider>
@@ -45,4 +40,4 @@ const WithLayoutParse = ({ Component, pageProps }) => {
   );
 };
 
-export default MyApp;
+export default MuiExtendedDemoApp;

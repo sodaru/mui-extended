@@ -3,11 +3,11 @@ import { HideMenuProvider, Layout } from "../src";
 import { DemoAppBar } from "./demoAppBar";
 import { DemoMenu } from "./demoMenu";
 
-type CustomLayoutProps = PropsWithChildren<{
+type DemoLayoutProps = PropsWithChildren<{
   pages: [];
 }>;
 
-export const DemoLayout = (props: CustomLayoutProps) => {
+export const DemoLayout = (props: DemoLayoutProps) => {
   return (
     <HideMenuProvider>
       <Layout

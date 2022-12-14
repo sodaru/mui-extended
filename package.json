@@ -1,7 +1,7 @@
 {
   "name": "mui-extended",
-  "version": "1.1.5",
-  "description": "Basic UI Components built on Material UI",
+  "version": "0.0.0",
+  "description": "Extended UI Components built on Material UI",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
   "files": [
@@ -22,14 +22,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@gitlab.com:sodaru/solib/mui-extended.git"
+    "url": "https://github.com/sodaru/mui-extended.git"
   },
   "author": "Raghavendra K R <raghavendra@sodaru.com>",
+  "contributors": [
+    "Raghavendra K R <raghavendra@sodaru.com>",
+    "Lokesh G C <lokesh@sodaru.com>",
+    "Sukhesh M G <sukhesh@sodaru.com>"
+  ],
   "license": "MIT",
   "bugs": {
-    "url": "https://gitlab.com/sodaru/solib/mui-extended.git/issues"
+    "url": "https://github.com/sodaru/mui-extended/issues"
   },
-  "homepage": "https://gitlab.com/sodaru/solib/mui-extended#readme",
+  "homepage": "https://github.com/sodaru/mui-extended#readme",
   "devDependencies": {
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
@@ -47,8 +52,10 @@
     "@types/react-dom": "^17.0.2 || ^18.0.0",
     "@types/react-syntax-highlighter": "^13.5.2",
     "eslint-config-next": "^12.1.0",
+    "eslint-config-sodaru": "^1.0.1",
     "lodash": "^4.17.21",
     "next": "^12.1.0",
+    "prettier-config-sodaru": "^1.0.0",
     "react": "^17.0.2 || ^18.0.0",
     "react-dom": "^17.0.2 || ^18.0.0",
     "rimraf": "^3.0.2"
@@ -76,9 +83,7 @@
   "dependencies": {
     "date-fns": "^2.28.0",
     "decorated-ajv": "^1.1.0",
-    "eslint-config-sodaru": "^1.0.1",
     "prettier": "^2.6.2",
-    "prettier-config-sodaru": "^1.0.0",
     "react-markdown": "^8.0.1",
     "react-syntax-highlighter": "^15.5.0",
     "remark-gfm": "^3.0.1"
