@@ -1,7 +1,7 @@
 import { TextField, FormControlLabel, Switch } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { MarkdownEditor } from "../../src";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 
 const MarkdownEditorDemoComponent: FunctionComponent = () => {
   const [value, setValue] = useState<string>("## Welcome");
@@ -39,4 +39,4 @@ const MarkdownEditorDemoComponent: FunctionComponent = () => {
 
 export default MarkdownEditorDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["markdown/editor"]);
+export const getStaticProps = getStaticPropsFactory("markdown/editor");

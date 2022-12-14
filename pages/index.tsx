@@ -1,6 +1,4 @@
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
-import { demoPage } from "../demoUtils/demoPage";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
+export { default } from "../demoUtils/emptyDemoComponent";
 
-export default demoPage(undefined);
-
-export const getStaticProps = getStaticPropsFactory(["home"]);
+export const getStaticProps = getStaticPropsFactory("home");

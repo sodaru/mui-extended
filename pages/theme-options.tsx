@@ -6,7 +6,7 @@ import {
   withResetButton,
   withSubmitButton
 } from "../src";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 
 const ApplyThemeButton = withSubmitButton(Button);
 const ResetThemeButton = withResetButton(Button);
@@ -94,4 +94,4 @@ const ThemeOptionsDemoComponent = () => {
 
 export default ThemeOptionsDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["theme-options"]);
+export const getStaticProps = getStaticPropsFactory("theme-options");

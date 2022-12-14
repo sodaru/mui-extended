@@ -1,5 +1,5 @@
 import { List, ListItem, Typography } from "@mui/material";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 import { TextTypingAnimation } from "../../src/animations/TextTypingAnimation";
 import { useState } from "react";
 
@@ -84,4 +84,4 @@ const TextTypingAnimationDemoComponent = (): JSX.Element => {
 
 export default TextTypingAnimationDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["animations/text-typing"]);
+export const getStaticProps = getStaticPropsFactory("animations/text-typing");

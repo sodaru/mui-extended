@@ -1,7 +1,7 @@
 import { Box, Paper, TextField } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { AspectRatioContainer } from "../src/AspectRatioContainer";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 
 const AspectRatioContainerDemoComponent: FunctionComponent = () => {
   const [width, setWidth] = useState(16);
@@ -45,4 +45,4 @@ const AspectRatioContainerDemoComponent: FunctionComponent = () => {
 
 export default AspectRatioContainerDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["aspect-ratio-container"]);
+export const getStaticProps = getStaticPropsFactory("aspect-ratio-container");

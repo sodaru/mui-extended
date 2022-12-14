@@ -1,7 +1,7 @@
 import { Box, Tooltip } from "@mui/material";
 import { CookiePreference } from "../src";
 
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
 const CookiePreferenceDemoComponent = () => {
@@ -18,4 +18,4 @@ const CookiePreferenceDemoComponent = () => {
 
 export default CookiePreferenceDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["cookie-preference"]);
+export const getStaticProps = getStaticPropsFactory("cookie-preference");

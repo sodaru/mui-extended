@@ -1,5 +1,5 @@
 import { List, ListItem, Paper, Typography } from "@mui/material";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 import { MarqueeAnimation } from "../../src/animations/MarqueeAnimation";
 
 const MarqueeAnimationDemoComponent = (): JSX.Element => {
@@ -44,4 +44,4 @@ const MarqueeAnimationDemoComponent = (): JSX.Element => {
 
 export default MarqueeAnimationDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["animations/marquee"]);
+export const getStaticProps = getStaticPropsFactory("animations/marquee");

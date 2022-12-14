@@ -1,4 +1,4 @@
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 import {
   Typography,
   Button,
@@ -12,8 +12,8 @@ import {
   Divider
 } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { withCloseOnNavigation } from "../src";
 import Link from "next/link";
+import { withCloseOnNavigation } from "../src/utils";
 
 const CloseOnNavigationDemoComponent: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
@@ -79,4 +79,4 @@ const CloseOnNavigationDemoComponent: FunctionComponent = () => {
 
 export default CloseOnNavigationDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["close-on-navigation"]);
+export const getStaticProps = getStaticPropsFactory("close-on-navigation");

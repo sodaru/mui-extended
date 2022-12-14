@@ -8,7 +8,7 @@ import {
 import { FunctionComponent, useState } from "react";
 import { CodeComponentContextProvider, MarkdownPreview } from "../../src";
 
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 
 export type DemoPageProps = {
   docs: Record<string, string>;
@@ -59,4 +59,4 @@ const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
 
 export default MarkdownPreviewDemoComponent;
 
-export const getStaticProps = getStaticPropsFactory(["markdown/preview"]);
+export const getStaticProps = getStaticPropsFactory("markdown/preview");

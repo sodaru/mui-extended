@@ -55,28 +55,19 @@ export const listDemoPages = async () => {
 /**
  * Reads the documents from `docs` directory
  */
-const loadDocs = async (paths: string[]): Promise<Record<string, string>> => {
+const loadDoc = async (path: string): Promise<string> => {
   const dir = getNextJsRootDir();
-
-  const allDocs: Record<string, string> = {};
-
-  await Promise.all(
-    paths.map(async path => {
-      const absPath = join(dir, "docs", path + ".md");
-      const docContent = await readFile(absPath, { encoding: "utf8" });
-      allDocs[path] = docContent;
-    })
-  );
-
-  return allDocs;
+  const absPath = join(dir, "docs", path + ".md");
+  const docContent = await readFile(absPath, { encoding: "utf8" });
+  return docContent;
 };
 
 export const getStaticPropsFactory = (
-  docPaths?: string[]
+  docPath?: string
 ): (() => Promise<Record<string, unknown>>) => {
   return async () => {
     const pages = await listDemoPages();
-    const docs = await loadDocs(docPaths || []);
-    return { props: { pages, docs } };
+    const doc = await loadDoc(docPath);
+    return { props: { pages, doc } };
   };
 };
