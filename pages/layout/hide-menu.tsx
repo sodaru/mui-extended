@@ -1,8 +1,7 @@
 import { Button, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
 import { useHideMenu } from "../../src";
-import { demoPage } from "../../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 
 const HideMenuDemoComponent: FunctionComponent = () => {
   const hideMenu = useHideMenu();
@@ -16,8 +15,6 @@ const HideMenuDemoComponent: FunctionComponent = () => {
   );
 };
 
-const HideMenuDemo = demoPage(<HideMenuDemoComponent />, "layout/hide-menu");
+export default HideMenuDemoComponent;
 
-export default HideMenuDemo;
-
-export const getStaticProps = getStaticPropsFactory(["layout/hide-menu"]);
+export const getStaticProps = getStaticPropsFactory("layout/hide-menu");

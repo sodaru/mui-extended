@@ -1,8 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
+export { default } from "../demoUtils/emptyDemoComponent";
 
-const WebStorageDemo = demoPage(undefined, "web-storage");
-
-export default WebStorageDemo;
-
-export const getStaticProps = getStaticPropsFactory(["web-storage"]);
+export const getStaticProps = getStaticPropsFactory("web-storage");

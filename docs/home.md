@@ -1,11 +1,11 @@
-# Sodaru UI Components
+# Material UI Components Extended
 
 ---
 
-> UI Components of for Projects in Sodaru Technologies
+> Extended UI Components built upon Material UI components.
 
-- **Source Location** : https://gitlab.com/sodaru/solib/ui-components
-- **Package Name** : `@solib/ui-components`
+- **Source Location** : https://github.com/sodaru/mui-extended
+- **Package Name** : `mui-extended`
 
 Components are built using
 

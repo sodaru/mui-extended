@@ -11,7 +11,7 @@ Saves the preferences in LocalStorage with key = `cookie-preference`, value = Ma
 - Using a Fab
 
   ```typescript
-  import { CookiePreference } from "@solib/ui-components";
+  import { CookiePreference } from "mui-extended";
 
   const myPage = () => {
     return (
@@ -32,7 +32,7 @@ Saves the preferences in LocalStorage with key = `cookie-preference`, value = Ma
 - Using Dialog
 
   ```typescript
-  import { CookiePreferenceDialog } from "@solib/ui-components";
+  import { CookiePreferenceDialog } from "mui-extended";
 
   const myPage = () => {
     return (
@@ -59,15 +59,12 @@ Saves the preferences in LocalStorage with key = `cookie-preference`, value = Ma
     Overrides necessory preference section
   - `preferences` Object of Type
     ```typescript
-    Record<
-      string,
-      { default: boolean; title: string; description: ReactNode }
-    >;
+    Record<string, { default: boolean; title: string; description: ReactNode }>;
     ```
     Overrides preference section
 
 - Using DefaultPreferences
 
   ```typescript
-  import { defaultCookiePreferences } from "@solib/ui-components";
+  import { defaultCookiePreferences } from "mui-extended";
   ```

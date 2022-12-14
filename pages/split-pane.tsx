@@ -1,5 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 import { Typography, Box } from "@mui/material";
 import { SplitPane } from "../src";
 import { FunctionComponent } from "react";
@@ -36,8 +35,6 @@ const SplitPaneDemoComponent: FunctionComponent = () => {
   );
 };
 
-const SplitPaneDemo = demoPage(<SplitPaneDemoComponent />, "split-pane");
+export default SplitPaneDemoComponent;
 
-export default SplitPaneDemo;
-
-export const getStaticProps = getStaticPropsFactory(["split-pane"]);
+export const getStaticProps = getStaticPropsFactory("split-pane");

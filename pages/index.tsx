@@ -1,8 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
+export { default } from "../demoUtils/emptyDemoComponent";
 
-const Index = demoPage(undefined, "home");
-
-export default Index;
-
-export const getStaticProps = getStaticPropsFactory(["home"]);
+export const getStaticProps = getStaticPropsFactory("home");

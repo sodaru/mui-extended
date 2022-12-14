@@ -1,8 +1,4 @@
-import { demoPage } from "../../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
+export { default } from "../../demoUtils/emptyDemoComponent";
 
-const FormAutocompleteDemo = demoPage(undefined, "form/autocomplete");
-
-export default FormAutocompleteDemo;
-
-export const getStaticProps = getStaticPropsFactory(["form/autocomplete"]);
+export const getStaticProps = getStaticPropsFactory("form/autocomplete");

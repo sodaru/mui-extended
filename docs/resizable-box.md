@@ -9,7 +9,7 @@ Implemented using [ResizeObserver](https://developer.mozilla.org/en-US/docs/Web/
 ## Usage
 
 ```typescript
-import { ResizableBox } from "@solib/ui-components";
+import { ResizableBox } from "mui-extended";
 
 const resizableBox = (
   <ResizableBox onResize={(width: number, height: number) => {}}>

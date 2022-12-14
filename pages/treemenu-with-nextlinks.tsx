@@ -1,13 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
+export { default } from "../demoUtils/emptyDemoComponent";
 
-const TreeMenuWithNextLinksDemo = demoPage(
-  undefined,
-  "treemenu-with-nextlinks"
-);
-
-export default TreeMenuWithNextLinksDemo;
-
-export const getStaticProps = getStaticPropsFactory([
-  "treemenu-with-nextlinks"
-]);
+export const getStaticProps = getStaticPropsFactory("treemenu-with-nextlinks");

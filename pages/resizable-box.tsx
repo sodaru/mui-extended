@@ -2,8 +2,7 @@ import { Box, Paper, Typography } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { ResizableBox } from "../src/ResizableBox";
 import { AspectRatioContainer } from "../src/AspectRatioContainer";
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
 
 const ResizableBoxDemoComponent: FunctionComponent = () => {
   const [size, setSize] = useState([100, 50]);
@@ -39,11 +38,6 @@ const ResizableBoxDemoComponent: FunctionComponent = () => {
   );
 };
 
-const ResizableBoxDemo = demoPage(
-  <ResizableBoxDemoComponent />,
-  "resizable-box"
-);
+export default ResizableBoxDemoComponent;
 
-export default ResizableBoxDemo;
-
-export const getStaticProps = getStaticPropsFactory(["resizable-box"]);
+export const getStaticProps = getStaticPropsFactory("resizable-box");

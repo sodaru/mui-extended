@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-import { MarkdownPreview } from "@solib/ui-components";
+import { MarkdownPreview } from "mui-extended";
 
 // load the markdown content
 const markdownContent: string;
