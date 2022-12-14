@@ -4,7 +4,7 @@ import { DemoAppBar } from "./demoAppBar";
 import { DemoMenu } from "./demoMenu";
 
 type DemoLayoutProps = PropsWithChildren<{
-  pages: [];
+  pages: string[];
 }>;
 
 export const DemoLayout = (props: DemoLayoutProps) => {

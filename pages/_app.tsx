@@ -7,12 +7,22 @@ import Head from "next/head";
 import { GoogleAnalytics, MarkdownPreview, ThemeOptionsProvider } from "../src";
 import { DemoLayout } from "../demoUtils/demoLayout";
 import Footer from "../demoUtils/footer";
+import { Meta } from "../demoUtils/Meta";
+import { AppProps } from "next/app";
+import { StaticProps } from "../demoUtils/staticProps";
 
-const MuiExtendedDemoApp = ({ Component, pageProps }) => {
+const MuiExtendedDemoApp = ({
+  Component,
+  pageProps
+}: AppProps<StaticProps>) => {
   const nextConfig: NextConfig = getConfig();
 
   const defaultThemeOptions =
     nextConfig?.publicRuntimeConfig?.defaultThemeOptions || {};
+
+  const pages = pageProps.pages || [];
+  const meta = pageProps.doc?.meta;
+  const docContent = pageProps.doc?.content || "";
 
   return (
     <>
@@ -20,14 +30,15 @@ const MuiExtendedDemoApp = ({ Component, pageProps }) => {
       <Head>
         <meta name="viewport" content="initial-scale=1, width=device-width" />
       </Head>
+      <Meta meta={meta} />
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
-          <DemoLayout pages={pageProps.pages || []}>
+          <DemoLayout pages={pages}>
             <Container maxWidth="lg">
               <Box minHeight="90vh">
-                <MarkdownPreview>{pageProps.doc || ""}</MarkdownPreview>
-                {Component.noDemo === undefined ? (
+                <MarkdownPreview>{docContent}</MarkdownPreview>
+                {Component["noDemo"] === undefined ? (
                   <Paper variant="outlined">
                     <Box p={2}>
                       <Typography variant="h5">Demo</Typography>

@@ -2,6 +2,21 @@ import { existsSync } from "fs";
 import { readdir, readFile, stat } from "fs/promises";
 import { join, relative } from "path";
 import { GetStaticProps } from "next";
+import { load } from "js-yaml";
+
+export type DocMeta = {
+  title?: string;
+  meta?: Record<string, string>;
+  structuredData?: Record<string, unknown>; // https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data
+};
+
+export type StaticProps = {
+  pages: string[];
+  doc: {
+    meta: DocMeta;
+    content: string;
+  };
+};
 
 /**
  * Return the list of pages in pages directory.
@@ -41,19 +56,40 @@ export const listDemoPages = async () => {
   return pages;
 };
 
+const extractMetaFromDocContent = (docContent: string) => {
+  const META_START = "```YAML\n";
+  const META_END = "\n```\n";
+
+  let meta: DocMeta = { title: "", meta: {} };
+  let content = docContent.trim();
+
+  if (content.startsWith(META_START)) {
+    // meta detected
+    const endOfMeta = content.indexOf(META_END);
+    const metaStr = content.substring(META_START.length, endOfMeta);
+    meta = load(metaStr);
+
+    content = content.substring(endOfMeta + META_END.length);
+  }
+
+  return { meta, content };
+};
+
 /**
  * Reads the documents from `docs` directory
  */
-const loadDoc = async (path: string): Promise<string> => {
+const loadDoc = async (path: string) => {
   const dir = process.cwd();
   const absPath = join(dir, "docs", path + ".md");
   const docContent = existsSync(absPath)
     ? await readFile(absPath, { encoding: "utf8" })
     : "";
-  return docContent;
+  return extractMetaFromDocContent(docContent);
 };
 
-export const getStaticPropsFactory = (docPath?: string): GetStaticProps => {
+export const getStaticPropsFactory = (
+  docPath?: string
+): GetStaticProps<StaticProps> => {
   return async () => {
     const pages = await listDemoPages();
     const doc = await loadDoc(docPath);
