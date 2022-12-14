@@ -6,6 +6,7 @@ import getConfig from "next/config";
 import Head from "next/head";
 import { GoogleAnalytics, MarkdownPreview, ThemeOptionsProvider } from "../src";
 import { DemoLayout } from "../demoUtils/demoLayout";
+import Footer from "../demoUtils/footer";
 
 const MuiExtendedDemoApp = ({ Component, pageProps }) => {
   const nextConfig: NextConfig = getConfig();
@@ -24,15 +25,18 @@ const MuiExtendedDemoApp = ({ Component, pageProps }) => {
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
           <DemoLayout pages={pageProps.pages || []}>
             <Container maxWidth="lg">
-              <MarkdownPreview>{pageProps.doc || ""}</MarkdownPreview>
-              {Component.noDemo === undefined ? (
-                <Paper variant="outlined">
-                  <Box p={2}>
-                    <Typography variant="h5">Demo</Typography>
-                    <Component {...pageProps} />
-                  </Box>
-                </Paper>
-              ) : null}
+              <Box minHeight="90vh">
+                <MarkdownPreview>{pageProps.doc || ""}</MarkdownPreview>
+                {Component.noDemo === undefined ? (
+                  <Paper variant="outlined">
+                    <Box p={2}>
+                      <Typography variant="h5">Demo</Typography>
+                      <Component {...pageProps} />
+                    </Box>
+                  </Paper>
+                ) : null}
+              </Box>
+              <Footer />
             </Container>
           </DemoLayout>
         </ThemeOptionsProvider>
