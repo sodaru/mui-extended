@@ -25,7 +25,7 @@
     "url": "git@gitlab.com:sodaru/solib/mui-extended.git"
   },
   "author": "Raghavendra K R <raghavendra@sodaru.com>",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "bugs": {
     "url": "https://gitlab.com/sodaru/solib/mui-extended.git/issues"
   },
@@ -34,7 +34,6 @@
     "@date-io/date-fns": "^2.13.1",
     "@emotion/react": "^11.8.1",
     "@emotion/styled": "^11.8.1",
-    "@fontsource/roboto": "^4.5.3",
     "@mui/icons-material": "^5.10.16",
     "@mui/lab": "^5.0.0-alpha.111",
     "@mui/material": "^5.10.17",
