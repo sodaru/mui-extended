@@ -11,14 +11,14 @@ import { CodeComponentContextProvider, MarkdownPreview } from "../../src";
 import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 
 export type DemoPageProps = {
-  docs: Record<string, string>;
+  doc: string;
   pages: string[];
 };
 
 const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
-  docs
+  doc
 }) => {
-  const docLines = docs["markdown/preview"].split("\n");
+  const docLines = doc.split("\n");
   const [codeMaxHeight, setCodeMaxHeight] = useState<string | undefined>();
   const [codeCopy, setCodeCopy] = useState<boolean | undefined>();
   return (

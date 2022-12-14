@@ -41,7 +41,7 @@ module.exports = withBundleAnalyzer({
     defaultThemeOptions: defaultThemeOptions,
     demo: {
       title: "MUI Extended UI Components",
-      repoUrl: "https://gitlab.com/sodaru/solib/ui-components"
+      repoUrl: "https://github.com/sodaru/mui-extended"
     }
   }
 });
