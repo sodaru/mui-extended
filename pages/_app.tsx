@@ -1,4 +1,4 @@
-import { Container, CssBaseline, Typography } from "@mui/material";
+import { Box, Container, CssBaseline, Paper, Typography } from "@mui/material";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { NextConfig } from "next";
@@ -22,15 +22,16 @@ const MuiExtendedDemoApp = ({ Component, pageProps }) => {
       <CssBaseline enableColorScheme />
       <LocalizationProvider dateAdapter={AdapterDateFns}>
         <ThemeOptionsProvider themeOptions={defaultThemeOptions}>
-          <DemoLayout pages={pageProps.pages}>
+          <DemoLayout pages={pageProps.pages || []}>
             <Container maxWidth="lg">
               <MarkdownPreview>{pageProps.doc || ""}</MarkdownPreview>
-
               {Component.noDemo === undefined ? (
-                <>
-                  <Typography variant="h5">Demo</Typography>
-                  <Component {...pageProps} />
-                </>
+                <Paper variant="outlined">
+                  <Box p={2}>
+                    <Typography variant="h5">Demo</Typography>
+                    <Component {...pageProps} />
+                  </Box>
+                </Paper>
               ) : null}
             </Container>
           </DemoLayout>
