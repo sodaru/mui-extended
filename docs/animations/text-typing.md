@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-import { TextTypingAnimation } from "@solib/ui-components";
+import { TextTypingAnimation } from "mui-extended";
 
 const typedComponent = (
   <TextTypingAnimation>String to Type</TextTypingAnimation>

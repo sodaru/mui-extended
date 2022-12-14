@@ -1,10 +1,4 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../../demoUtils/staticProps";
+export { default } from "../../../demoUtils/emptyDemoComponent";
 
-const FormFileInputDemo = demoPage(undefined, "form/input-control/file");
-
-export default FormFileInputDemo;
-
-export const getStaticProps = getStaticPropsFactory([
-  "form/input-control/file"
-]);
+export const getStaticProps = getStaticPropsFactory("form/input-control/file");

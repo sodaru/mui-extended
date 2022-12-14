@@ -7,7 +7,7 @@ Creates a Tree Menu with links. Uses [`TreeView`](https://mui.com/components/tre
 ## Usage
 
 ```typescript
-import { TreeMenuWithNextLinks } from "@solib/ui-components";
+import { TreeMenuWithNextLinks } from "mui-extended";
 
 const treeMenuProps: TreeMenuWithNextLinksProps;
 

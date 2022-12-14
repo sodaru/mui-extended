@@ -20,7 +20,7 @@ Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customizat
 - `ThemeOptionsProvider`
 
   ```typescript
-  import { ThemeOptionsProvider } from "@solib/ui-components";
+  import { ThemeOptionsProvider } from "mui-extended";
 
   // wrap all child components
   const component = (
@@ -37,7 +37,7 @@ Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customizat
 - `useThemeOptions` to update the theme from inside the child components
 
   ```typescript
-  import { useThemeOptions } from "@solib/ui-components";
+  import { useThemeOptions } from "mui-extended";
   import { ThemeOptions } from "@mui/material";
 
   // within the child component
@@ -48,5 +48,3 @@ Also Implements [`Responsive Font Sizes`](https://mui.com/material-ui/customizat
   };
   setThemeOptions(newThemeOptions); // updates primary main color to "#0000ff"
   ```
-
-_[`SodaruApp`](./sodaru-app) wraps All pages of nextJs in `ThemeOptionsProvider`_

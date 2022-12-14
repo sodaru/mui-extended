@@ -1,8 +1,4 @@
-import { demoPage } from "../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../demoUtils/staticProps";
+export { default } from "../demoUtils/emptyDemoComponent";
 
-const ReCaptchaDemo = demoPage(undefined, "recaptcha");
-
-export default ReCaptchaDemo;
-
-export const getStaticProps = getStaticPropsFactory(["recaptcha"]);
+export const getStaticProps = getStaticPropsFactory("recaptcha");

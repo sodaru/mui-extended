@@ -2,10 +2,6 @@
 const withBundleAnalyzer = require("@next/bundle-analyzer")({
   enabled: process.env.ANALYZE_BUNDLE === "true"
 });
-const images = { domains: ["about.gitlab.com"] };
-if (process.env.NEXT_PUBLIC_DISABLE_SODARU_IMAGE_OPTIMIZATION === "true") {
-  images.loader = "custom";
-}
 
 /**
  * @type import("@mui/material").ThemeOptions;
@@ -41,12 +37,11 @@ const defaultThemeOptions = {
 };
 
 module.exports = withBundleAnalyzer({
-  images: images,
   publicRuntimeConfig: {
     defaultThemeOptions: defaultThemeOptions,
     demo: {
-      title: "Sodaru UI Components",
-      repoUrl: "https://gitlab.com/sodaru/solib/ui-components"
+      title: "MUI Extended UI Components",
+      repoUrl: "https://github.com/sodaru/mui-extended"
     }
   }
 });

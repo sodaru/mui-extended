@@ -1,10 +1,4 @@
-import { demoPage } from "../../../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../../demoUtils/staticProps";
+export { default } from "../../../demoUtils/emptyDemoComponent";
 
-const FormInputControlDemo = demoPage(undefined, "form/input-control/index");
-
-export default FormInputControlDemo;
-
-export const getStaticProps = getStaticPropsFactory([
-  "form/input-control/index"
-]);
+export const getStaticProps = getStaticPropsFactory("form/input-control/index");

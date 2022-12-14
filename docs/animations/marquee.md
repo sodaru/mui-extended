@@ -5,7 +5,7 @@
 ## Usage
 
 ```typescript
-import { MarqueeAnimation } from "@solib/ui-components";
+import { MarqueeAnimation } from "mui-extended";
 
 const marqueedComponent = (
   <MarqueeAnimation>React node to be Marqueed</MarqueeAnimation>

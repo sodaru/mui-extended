@@ -1,8 +1,4 @@
-import { demoPage } from "../../src/demo-utils/demoLayout";
-import { getStaticPropsFactory } from "../../src/demo-utils/staticProps";
+import { getStaticPropsFactory } from "../../demoUtils/staticProps";
+export { default } from "../../demoUtils/emptyDemoComponent";
 
-const FormTextFieldDemo = demoPage(undefined, "form/textfield");
-
-export default FormTextFieldDemo;
-
-export const getStaticProps = getStaticPropsFactory(["form/textfield"]);
+export const getStaticProps = getStaticPropsFactory("form/textfield");

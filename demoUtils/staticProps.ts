@@ -1,17 +1,21 @@
 import { existsSync } from "fs";
 import { readdir, readFile, stat } from "fs/promises";
 import { join, relative } from "path";
+import { GetStaticProps } from "next";
+import { load } from "js-yaml";
 
-const getNextJsRootDir = (): string => {
-  let dir = process.cwd();
-  while (!existsSync(join(dir, "package.json"))) {
-    const parentDir = join(dir, "..");
-    if (dir == parentDir) {
-      throw new Error("No NextJs Package found");
-    }
-    dir = parentDir;
-  }
-  return dir;
+export type DocMeta = {
+  title?: string;
+  meta?: Record<string, string>;
+  structuredData?: Record<string, unknown>; // https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data
+};
+
+export type StaticProps = {
+  pages: string[];
+  doc: {
+    meta: DocMeta;
+    content: string;
+  };
 };
 
 /**
@@ -19,7 +23,7 @@ const getNextJsRootDir = (): string => {
  * Required for the use in Menu of the Demo Pages
  */
 export const listDemoPages = async () => {
-  const dir = getNextJsRootDir();
+  const dir = process.cwd();
   const pagesDir = join(dir, "pages");
   const pages = [];
   if (existsSync(pagesDir)) {
@@ -52,31 +56,43 @@ export const listDemoPages = async () => {
   return pages;
 };
 
+const extractMetaFromDocContent = (docContent: string) => {
+  const META_START = "```YAML\n";
+  const META_END = "\n```\n";
+
+  let meta: DocMeta = { title: "", meta: {} };
+  let content = docContent.trim();
+
+  if (content.startsWith(META_START)) {
+    // meta detected
+    const endOfMeta = content.indexOf(META_END);
+    const metaStr = content.substring(META_START.length, endOfMeta);
+    meta = load(metaStr);
+
+    content = content.substring(endOfMeta + META_END.length);
+  }
+
+  return { meta, content };
+};
+
 /**
  * Reads the documents from `docs` directory
  */
-const loadDocs = async (paths: string[]): Promise<Record<string, string>> => {
-  const dir = getNextJsRootDir();
-
-  const allDocs: Record<string, string> = {};
-
-  await Promise.all(
-    paths.map(async path => {
-      const absPath = join(dir, "docs", path + ".md");
-      const docContent = await readFile(absPath, { encoding: "utf8" });
-      allDocs[path] = docContent;
-    })
-  );
-
-  return allDocs;
+const loadDoc = async (path: string) => {
+  const dir = process.cwd();
+  const absPath = join(dir, "docs", path + ".md");
+  const docContent = existsSync(absPath)
+    ? await readFile(absPath, { encoding: "utf8" })
+    : "";
+  return extractMetaFromDocContent(docContent);
 };
 
 export const getStaticPropsFactory = (
-  docPaths?: string[]
-): (() => Promise<Record<string, unknown>>) => {
+  docPath?: string
+): GetStaticProps<StaticProps> => {
   return async () => {
     const pages = await listDemoPages();
-    const docs = await loadDocs(docPaths || []);
-    return { props: { pages, docs } };
+    const doc = await loadDoc(docPath);
+    return { props: { pages, doc } };
   };
 };
