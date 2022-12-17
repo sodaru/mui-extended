@@ -18,7 +18,8 @@
     "prepack": "npm run test",
     "postversion": "git push --follow-tags",
     "dev": "next dev",
-    "start": "next start"
+    "start": "next start",
+    "export": "npx next export -o static-pages"
   },
   "repository": {
     "type": "git",
