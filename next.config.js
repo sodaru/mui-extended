@@ -43,5 +43,6 @@ module.exports = withBundleAnalyzer({
       title: "MUI Extended UI Components",
       repoUrl: "https://github.com/sodaru/mui-extended"
     }
-  }
+  },
+  basePath: "/mui-extended"
 });
