@@ -16,7 +16,7 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: npm i
-      - run: npm run build
+      - run: npm run next-build
       - run: npm run export
       - name: upload pages artifacts
         uses: actions/upload-pages-artifact@v1

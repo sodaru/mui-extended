@@ -4,12 +4,15 @@ import { DocMeta } from "./staticProps";
 import { useRouter } from "next/router";
 
 export const Meta: FunctionComponent<{ meta?: DocMeta }> = ({ meta }) => {
+  const router = useRouter();
+  if (!meta) {
+    return <></>;
+  }
   const {
     title,
     meta: { description, ...metaTags }
   } = meta;
 
-  const router = useRouter();
   const domain = process.env.NEXT_PUBLIC_HOST_DOMAIN;
   const url = `https://${domain}${router.asPath}`;
   const featuredImageUrl = `https://${domain}/featured-image.jpg`;

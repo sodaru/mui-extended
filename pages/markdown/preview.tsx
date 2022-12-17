@@ -8,17 +8,20 @@ import {
 import { FunctionComponent, useState } from "react";
 import { CodeComponentContextProvider, MarkdownPreview } from "../../src";
 
-import { getStaticPropsFactory } from "../../demoUtils/staticProps";
+import {
+  getStaticPropsFactory,
+  StaticProps
+} from "../../demoUtils/staticProps";
 
 export type DemoPageProps = {
   doc: string;
   pages: string[];
 };
 
-const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
+const MarkdownPreviewDemoComponent: FunctionComponent<StaticProps> = ({
   doc
 }) => {
-  const docLines = doc.split("\n");
+  const docLines = doc && doc.content && doc.content.split("\n");
   const [codeMaxHeight, setCodeMaxHeight] = useState<string | undefined>();
   const [codeCopy, setCodeCopy] = useState<boolean | undefined>();
   return (
@@ -49,9 +52,11 @@ const MarkdownPreviewDemoComponent: FunctionComponent<DemoPageProps> = ({
       <CodeComponentContextProvider
         value={{ maxHeight: codeMaxHeight, enableCopy: codeCopy }}
       >
-        <MarkdownPreview>
-          {"```\n" + docLines.map(l => "    " + l).join("\n") + "\n```"}
-        </MarkdownPreview>
+        {docLines && (
+          <MarkdownPreview>
+            {"```\n" + docLines.map(l => "    " + l).join("\n") + "\n```"}
+          </MarkdownPreview>
+        )}
       </CodeComponentContextProvider>
     </>
   );

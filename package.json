@@ -13,6 +13,7 @@
     "eslint": "npx eslint ./ --no-error-on-unmatched-pattern",
     "tsc": "npx tsc --project tsconfig.build.json",
     "build": "npm run prettier && npm run eslint && npm run clean && npm run tsc",
+    "next-build": "npm run build && npx next build",
     "pretest": "npm run build",
     "test": "npx next build",
     "prepack": "npm run test",
