@@ -44,5 +44,5 @@ module.exports = withBundleAnalyzer({
       repoUrl: "https://github.com/sodaru/mui-extended"
     }
   },
-  basePath: "mui-extended"
+  basePath: "/mui-extended"
 });
