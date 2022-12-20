@@ -1,6 +1,4 @@
 import { Box } from "@mui/material";
-import { NextConfig } from "next";
-import getConfig from "next/config";
 import { FunctionComponent } from "react";
 import { ThemeModeSwitch } from "../src";
 import {
@@ -8,8 +6,6 @@ import {
   TreeMenuWithNextLinksProps
 } from "../src/TreeMenuWithNextLinks";
 import { useStateWithSessionStorage } from "../src/utils";
-
-const nextConfig: NextConfig = getConfig();
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
@@ -47,7 +43,6 @@ export const convertDemoPagesToTreeMenuProps = (
       }
       return link;
     }),
-    basePath: nextConfig.basePath,
     improveLabels: true
   };
 
