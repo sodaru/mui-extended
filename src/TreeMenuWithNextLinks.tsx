@@ -42,7 +42,6 @@ type TreeLinkType = {
  */
 export type TreeMenuWithNextLinksProps = {
   links: (string | TreeLinkType)[];
-  basePath?: string;
   improveLabels?: boolean;
   TreeViewProps?: TreeViewProps;
   TreeItemProps?: TreeItemProps;
@@ -147,8 +146,6 @@ const CustomTreeItemContent = forwardRef<
     preventSelection
   } = useTreeItem(nodeId);
 
-  const router = useRouter();
-
   const icon = iconProp || expansionIcon || displayIcon;
 
   const handleMouseDown = (
@@ -186,7 +183,7 @@ const CustomTreeItemContent = forwardRef<
 
   if (link !== undefined) {
     content = (
-      <Link href={(router.basePath || "") + "/" + link} passHref={true}>
+      <Link href={link} passHref={true}>
         <a style={{ width: "100%" }}>{content}</a>
       </Link>
     );
@@ -232,7 +229,6 @@ const getNearestLink = (node: TreeNode): string => {
 const renderTreeNode = (
   node: TreeNode,
   improveLabels?: boolean,
-  basePath?: string,
   TreeItemProps?: TreeItemProps
 ) => {
   return (
@@ -246,7 +242,7 @@ const renderTreeNode = (
       {...TreeItemProps}
     >
       {Object.values(node.children).map(_node =>
-        renderTreeNode(_node, improveLabels, basePath, TreeItemProps)
+        renderTreeNode(_node, improveLabels, TreeItemProps)
       )}
     </TreeItem>
   );
@@ -254,7 +250,7 @@ const renderTreeNode = (
 
 export const TreeMenuWithNextLinks: FunctionComponent<
   TreeMenuWithNextLinksProps
-> = ({ links, basePath, improveLabels, TreeViewProps, TreeItemProps }) => {
+> = ({ links, improveLabels, TreeViewProps, TreeItemProps }) => {
   const router = useRouter();
 
   const topTreeNodes = convertLinksToTreeNodes(links);
@@ -281,7 +277,7 @@ export const TreeMenuWithNextLinks: FunctionComponent<
       {..._treeViewProps}
     >
       {Object.values(topTreeNodes).map(node =>
-        renderTreeNode(node, improveLabels, basePath, TreeItemProps)
+        renderTreeNode(node, improveLabels, TreeItemProps)
       )}
     </TreeView>
   );
