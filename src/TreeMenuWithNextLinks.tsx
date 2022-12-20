@@ -183,7 +183,7 @@ const CustomTreeItemContent = forwardRef<
 
   if (link !== undefined) {
     content = (
-      <Link href={link} passHref={true}>
+      <Link href={"/" + link}>
         <a style={{ width: "100%" }}>{content}</a>
       </Link>
     );
