@@ -11,4 +11,4 @@ export * from "./ResponsiveDialog";
 export * from "./splitPane/SplitPane";
 export * from "./ThemeModeSwitch";
 export * from "./ThemeOptionsContext";
-export * from "./TreeMenuWithNextLinks";
+export * from "./TreeMenuWithLinks";
