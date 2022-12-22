@@ -1,3 +1,10 @@
+```YAML
+title: Resizable Box
+meta:
+  description:
+    customizable react Resizable Box which emits resize event. uses typescript.
+```
+
 # Resizable Box
 
 ---

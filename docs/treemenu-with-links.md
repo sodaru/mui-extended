@@ -1,4 +1,11 @@
-# Tree Menu With [Next/Links](https://nextjs.org/docs/api-reference/next/link)
+```YAML
+title: Tree Menu With Links
+meta:
+  description:
+    extendign MUI's Tree Menu to provide custom implementation using links array as input.
+```
+
+# Tree Menu With Links
 
 ---
 

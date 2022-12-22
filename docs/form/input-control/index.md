@@ -1,3 +1,10 @@
+```YAML
+title: FormInputControl
+meta:
+  description:
+    A customizable react InputControl to include error or helperText props be used with Form.
+```
+
 # FormInputControl
 
 ---

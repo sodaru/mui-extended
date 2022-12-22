@@ -1,8 +1,15 @@
+```YAML
+title: Material UI Components Extended
+meta:
+  description:
+    A customizable react/typescript/ES6/ESNext UI compoents which extends basic ui components provided by material ui(MUI)
+```
+
 # Material UI Components Extended
 
 ---
 
-> Extended UI Components built upon Material UI components.
+> UI Components which extends basic Material UI components.
 
 - **Source Location** : https://github.com/sodaru/mui-extended
 - **Package Name** : `mui-extended`

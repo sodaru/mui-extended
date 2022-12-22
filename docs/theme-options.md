@@ -1,3 +1,10 @@
+```YAML
+title: Theme Options
+meta:
+  description:
+    extendign MUI's ThemeProvider to change nested theme options at any level.
+```
+
 # Theme Options
 
 ---

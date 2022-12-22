@@ -1,3 +1,10 @@
+```YAML
+title: Google Analytics
+meta:
+  description:
+    A react Google Analytics component.
+```
+
 # Google Analytics
 
 ---

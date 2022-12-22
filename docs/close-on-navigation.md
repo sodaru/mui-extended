@@ -1,3 +1,10 @@
+```YAML
+title: Close On Navigation modal
+meta:
+  description:
+    A react customizabel modal component to close when browser is navigated back/forward.
+```
+
 # Close On Navigation
 
 ---

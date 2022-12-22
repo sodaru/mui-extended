@@ -1,3 +1,10 @@
+```YAML
+title: Marquee Animation
+meta:
+  description:
+    Lightweight, performant React component that utilizes the power of CSS animations to create smooth marquees slider
+```
+
 # Marquee Animation
 
 ---

@@ -1,3 +1,10 @@
+```YAML
+title: FormAutocomplete
+meta:
+  description:
+    A react Autocomplete to be used with Form.
+```
+
 # FormAutocomplete
 
 ---

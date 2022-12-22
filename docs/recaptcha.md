@@ -1,3 +1,10 @@
+```YAML
+title: reCAPTCHA
+meta:
+  description:
+    google reCAPTCHA implemented using react and typescript.
+```
+
 # reCAPTCHA
 
 ---

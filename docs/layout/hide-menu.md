@@ -1,3 +1,10 @@
+```YAML
+title: HideMenu
+meta:
+  description:
+    A react wrapper to hide and show menu.
+```
+
 # HideMenu
 
 ---

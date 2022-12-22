@@ -1,3 +1,10 @@
+```YAML
+title: Responsive Dialog
+meta:
+  description:
+    customizable react Responsive Dialog which goes full screen on mobile.
+```
+
 # Responsive Dialog
 
 ---
