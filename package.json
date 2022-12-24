@@ -2,6 +2,15 @@
   "name": "mui-extended",
   "version": "0.0.6",
   "description": "Extended UI Components built on Material UI",
+  "keywords": [
+    "mui",
+    "mui extended",
+    "material UI",
+    "react UI",
+    "react form",
+    "react markdown",
+    "sodaru"
+  ],
   "main": "dist/cjs/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
