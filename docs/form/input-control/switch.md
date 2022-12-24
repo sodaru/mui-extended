@@ -1,3 +1,10 @@
+```YAML
+title: FormSwitch
+meta:
+  description:
+    A react Switch to be used with Form.
+```
+
 # FormSwitch
 
 ---

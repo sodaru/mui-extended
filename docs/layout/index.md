@@ -1,3 +1,10 @@
+```YAML
+title: Layout
+meta:
+  description:
+    A customizable react Layout based on material ui using TypeScript. consist splitPane, appBar and menu.
+```
+
 # Layout
 
 ---

@@ -1,15 +1,22 @@
 import { Box } from "@mui/material";
-import { NextConfig } from "next";
-import getConfig from "next/config";
+import Link from "next/link";
+import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
 import { ThemeModeSwitch } from "../src";
 import {
+  LinkComponentType,
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
-} from "../src/TreeMenuWithNextLinks";
+} from "../src/TreeMenuWithLinks";
 import { useStateWithSessionStorage } from "../src/utils";
 
-const nextConfig: NextConfig = getConfig();
+const NextLinks = ({ href, children }: LinkComponentType) => {
+  return (
+    <Link href={"/" + href} passHref={true}>
+      <a style={{ width: "100%" }}>{children}</a>
+    </Link>
+  );
+};
 
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
@@ -18,7 +25,7 @@ export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
     "layoutMenuExpanded",
     []
   );
-
+  const router = useRouter();
   const onNodeToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
     setExpanded(nodeIds);
   };
@@ -28,8 +35,10 @@ export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
       {...props}
       TreeViewProps={{
         expanded,
-        onNodeToggle
+        onNodeToggle,
+        selected: router.asPath.substring(1)
       }}
+      LinkComponent={NextLinks}
     />
   );
 };
@@ -47,7 +56,6 @@ export const convertDemoPagesToTreeMenuProps = (
       }
       return link;
     }),
-    basePath: nextConfig.basePath,
     improveLabels: true
   };
 

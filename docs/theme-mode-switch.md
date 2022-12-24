@@ -1,3 +1,10 @@
+```YAML
+title: Theme Mode Switch
+meta:
+  description:
+    react Theme switcher to toggle theme mode.
+```
+
 # Theme Mode Switch
 
 ---

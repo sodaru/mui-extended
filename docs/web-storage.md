@@ -1,3 +1,10 @@
+```YAML
+title: Web Storage
+meta:
+  description:
+    A react/typesctipt component to store state in localStorage and/or sessionStorage.
+```
+
 # Web Storage
 
 ---

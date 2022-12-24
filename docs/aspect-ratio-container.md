@@ -1,3 +1,10 @@
+```YAML
+title: Aspect Ratio Container
+meta:
+  description:
+    A react Container component whose height is always relative to its width.
+```
+
 # Aspect Ratio Container
 
 ---

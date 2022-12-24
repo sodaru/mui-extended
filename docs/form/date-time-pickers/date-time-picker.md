@@ -1,3 +1,10 @@
+```YAML
+title: FormDateTimePicker
+meta:
+  description:
+    A customizable react DateTimePicker to be used with Form.
+```
+
 # FormDateTimePicker
 
 ---

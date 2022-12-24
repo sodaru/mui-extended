@@ -1,4 +1,4 @@
-import { forwardRef, FunctionComponent } from "react";
+import { ComponentType, forwardRef, FunctionComponent } from "react";
 import {
   TreeItem,
   TreeItemContentProps,
@@ -9,11 +9,10 @@ import {
 } from "@mui/lab";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import Link from "next/link";
 import { Typography } from "@mui/material";
 import clsx from "clsx";
 import { deepmerge } from "@mui/utils";
-import { useRouter } from "next/router";
+import type { ReactNode } from "react";
 
 type TreeLinkType = {
   link: string;
@@ -42,10 +41,10 @@ type TreeLinkType = {
  */
 export type TreeMenuWithNextLinksProps = {
   links: (string | TreeLinkType)[];
-  basePath?: string;
   improveLabels?: boolean;
   TreeViewProps?: TreeViewProps;
   TreeItemProps?: TreeItemProps;
+  LinkComponent?: ComponentType<LinkComponentType>;
 };
 
 type TreeNode = {
@@ -53,6 +52,19 @@ type TreeNode = {
   link?: string;
   label: string;
   children: Record<string, TreeNode>;
+};
+
+export type LinkComponentType = {
+  href: string;
+  children: ReactNode;
+};
+
+const LinkComponentDefault = ({ href, children }: LinkComponentType) => {
+  return (
+    <a href={"/" + href} style={{ width: "100%" }}>
+      {children}
+    </a>
+  );
 };
 
 const trimSlashes = (str: string): string => {
@@ -124,7 +136,10 @@ const convertLinksToTreeNodes = (
  */
 const CustomTreeItemContent = forwardRef<
   HTMLDivElement,
-  TreeItemContentProps & { link?: string }
+  TreeItemContentProps & {
+    link?: string;
+    LinkComponent?: ComponentType<LinkComponentType>;
+  }
 >(function CustomTreeItemContent(props, ref) {
   const {
     classes,
@@ -134,7 +149,8 @@ const CustomTreeItemContent = forwardRef<
     icon: iconProp,
     expansionIcon,
     displayIcon,
-    link
+    link,
+    LinkComponent
   } = props;
 
   const {
@@ -146,8 +162,6 @@ const CustomTreeItemContent = forwardRef<
     handleSelection,
     preventSelection
   } = useTreeItem(nodeId);
-
-  const router = useRouter();
 
   const icon = iconProp || expansionIcon || displayIcon;
 
@@ -184,12 +198,10 @@ const CustomTreeItemContent = forwardRef<
     </Typography>
   );
 
+  const Link = LinkComponent || LinkComponentDefault;
+
   if (link !== undefined) {
-    content = (
-      <Link href={(router.basePath || "") + "/" + link} passHref={true}>
-        <a style={{ width: "100%" }}>{content}</a>
-      </Link>
-    );
+    content = <Link href={link}>{content}</Link>;
   }
 
   return (
@@ -232,8 +244,8 @@ const getNearestLink = (node: TreeNode): string => {
 const renderTreeNode = (
   node: TreeNode,
   improveLabels?: boolean,
-  basePath?: string,
-  TreeItemProps?: TreeItemProps
+  TreeItemProps?: TreeItemProps,
+  LinkComponent?: ComponentType<LinkComponentType>
 ) => {
   return (
     <TreeItem
@@ -241,12 +253,15 @@ const renderTreeNode = (
       label={improveLabel(node.label, improveLabels)}
       key={node.id}
       ContentComponent={CustomTreeItemContent}
-      // @ts-expect-error CustomTreeItemContent expects link
-      ContentProps={{ link: getNearestLink(node) }}
+      ContentProps={{
+        // @ts-expect-error CustomTreeItemContent expects link
+        link: getNearestLink(node),
+        LinkComponent: LinkComponent
+      }}
       {...TreeItemProps}
     >
       {Object.values(node.children).map(_node =>
-        renderTreeNode(_node, improveLabels, basePath, TreeItemProps)
+        renderTreeNode(_node, improveLabels, TreeItemProps, LinkComponent)
       )}
     </TreeItem>
   );
@@ -254,13 +269,10 @@ const renderTreeNode = (
 
 export const TreeMenuWithNextLinks: FunctionComponent<
   TreeMenuWithNextLinksProps
-> = ({ links, basePath, improveLabels, TreeViewProps, TreeItemProps }) => {
-  const router = useRouter();
-
+> = ({ links, improveLabels, TreeViewProps, TreeItemProps, LinkComponent }) => {
   const topTreeNodes = convertLinksToTreeNodes(links);
 
   const _treeViewProps = { ...TreeViewProps };
-  _treeViewProps.selected = router.asPath.substring(1);
 
   const treeViewSx = deepmerge(TreeViewProps?.sx || {}, {
     "& .MuiTreeItem-content": {
@@ -281,7 +293,7 @@ export const TreeMenuWithNextLinks: FunctionComponent<
       {..._treeViewProps}
     >
       {Object.values(topTreeNodes).map(node =>
-        renderTreeNode(node, improveLabels, basePath, TreeItemProps)
+        renderTreeNode(node, improveLabels, TreeItemProps, LinkComponent)
       )}
     </TreeView>
   );

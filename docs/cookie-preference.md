@@ -1,3 +1,10 @@
+```YAML
+title: Cookie Preference
+meta:
+  description:
+    A react modal/dialog to view and set Cookie Preference.
+```
+
 # Cookie Preference
 
 ---

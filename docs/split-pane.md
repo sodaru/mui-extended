@@ -1,3 +1,10 @@
+```YAML
+title: Split Pane
+meta:
+  description:
+    customizable react Split Pane Dialog which Splits a container into 2 parts with resizable divider.
+```
+
 # Split Pane
 
 ---

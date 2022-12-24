@@ -1,3 +1,10 @@
+```YAML
+title: FormFileInput
+meta:
+  description:
+    A customizable react FileInput to be used with Form.
+```
+
 # FormFileInput
 
 ---

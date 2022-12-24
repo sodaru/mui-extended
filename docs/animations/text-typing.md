@@ -1,3 +1,10 @@
+```YAML
+title: Text Typing Animation
+meta:
+  description:
+    A React typing animation component with typewriter effect.
+```
+
 # Text Typing Animation
 
 ---

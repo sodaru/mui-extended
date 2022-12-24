@@ -1,3 +1,10 @@
+```YAML
+title: FormCheckboxGroup
+meta:
+  description:
+    A customizable react CheckboxGroup to be used with Form.
+```
+
 # FormCheckboxGroup
 
 A `ControlledCheckboxGroup` is created to map `value` to that of `CheckboxGroup` component

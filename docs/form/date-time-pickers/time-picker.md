@@ -1,3 +1,10 @@
+```YAML
+title: FormTimePicker
+meta:
+  description:
+    A customizable react TimePicker to be used with Form.
+```
+
 # FormTimePicker
 
 ---

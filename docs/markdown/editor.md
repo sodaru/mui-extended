@@ -1,3 +1,10 @@
+```YAML
+title: MarkdownEditor
+meta:
+  description:
+    A react markdown editor with preview, using TypeScript.
+```
+
 # MarkdownEditor
 
 ---

@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@mui/material";
 import { Component, createRef, RefObject } from "react";
 
-export type ResizableBoxProps = BoxProps & {
+export type ResizableBoxProps = Omit<BoxProps, "onResize"> & {
   onResize: (width: number, height: number) => void;
   boxRef?: RefObject<HTMLDivElement>;
 };
