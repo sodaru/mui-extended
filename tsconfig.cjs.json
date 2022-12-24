@@ -5,9 +5,11 @@
     "target": "ES5",
     "module": "CommonJS",
     "moduleResolution": "node",
-    "lib": ["ESNext"],
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "importHelpers": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react-jsx",
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
