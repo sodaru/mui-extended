@@ -8,5 +8,3 @@ meta:
 # Layout Without Menu and AppBar
 
 ---
-
-[Back](../layout)

@@ -1,0 +1,18 @@
+name: Publish and Deploy
+run-name: ${{ github.actor }} is running this build.
+
+on:
+  push:
+    branches:
+      - develop
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "npm"
+      - run: npm i
+      - run: npm run next-build

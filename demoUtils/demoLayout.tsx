@@ -1,7 +1,7 @@
 import { PropsWithChildren } from "react";
 import { HideMenuProvider, Layout } from "../src";
 import { DemoAppBar } from "./demoAppBar";
-import { DemoMenu } from "./demoMenu";
+import { DemoMenuWithThemeMode } from "./demoMenu";
 
 type DemoLayoutProps = PropsWithChildren<{
   pages: string[];
@@ -11,7 +11,7 @@ export const DemoLayout = (props: DemoLayoutProps) => {
   return (
     <HideMenuProvider>
       <Layout
-        menu={<DemoMenu pages={props.pages} />}
+        menu={<DemoMenuWithThemeMode pages={props.pages} />}
         appBar={<DemoAppBar />}
         splitPaneProps={{ minSize: 250 }}
       >

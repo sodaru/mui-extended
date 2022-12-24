@@ -1,9 +1,10 @@
-name: static pages
-run-name: ${{ github.actor }} is running this demo.
+name: Publish and Deploy
+run-name: ${{ github.actor }} is running this publish and deploy.
+
 on:
   push:
-    branches:
-      - develop
+    tags:
+      - "*"
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -13,8 +14,7 @@ jobs:
         with:
           node-version: 16
           cache: "npm"
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: npm i
       - run: npm run next-build
       - run: npm run export
@@ -22,6 +22,19 @@ jobs:
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./static-pages
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          registry-url: https://registry.npmjs.org/
+      - run: npm install
+      - run: npm test
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLIC_TOKEN}}
   deploy:
     needs: build
     permissions:
