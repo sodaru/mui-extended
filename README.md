@@ -7,7 +7,7 @@ UI components extending Material UI.
 ## install
 
 ```shell
-npm i mui-extended;
+npm i mui-extended
 ```
 
 ## Usage
@@ -19,7 +19,7 @@ import { Form } from "mui-extended";
 const { Form } = require("mui-extended");
 ```
 
-### click [here](https://sodaru.github.io/mui-extended/) for detailed documentation.
+### Go to https://sodaru.github.io/mui-extended/ for detailed documentation.
 
 ## Contribution
 
