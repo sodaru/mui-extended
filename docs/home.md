@@ -2,7 +2,7 @@
 title: Material UI Components Extended
 meta:
   description:
-    A customizable react/typescript/ES6/ESNext UI compoents which extends basic ui components provided by material ui(MUI)
+    Customizable react/typescript/ES6/ESNext UI components which extends basic ui components provided by material ui (MUI)
 ```
 
 # Material UI Components Extended

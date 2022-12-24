@@ -1,5 +1,4 @@
 name: Publish and Deploy
-run-name: ${{ github.actor }} is running this publish and deploy.
 
 on:
   push:

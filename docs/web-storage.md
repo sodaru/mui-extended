@@ -2,7 +2,7 @@
 title: Web Storage
 meta:
   description:
-    A react/typesctipt component for localStorage and sessionStorage.
+    A react/typesctipt component to store state in localStorage and/or sessionStorage.
 ```
 
 # Web Storage

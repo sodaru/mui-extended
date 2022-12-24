@@ -2,7 +2,7 @@
 title: Layout Without Menu and AppBar
 meta:
   description:
-   react Layout cosisting of only splitpane.
+   react Layout consisting of only splitpane.
 ```
 
 # Layout Without Menu and AppBar

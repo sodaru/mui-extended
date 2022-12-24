@@ -75,7 +75,7 @@ export const convertDemoPagesToTreeMenuProps = (
   return props;
 };
 
-export const DemoMenuWithThemeMode = ({ pages }: { pages?: string[] }) => {
+export const DemoMenu = ({ pages }: { pages?: string[] }) => {
   return (
     <span>
       <Box p={1}></Box>
@@ -85,17 +85,6 @@ export const DemoMenuWithThemeMode = ({ pages }: { pages?: string[] }) => {
       <Box display="flex" p={1} justifyContent="center" alignItems="center">
         <ThemeModeSwitch orientation="vertical" />
       </Box>
-    </span>
-  );
-};
-
-export const DemoMenu = ({ pages }: { pages?: string[] }) => {
-  return (
-    <span>
-      <Box p={1}></Box>
-      <TreeMenuWithNextLinksSessionPersisted
-        {...convertDemoPagesToTreeMenuProps(pages)}
-      />
     </span>
   );
 };
