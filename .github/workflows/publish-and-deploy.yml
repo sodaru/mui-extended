@@ -15,13 +15,13 @@ jobs:
           cache: "npm"
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: npm i
-      - run: npm run next-build
+      - run: npm run test
       - run: npm run export
       - name: upload pages artifacts
         uses: actions/upload-pages-artifact@v1
         with:
           path: ./static-pages
-  publish:
+  publish-to-npm:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -30,11 +30,10 @@ jobs:
           node-version: 16
           registry-url: https://registry.npmjs.org/
       - run: npm install
-      - run: npm test
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_PUBLIC_TOKEN}}
-  deploy:
+  deploy-pages:
     needs: build
     permissions:
       contents: read
