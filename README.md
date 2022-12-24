@@ -4,19 +4,19 @@ UI components extending Material UI.
 
 > Few of the common and most used UI components in react.
 
-## Usage
-
-### install
+## install
 
 ```shell
 npm i mui-extended;
 ```
 
+## Usage
+
 ```typescript
-import * from "mui-extended";
+import { Form } from "mui-extended";
 
 // in CommonJS environments
-const JSONObjectMerge = require("mui-extended");
+const { Form } = require("mui-extended");
 ```
 
 ### click [here](https://sodaru.github.io/mui-extended/) for detailed documentation.

@@ -47,11 +47,9 @@ const MarkdownPreviewDemoComponent: FunctionComponent<StaticProps> = ({
       <CodeComponentContextProvider
         value={{ maxHeight: codeMaxHeight, enableCopy: codeCopy }}
       >
-        {
-          <MarkdownPreview>
-            {"```\n" + docLines.map(l => "    " + l).join("\n") + "\n```"}
-          </MarkdownPreview>
-        }
+        <MarkdownPreview>
+          {"```\n" + docLines.map(l => "    " + l).join("\n") + "\n```"}
+        </MarkdownPreview>
       </CodeComponentContextProvider>
     </>
   );
