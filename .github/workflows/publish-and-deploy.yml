@@ -16,6 +16,8 @@ jobs:
       - run: echo "The job was automatically triggered by a ${{ github.event_name }} event."
       - run: npm i
       - run: npm run test
+        env:
+          NEXT_PUBLIC_GOOGLE_ANALYTICS_ID: ${{secrets.GOOGLE_ANALYTICS_ID}}
       - run: npm run export
       - name: upload pages artifacts
         uses: actions/upload-pages-artifact@v1

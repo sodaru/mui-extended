@@ -23,6 +23,7 @@ const MuiExtendedDemoApp = ({
   const pages = pageProps.pages || [];
   const meta = pageProps.doc?.meta;
   const docContent = pageProps.doc?.content || "";
+  const title = pageProps.doc?.title || "";
 
   return (
     <>
@@ -37,6 +38,10 @@ const MuiExtendedDemoApp = ({
           <DemoLayout pages={pages}>
             <Container maxWidth="lg">
               <Box minHeight="90vh">
+                <Typography sx={{ marginTop: "16px" }} variant="h4">
+                  {title}
+                </Typography>
+                <hr />
                 <MarkdownPreview>{docContent}</MarkdownPreview>
                 {Component["noDemo"] === undefined ? (
                   <Paper variant="outlined">
