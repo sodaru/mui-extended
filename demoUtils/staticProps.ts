@@ -15,6 +15,7 @@ export type StaticProps = {
   doc: {
     meta: DocMeta;
     content: string;
+    title: string;
   };
 };
 
@@ -56,12 +57,14 @@ export const listDemoPages = async () => {
   return pages;
 };
 
-const extractMetaFromDocContent = (docContent: string) => {
+const extractDetailsFromDocContent = (docContent: string) => {
   const META_START = "```YAML\n";
   const META_END = "\n```\n";
+  const TITLE_END = "\n---\n";
 
   let meta: DocMeta = { title: "", meta: {} };
   let content = docContent.trim();
+  let title = "";
 
   if (content.startsWith(META_START)) {
     // meta detected
@@ -70,9 +73,14 @@ const extractMetaFromDocContent = (docContent: string) => {
     meta = load(metaStr);
 
     content = content.substring(endOfMeta + META_END.length);
+
+    //seperate title and content
+    const titleEndIndex = content.indexOf(TITLE_END);
+    title = content.substring(0, titleEndIndex).replace("#", "").trim();
+    content = content.substring(titleEndIndex + TITLE_END.length);
   }
 
-  return { meta, content };
+  return { meta, title, content };
 };
 
 /**
@@ -84,7 +92,7 @@ const loadDoc = async (path: string) => {
   const docContent = existsSync(absPath)
     ? await readFile(absPath, { encoding: "utf8" })
     : "";
-  return extractMetaFromDocContent(docContent);
+  return extractDetailsFromDocContent(docContent);
 };
 
 export const getStaticPropsFactory = (
