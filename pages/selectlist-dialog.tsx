@@ -7,18 +7,25 @@ import { useState } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { getStaticPropsFactory } from "../demoUtils/staticProps";
+import Box from "@mui/material/Box";
+import { CloseNavigation } from "../src/utils/CloseNavigation";
 
 const SelectListDialogDemo = () => {
   const [open, setOpen] = useState(false);
-  console.log("SelectListDialogDemo");
-  const onSelect = value => {
-    console.log("on select called");
-    console.log(value);
+  const [selectedValue, SetSelectedValue] = useState(null);
+
+  const onSelect = () => {
     setOpen(false);
   };
 
-  const onclose = () => {
-    console.log("on close called");
+  const onClose: SelectListDialogProps["onClose"] = (
+    event,
+    reason,
+    selectedValue
+  ) => {
+    event;
+    console.log("close reason " + reason);
+    if (selectedValue) SetSelectedValue(selectedValue);
     setOpen(false);
   };
 
@@ -28,24 +35,28 @@ const SelectListDialogDemo = () => {
   };
 
   const slectListProps: SelectListDialogProps = {
-    onSelect: onSelect,
-    onClose: onclose,
+    onSubmit: onSelect,
+    onClose: onClose,
     open: open,
     View: () => {
       return <Typography>Content goes here!!!</Typography>;
     },
     viewProps: {
-      /**
-       * TODO: verify onSlect at SelectListDialogProps and ViewPropsType
-       */
-      onSelect: onSelect
+      onSelect: onSelect,
+      selectedValue: selectedValue
     }
   };
 
   return (
     <>
       <Button onClick={onOpenModal}>Open Modal</Button>
-      <SelectListDialog {...slectListProps} />
+      <Box display={"flex"}>
+        <Typography>Selected Value :</Typography> {selectedValue ?? ""}
+      </Box>
+      <CloseNavigation
+        DialogComponent={SelectListDialog}
+        props={slectListProps}
+      />
     </>
   );
 };

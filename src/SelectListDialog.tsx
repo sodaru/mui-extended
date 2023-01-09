@@ -1,5 +1,6 @@
 import {
   Button,
+  Dialog,
   DialogActions,
   DialogContent,
   DialogProps,
@@ -7,19 +8,18 @@ import {
   Typography
 } from "@mui/material";
 import { ComponentType, useState } from "react";
-import { ResponsiveDialog } from "./ResponsiveDialog";
+import { CloseNavigation } from "./utils/CloseNavigation";
 
 export type ViewPropsType = {
   selectedValue?: unknown;
   onSelect: (value: unknown) => void;
 } & Record<string, unknown>;
 
-export type SelectListDialogProps = DialogProps & {
+export type SelectListDialogProps = Omit<DialogProps, "onClose"> & {
   title?: string;
   cancelLabel?: string;
   submitLabel?: string;
-  onClose: DialogProps["onClose"];
-  onSelect: (value: unknown) => void;
+  onClose: (event: Event, reason: string, selectedValue?: unknown) => void;
   View: ComponentType<ViewPropsType>;
   viewProps: ViewPropsType;
   closeIcon?: string;
@@ -29,7 +29,6 @@ export const SelectListDialog = ({
   onClose,
   View,
   viewProps,
-  onSelect,
   ...props
 }: SelectListDialogProps) => {
   const title = props.title ?? "Slect";
@@ -41,16 +40,15 @@ export const SelectListDialog = ({
   };
 
   const onSubmit = e => {
-    onSelect(value);
-    onClose(e, "backdropClick");
+    onClose(e, "submit", value);
   };
 
   const onCancel = e => {
-    onClose(e, "backdropClick");
+    onClose(e, "cancel");
   };
 
   return (
-    <ResponsiveDialog open={open} onClose={onClose} {...props}>
+    <Dialog open={open} onClose={onClose} {...props}>
       <DialogTitle>
         <Typography>{title}</Typography>
       </DialogTitle>
@@ -63,6 +61,6 @@ export const SelectListDialog = ({
           {submitLabel}
         </Button>
       </DialogActions>
-    </ResponsiveDialog>
+    </Dialog>
   );
 };
