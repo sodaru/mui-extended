@@ -12,7 +12,8 @@ import {
   FormLabel
 } from "@mui/material";
 import { FunctionComponent, useState } from "react";
-import { ResponsiveDialog } from "../src";
+import { withResponsiveDialog } from "../src";
+import Dialog from "@mui/material/Dialog";
 
 const ResponsiveDialogDemoComponent: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
@@ -26,6 +27,9 @@ const ResponsiveDialogDemoComponent: FunctionComponent = () => {
   } else if (fullScreen == "false") {
     fullScreenProps.fullScreen = false;
   }
+
+  const ResponsiveDialog = withResponsiveDialog(Dialog);
+
   return (
     <>
       <RadioGroup

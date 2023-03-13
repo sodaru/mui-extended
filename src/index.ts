@@ -12,3 +12,4 @@ export * from "./splitPane/SplitPane";
 export * from "./ThemeModeSwitch";
 export * from "./ThemeOptionsContext";
 export * from "./TreeMenuWithLinks";
+export * from "./utils";

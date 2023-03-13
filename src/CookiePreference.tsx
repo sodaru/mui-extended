@@ -13,7 +13,10 @@ import {
   Typography
 } from "@mui/material";
 import { forwardRef, FunctionComponent, ReactNode, useState } from "react";
-import { ResponsiveDialog, ResponsiveDialogProps } from "./ResponsiveDialog";
+import {
+  withResponsiveDialog,
+  ResponsiveDialogProps
+} from "./ResponsiveDialog";
 import { useStateWithLocalStorage } from "./utils";
 import CookieOutlinedIcon from "@mui/icons-material/CookieOutlined";
 
@@ -74,7 +77,7 @@ export const CookiePreferenceDialog: FunctionComponent<
   );
 
   return (
-    <ResponsiveDialog {...props}>
+    <withResponsiveDialog {...props}>
       <DialogTitle>{title || defaultTitle}</DialogTitle>
       <DialogContent>
         <Typography variant="body1">
@@ -130,7 +133,7 @@ export const CookiePreferenceDialog: FunctionComponent<
           Close
         </Button>
       </DialogActions>
-    </ResponsiveDialog>
+    </withResponsiveDialog>
   );
 };
 

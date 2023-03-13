@@ -3,16 +3,17 @@ import {
   SelectListDialog,
   SelectListDialogProps
 } from "../src/SelectListDialog";
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { getStaticPropsFactory } from "../demoUtils/staticProps";
 import Box from "@mui/material/Box";
-import { CloseNavigation } from "../src/utils/CloseNavigation";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 
 const SelectListDialogDemo = () => {
   const [open, setOpen] = useState(false);
-  const [selectedValue, SetSelectedValue] = useState(null);
+  const [selectedValue, SetSelectedValue] = useState<string>("");
 
   const onSelect = () => {
     setOpen(false);
@@ -23,9 +24,10 @@ const SelectListDialogDemo = () => {
     reason,
     selectedValue
   ) => {
-    event;
     console.log("close reason " + reason);
-    if (selectedValue) SetSelectedValue(selectedValue);
+    if (selectedValue) {
+      SetSelectedValue(selectedValue as string);
+    }
     setOpen(false);
   };
 
@@ -34,12 +36,29 @@ const SelectListDialogDemo = () => {
     setOpen(true);
   };
 
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.checked) {
+      SetSelectedValue(selectedValue + event.target.name);
+    } else {
+      SetSelectedValue(selectedValue.replace(event.target.name, ""));
+    }
+  };
+
   const slectListProps: SelectListDialogProps = {
     onSubmit: onSelect,
     onClose: onClose,
     open: open,
     View: () => {
-      return <Typography>Content goes here!!!</Typography>;
+      return (
+        <Box>
+          <FormControlLabel
+            control={<Checkbox onChange={handleChange} name="Item1" />}
+            label="Item1"
+          />
+          <FormControlLabel control={<Checkbox name="Item2" />} label="Item2" />
+          <FormControlLabel control={<Checkbox name="Item3" />} label="Item3" />
+        </Box>
+      );
     },
     viewProps: {
       onSelect: onSelect,
@@ -53,10 +72,7 @@ const SelectListDialogDemo = () => {
       <Box display={"flex"}>
         <Typography>Selected Value :</Typography> {selectedValue ?? ""}
       </Box>
-      <CloseNavigation
-        DialogComponent={SelectListDialog}
-        props={slectListProps}
-      />
+      <SelectListDialog {...slectListProps} />
     </>
   );
 };
