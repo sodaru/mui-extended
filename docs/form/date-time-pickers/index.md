@@ -14,6 +14,12 @@ Extends [_MUI datepickers_](https://mui.com/x/react-date-pickers/getting-started
 \
 &nbsp;
 
+> To use any of the below components, install the following additional packages
+>
+> ```
+> npm i @mui/x-date-pickers @date-io/date-fns date-fns
+> ```
+
 Following DatePickers are extended
 
 - [_DatePicker_](./date-time-pickers/date-picker)

@@ -9,11 +9,11 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  FormLabel
+  FormLabel,
+  Dialog
 } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 import { withResponsiveDialog } from "../src";
-import Dialog from "@mui/material/Dialog";
 
 const ResponsiveDialogDemoComponent: FunctionComponent = () => {
   const [open, setOpen] = useState(false);
