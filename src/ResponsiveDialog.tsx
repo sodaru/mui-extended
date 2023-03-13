@@ -1,4 +1,4 @@
-import { ComponentType } from "react-markdown/lib/ast-to-react";
+import { ComponentType } from "react";
 import { useMobile } from "./utils/useMobile";
 
 export type ResponsiveDialogProps = {

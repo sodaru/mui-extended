@@ -9,6 +9,12 @@ meta:
 
 ---
 
+> To use this component, install the following additional packages
+>
+> ```
+> npm i prettier
+> ```
+
 ## Usage
 
 ```typescript

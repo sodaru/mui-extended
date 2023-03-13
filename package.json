@@ -104,9 +104,6 @@
     "@date-io/date-fns": {
       "optional": true
     },
-    "@mui/icons-material": {
-      "optional": true
-    },
     "@mui/lab": {
       "optional": true
     },

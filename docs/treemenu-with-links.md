@@ -11,6 +11,12 @@ meta:
 
 Creates a Tree Menu with links. Uses [`TreeView`](https://mui.com/components/tree-view/) component from `MUI`
 
+> To use this component, install the following additional packages
+>
+> ```
+> npm i @mui/lab
+> ```
+
 ## Usage
 
 ```typescript
