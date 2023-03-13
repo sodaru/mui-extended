@@ -1,24 +1,15 @@
-import { Dialog, DialogProps } from "@mui/material";
-import { FunctionComponent } from "react";
-import { withCloseOnNavigation } from "./utils";
+import { ComponentType } from "react";
 import { useMobile } from "./utils/useMobile";
 
-export type ResponsiveDialogProps = DialogProps & {
-  onClose: DialogProps["onClose"];
+export type ResponsiveDialogProps = {
+  fullScreen?: boolean;
 };
 
-const CloseOnNavigateDialog = withCloseOnNavigation(
-  Dialog
-) as FunctionComponent<DialogProps>;
-
-export const ResponsiveDialog: FunctionComponent<ResponsiveDialogProps> = ({
-  children,
-  ...props
-}) => {
-  const isMobile = useMobile();
-  return (
-    <CloseOnNavigateDialog fullScreen={isMobile} {...props}>
-      {children}
-    </CloseOnNavigateDialog>
-  );
+export const withResponsiveDialog = <T extends ResponsiveDialogProps>(
+  DialogComponent: ComponentType<T>
+): ComponentType<T> => {
+  return function ResponsiveComponent(props: T) {
+    const isMobile = useMobile();
+    return <DialogComponent fullScreen={isMobile} {...props} />;
+  };
 };

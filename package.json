@@ -13,7 +13,6 @@
     "react GoogleAnalytics",
     "sodaru"
   ],
-  "main": "dist/cjs/index.js",
   "module": "./dist/index.js",
   "typings": "./dist/index.d.js",
   "files": [
@@ -24,10 +23,9 @@
     "prettier": "npx prettier --check --ignore-unknown ./**/*",
     "eslint": "npx eslint ./ --no-error-on-unmatched-pattern",
     "tsc": "npx tsc --project tsconfig.build.json",
-    "tsc-cjs": "npx tsc --project tsconfig.cjs.json",
     "next-build": "npx next build",
     "prebuild": "npm run prettier && npm run eslint && npm run clean",
-    "build": "npm run tsc && npm run tsc-cjs && npm run next-build",
+    "build": "npm run tsc && npm run next-build",
     "pretest": "npm run build",
     "test": "echo 'no tests'",
     "prepack": "npm run test",
@@ -87,24 +85,49 @@
   },
   "peerDependencies": {
     "@date-io/date-fns": "^2.13.1",
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.1",
     "@mui/lab": "^5.0.0-alpha.73",
     "@mui/material": "^5.6.1",
     "@mui/x-date-pickers": "^5.0.0-alpha.0",
-    "lodash": "^4.17.21",
-    "next": "^12.1.0 || ^13.0.0",
-    "react": "^17.0.2 || ^18.0.0",
-    "tslib": "^2.3.1"
-  },
-  "dependencies": {
     "date-fns": "^2.28.0",
     "decorated-ajv": "^1.1.0",
+    "lodash": "^4.17.21",
+    "next": "^12.1.0 || ^13.0.0",
     "prettier": "^2.6.2",
+    "react": "^17.0.2 || ^18.0.0",
     "react-markdown": "^8.0.1",
     "react-syntax-highlighter": "^15.5.0",
-    "remark-gfm": "^3.0.1"
+    "remark-gfm": "^3.0.1",
+    "tslib": "^2.5.0"
+  },
+  "peerDependenciesMeta": {
+    "@date-io/date-fns": {
+      "optional": true
+    },
+    "@mui/lab": {
+      "optional": true
+    },
+    "@mui/x-date-pickers": {
+      "optional": true
+    },
+    "date-fns": {
+      "optional": true
+    },
+    "decorated-ajv": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "react-markdown": {
+      "optional": true
+    },
+    "react-syntax-highlighter": {
+      "optional": true
+    },
+    "remark-gfm": {
+      "optional": true
+    }
   },
   "sideEffects": false
 }

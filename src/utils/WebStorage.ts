@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useStateWithWebStorage = <T>(
+export const useStateWithWebStorage = <T>(
   webStorage: Storage,
   webStorageKey: string,
   initialValue: T

@@ -11,6 +11,14 @@ meta:
 
 Form is a controller for input fields
 
+> To use this component, install the following additional packages
+>
+> ```
+> npm i decorated-ajv
+> ```
+
+````
+
 ## Usage
 
 - use `Form` to wrap inputs within it
@@ -47,7 +55,7 @@ Form is a controller for input fields
       <SubmitButton>Submit</SubmitButton>
     </Form>
   );
-  ```
+````
 
 ## Features
 

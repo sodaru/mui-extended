@@ -11,6 +11,12 @@ meta:
 
 wraps [_DatePicker_](https://mui.com/components/date-picker/) to correct the `onChange` and `onBlur` props
 
+> To use this component, install the following additional packages
+>
+> ```
+> npm i @mui/x-date-pickers @date-io/date-fns date-fns
+> ```
+
 ## Props
 
 - All [_`DatePickerProps`_](https://mui.com/api/date-picker/#props)
