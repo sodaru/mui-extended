@@ -1,8 +1,10 @@
 import {
   Box,
   Button,
+  Dialog,
   DialogActions,
   DialogContent,
+  DialogProps,
   DialogTitle,
   Fab,
   FabProps,
@@ -13,10 +15,7 @@ import {
   Typography
 } from "@mui/material";
 import { forwardRef, FunctionComponent, ReactNode, useState } from "react";
-import {
-  withResponsiveDialog,
-  ResponsiveDialogProps
-} from "./ResponsiveDialog";
+import { ResponsiveDialogProps } from "./ResponsiveDialog";
 import { useStateWithLocalStorage } from "./utils";
 import CookieOutlinedIcon from "@mui/icons-material/CookieOutlined";
 
@@ -31,7 +30,7 @@ export type CookiePreferenceDialogProps = Omit<
     string,
     { default: boolean; title: string; description: ReactNode }
   >;
-};
+} & DialogProps;
 
 const defaultTitle = "Cookie Preferences";
 
@@ -77,7 +76,7 @@ export const CookiePreferenceDialog: FunctionComponent<
   );
 
   return (
-    <withResponsiveDialog {...props}>
+    <Dialog {...props}>
       <DialogTitle>{title || defaultTitle}</DialogTitle>
       <DialogContent>
         <Typography variant="body1">
@@ -133,7 +132,7 @@ export const CookiePreferenceDialog: FunctionComponent<
           Close
         </Button>
       </DialogActions>
-    </withResponsiveDialog>
+    </Dialog>
   );
 };
 
