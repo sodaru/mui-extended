@@ -102,31 +102,31 @@
   },
   "peerDependenciesMeta": {
     "@date-io/date-fns": {
-      "optional": true
+      "optional": false
     },
     "@mui/lab": {
-      "optional": true
+      "optional": false
     },
     "@mui/x-date-pickers": {
-      "optional": true
+      "optional": false
     },
     "date-fns": {
-      "optional": true
+      "optional": false
     },
     "decorated-ajv": {
-      "optional": true
+      "optional": false
     },
     "prettier": {
-      "optional": true
+      "optional": false
     },
     "react-markdown": {
-      "optional": true
+      "optional": false
     },
     "react-syntax-highlighter": {
-      "optional": true
+      "optional": false
     },
     "remark-gfm": {
-      "optional": true
+      "optional": false
     }
   },
   "sideEffects": false
