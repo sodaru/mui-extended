@@ -33,7 +33,7 @@ const MarqueeAnimationDemoComponent = (): JSX.Element => {
         <ListItem>
           <MarqueeAnimation repeat={true} width="100%">
             <Typography color="primary" variant="h3">
-              Formatted Text &nbsp;
+              Formatted Text Format&nbsp;
             </Typography>
           </MarqueeAnimation>
         </ListItem>
