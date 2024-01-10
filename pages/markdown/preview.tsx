@@ -51,6 +51,17 @@ const MarkdownPreviewDemoComponent: FunctionComponent<StaticProps> = ({
           {"```\n" + docLines.map(l => "    " + l).join("\n") + "\n```"}
         </MarkdownPreview>
       </CodeComponentContextProvider>
+
+      <Typography variant="h4">Markdown Preview with Anchor Links</Typography>
+      <MarkdownPreview anchorLink>
+        {`
+# My Header 
+## My Sub Header 
+### Another Sub Header 1 
+Content under \`Another Sub Header 1\` 
+### Another Sub Header 2
+`}
+      </MarkdownPreview>
     </>
   );
 };

@@ -15,7 +15,7 @@ import {
   IconButton,
   Tooltip
 } from "@mui/material";
-import { createContext, FunctionComponent, useContext } from "react";
+import { createContext, FunctionComponent, ReactNode, useContext } from "react";
 import ReactMarkdown, { Components, Options } from "react-markdown";
 import { PrismAsyncLight as SyntaxHighlighter } from "react-syntax-highlighter";
 import remarkGfm from "remark-gfm";
@@ -33,6 +33,54 @@ type CodeComponentContextType = { enableCopy?: boolean; maxHeight?: string };
 const CodeComponentContext = createContext<CodeComponentContextType>({});
 
 export const CodeComponentContextProvider = CodeComponentContext.Provider;
+
+const getNodeText = (node: ReactNode) => {
+  if (["string", "number"].includes(typeof node)) {
+    return node;
+  } else if (node instanceof Array) {
+    return node.map(getNodeText).join("");
+  } else if (typeof node === "object" && node) {
+    //@ts-expect-error props may not be in node
+    return getNodeText(node?.props?.children);
+  } else {
+    return "";
+  }
+};
+
+export const generateAnchorLink = (linkTitle: ReactNode) => {
+  return (
+    getNodeText(linkTitle)
+      .toLocaleLowerCase()
+      // eslint-disable-next-line no-control-regex
+      .replace(/[\x00-\x2f\x3a-\x40\x5b-\x60\x7b-\x7f]/g, "_")
+  );
+};
+
+export type TypeMarkdownPreviewProps = {
+  anchorLink?: boolean;
+  includeHierarchyInAnchorLink?: boolean;
+};
+const MarkdownPreviewContext = createContext<TypeMarkdownPreviewProps>({});
+
+export const markdownAnchorLinkHOC = function <T = Record<string, unknown>>(
+  HeaderComponent: FunctionComponent<T>
+) {
+  return function HeaderComponentWithAnchorLink(props: T) {
+    const context = useContext(MarkdownPreviewContext);
+    let elem = <HeaderComponent {...props} />;
+    if (context.anchorLink) {
+      elem = (
+        <a
+          href={"#" + generateAnchorLink(props["children"] || "")}
+          style={{ textDecoration: "none", color: "inherit" }}
+        >
+          {elem}
+        </a>
+      );
+    }
+    return elem;
+  };
+};
 
 const SyntaxHighLightedCodeComponent: Components["code"] = ({
   inline,
@@ -178,17 +226,19 @@ const A = props => {
   );
 };
 
-export const MarkdownPreview: FunctionComponent<{
-  children: string;
-  components?: Options["components"];
-}> = ({ children, components = {} }) => {
+export const MarkdownPreview: FunctionComponent<
+  {
+    children: string;
+    components?: Options["components"];
+  } & TypeMarkdownPreviewProps
+> = ({ children, components = {}, ...props }) => {
   const _components: Options["components"] = {
-    h1: H1,
-    h2: H2,
-    h3: H3,
-    h4: H4,
-    h5: H5,
-    h6: H6,
+    h1: markdownAnchorLinkHOC(H1),
+    h2: markdownAnchorLinkHOC(H2),
+    h3: markdownAnchorLinkHOC(H3),
+    h4: markdownAnchorLinkHOC(H4),
+    h5: markdownAnchorLinkHOC(H5),
+    h6: markdownAnchorLinkHOC(H6),
     p: P,
     blockquote: Blockquote,
     table: TableComponent,
@@ -204,8 +254,10 @@ export const MarkdownPreview: FunctionComponent<{
   };
 
   return (
-    <ReactMarkdown components={_components} remarkPlugins={[remarkGfm]}>
-      {children}
-    </ReactMarkdown>
+    <MarkdownPreviewContext.Provider value={props}>
+      <ReactMarkdown components={_components} remarkPlugins={[remarkGfm]}>
+        {children}
+      </ReactMarkdown>
+    </MarkdownPreviewContext.Provider>
   );
 };

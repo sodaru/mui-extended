@@ -19,7 +19,10 @@ export type FormProps<T extends Record<string, unknown>> = PropsWithChildren<{
 
 const getDefaultValidator = (schema: JSONSchema7): FormFieldValidatorType => {
   return async (name, value) => {
-    validate(schema, value);
+    const violations = await validate(schema, value);
+    if (violations.length > 0) {
+      throw new Error(violations[0].message);
+    }
   };
 };
 
