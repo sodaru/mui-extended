@@ -50,6 +50,7 @@ const FormDemoComponent: FunctionComponent = () => {
           <Typography variant="h6">Form</Typography>
           <Form
             initialValues={{
+              textWithSchema: "",
               text: "",
               select: "blr",
               textarea: "",
@@ -62,6 +63,13 @@ const FormDemoComponent: FunctionComponent = () => {
               datePicker: new Date().toISOString(),
               timePicker: new Date().toISOString(),
               datetimePicker: new Date().toISOString()
+            }}
+            schemas={{
+              textWithSchema: {
+                type: "string",
+                minLength: 5,
+                errorMessage: { minLength: "must have value" }
+              }
             }}
             validators={{
               text: validator,
@@ -117,7 +125,10 @@ const FormDemoComponent: FunctionComponent = () => {
                 ChipProps={{ size: "small" }}
                 sx={{ width: "100%" }}
               />
-
+              <FormTextField
+                name="textWithSchema"
+                label="Text With Schema for validation"
+              />
               <FormTextField name="text" label="Text" />
 
               <FormTextField
