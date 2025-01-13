@@ -1,7 +1,7 @@
 import { List, ListItem, Typography } from "@mui/material";
 import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 import { TextTypingAnimation } from "../../src/animations/TextTypingAnimation";
-import { useState } from "react";
+import { useState, JSX } from "react";
 
 const TextTypingAnimationDemoComponent = (): JSX.Element => {
   const messageList = [

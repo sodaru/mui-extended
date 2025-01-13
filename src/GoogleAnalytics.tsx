@@ -1,5 +1,6 @@
 import Script from "next/script";
 import { useStateWithLocalStorage } from "./utils";
+import { JSX } from "react";
 
 /**
  * Adds Google Analytics to Webpage , if NEXT_PUBLIC_GOOGLE_ANALYTICS_ID is set

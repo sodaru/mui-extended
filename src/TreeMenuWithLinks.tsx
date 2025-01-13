@@ -1,18 +1,24 @@
-import { ComponentType, forwardRef, FunctionComponent } from "react";
 import {
-  TreeItem,
-  TreeItemContentProps,
-  TreeItemProps,
-  TreeView,
-  TreeViewProps,
-  useTreeItem
-} from "@mui/lab";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowRightIcon from "@mui/icons-material/ArrowRight";
-import { Typography } from "@mui/material";
-import clsx from "clsx";
-import { deepmerge } from "@mui/utils";
-import type { ReactNode } from "react";
+  RichTreeView,
+  RichTreeViewProps,
+  TreeItem2,
+  TreeItem2Content,
+  TreeItem2Props,
+  TreeViewBaseItem,
+  UseTreeItem2Status,
+  useTreeItem2Utils
+} from "@mui/x-tree-view";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import {
+  createRef,
+  FC,
+  forwardRef,
+  FunctionComponent,
+  MouseEvent as ReactMouseEvent,
+  ReactNode,
+  RefObject
+} from "react";
 
 type TreeLinkType = {
   link: string;
@@ -39,32 +45,18 @@ type TreeLinkType = {
  * }
  * ```
  */
-export type TreeMenuWithNextLinksProps = {
+export type TreeMenuWithNextLinksProps<
+  R extends Record<string, unknown> = Record<string, unknown>,
+  Multiple extends boolean | undefined = false
+> = {
   links: (string | TreeLinkType)[];
   improveLabels?: boolean;
-  TreeViewProps?: TreeViewProps;
-  TreeItemProps?: TreeItemProps;
-  LinkComponent?: ComponentType<LinkComponentType>;
-};
-
-type TreeNode = {
-  id: string;
-  link?: string;
-  label: string;
-  children: Record<string, TreeNode>;
+  RichTreeViewProps?: Omit<RichTreeViewProps<R, Multiple>, "items">;
 };
 
 export type LinkComponentType = {
   href: string;
   children: ReactNode;
-};
-
-const LinkComponentDefault = ({ href, children }: LinkComponentType) => {
-  return (
-    <a href={"/" + href} style={{ width: "100%" }}>
-      {children}
-    </a>
-  );
 };
 
 const trimSlashes = (str: string): string => {
@@ -77,15 +69,114 @@ const trimSlashes = (str: string): string => {
   return str;
 };
 
-const convertLinksToTreeNodes = (
-  links: TreeMenuWithNextLinksProps["links"]
-): Record<string, TreeNode> => {
-  const rootTreeNode: TreeNode = {
-    id: "",
-    link: "",
-    label: "",
-    children: {}
+const withNextLink = (
+  id: string,
+  iconRef: RefObject<SVGSVGElement>,
+  handleExpansion: (event: ReactMouseEvent<Element, MouseEvent>) => void
+) => {
+  const TreeItemContentWithNextLink: FC<{
+    status: UseTreeItem2Status;
+    indentationAtItemLevel?: true;
+  }> = props => {
+    const router = useRouter();
+
+    const ref = createRef<HTMLDivElement>();
+    const link = "/" + id.split(".").join("/");
+
+    return (
+      <Link href={link} style={{ textDecoration: "none", color: "inherit" }}>
+        <TreeItem2Content
+          {...props}
+          ref={ref}
+          onClick={e => {
+            let isExpandIcon = false;
+            let target = e.target as HTMLElement | SVGSVGElement;
+            while (target && target != ref.current) {
+              if (target == iconRef.current) {
+                isExpandIcon = true;
+                break;
+              }
+              target = target.parentElement;
+            }
+            e.preventDefault();
+            e.stopPropagation();
+            if (isExpandIcon) {
+              handleExpansion(e);
+            } else {
+              router.push(link);
+            }
+          }}
+        />
+      </Link>
+    );
   };
+  return TreeItemContentWithNextLink;
+};
+
+const improveLabel = (label: string, improve?: boolean) => {
+  if (improve) {
+    label = label
+      .split(/(-|_)/)
+      .filter(c => c != "-" && c != "_")
+      .map(s => s.charAt(0).toLocaleUpperCase() + s.substring(1))
+      .join(" ");
+  }
+  return label;
+};
+
+const CustomTreeItem = forwardRef(function CustomTreeItem(
+  props: TreeItem2Props,
+  ref: React.Ref<HTMLLIElement>
+) {
+  const { publicAPI, interactions } = useTreeItem2Utils({
+    itemId: props.itemId,
+    children: props.children
+  });
+
+  const item = publicAPI.getItem(props.itemId) as { hasLink?: boolean };
+
+  const iconRef = createRef<SVGSVGElement>();
+
+  return (
+    <TreeItem2
+      {...props}
+      ref={ref}
+      slots={{
+        content: item.hasLink
+          ? withNextLink(
+              props.itemId ?? "",
+              iconRef,
+              interactions.handleExpansion
+            )
+          : TreeItem2Content
+      }}
+      slotProps={{
+        collapseIcon: { ref: iconRef },
+        expandIcon: { ref: iconRef }
+      }}
+    />
+  );
+});
+
+export const TreeMenuWithNextLinks: FunctionComponent<
+  TreeMenuWithNextLinksProps
+> = ({ links, improveLabels, RichTreeViewProps }) => {
+  const topItems = convertToRichTreeViewItems(links, improveLabels);
+
+  return (
+    <RichTreeView
+      {...RichTreeViewProps}
+      items={topItems}
+      slots={{ item: CustomTreeItem }}
+    />
+  );
+};
+
+const convertToRichTreeViewItems = (
+  links: (string | TreeLinkType)[],
+  improveLabels?: boolean
+) => {
+  const itemsMap: Record<string, TreeViewBaseItem & { hasLink?: boolean }> = {};
 
   for (const link of links) {
     const _link: TreeLinkType = typeof link == "string" ? { link } : link;
@@ -107,194 +198,42 @@ const convertLinksToTreeNodes = (
         labelSegments.shift();
       }
     }
-
-    let currentNode: TreeNode = rootTreeNode;
-
     for (let i = 0; i < linkSegments.length; i++) {
-      const linkSegment = linkSegments[i];
-      const labelSegment = labelSegments[i];
-      if (!currentNode.children[linkSegment]) {
-        currentNode.children[linkSegment] = {
-          id: linkSegments.slice(0, i + 1).join("/"),
-          label: labelSegment,
-          children: {}
+      const id = linkSegments.slice(0, i + 1).join(".");
+      const label = labelSegments[i] ?? linkSegments[i];
+      if (itemsMap[id] === undefined) {
+        itemsMap[id] = {
+          id,
+          label,
+          children: []
         };
       }
-      currentNode = currentNode.children[linkSegment];
-      if (labelSegment) {
-        currentNode.label = labelSegment;
+      itemsMap[id].label = label;
+
+      if (improveLabels) {
+        itemsMap[id].label = improveLabel(itemsMap[id].label, improveLabels);
+      }
+
+      if (i > 0) {
+        const parentId = linkSegments.slice(0, i).join(".");
+        const parentChildren = itemsMap[parentId].children ?? [];
+        parentChildren.push(itemsMap[id]);
+      }
+
+      if (i == linkSegments.length - 1) {
+        itemsMap[id].hasLink = true;
       }
     }
-    currentNode.link = _link.link;
   }
 
-  return rootTreeNode.children;
-};
-
-/**
- * Prevents event from bubling up from icon component, So clicking on icon only provides expansion and collapse of childtree
- */
-const CustomTreeItemContent = forwardRef<
-  HTMLDivElement,
-  TreeItemContentProps & {
-    link?: string;
-    LinkComponent?: ComponentType<LinkComponentType>;
-  }
->(function CustomTreeItemContent(props, ref) {
-  const {
-    classes,
-    className,
-    label,
-    nodeId,
-    icon: iconProp,
-    expansionIcon,
-    displayIcon,
-    link,
-    LinkComponent
-  } = props;
-
-  const {
-    disabled,
-    expanded,
-    selected,
-    focused,
-    handleExpansion,
-    handleSelection,
-    preventSelection
-  } = useTreeItem(nodeId);
-
-  const icon = iconProp || expansionIcon || displayIcon;
-
-  const handleMouseDown = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    preventSelection(event);
-  };
-
-  const handleExpansionClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    event.preventDefault();
-    event.stopPropagation();
-    handleExpansion(event);
-  };
-
-  const handleSelectionClick = (
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>
-  ) => {
-    if (!expanded) {
-      handleExpansion(event);
-    }
-    handleSelection(event);
-  };
-
-  let content = (
-    <Typography
-      onClick={handleSelectionClick}
-      component="div"
-      className={classes.label}
-    >
-      {label}
-    </Typography>
-  );
-
-  const Link = LinkComponent || LinkComponentDefault;
-
-  if (link !== undefined) {
-    content = <Link href={link}>{content}</Link>;
-  }
-
-  return (
-    <div
-      className={clsx(className, classes.root, {
-        [classes.expanded]: expanded,
-        [classes.selected]: selected,
-        [classes.focused]: focused,
-        [classes.disabled]: disabled
-      })}
-      onMouseDown={handleMouseDown}
-      ref={ref}
-    >
-      <div onClick={handleExpansionClick} className={classes.iconContainer}>
-        {icon}
-      </div>
-      {content}
-    </div>
-  );
-});
-
-const improveLabel = (label: string, improve?: boolean) => {
-  if (improve) {
-    label = label
-      .split(/(-|_)/)
-      .filter(c => c != "-" && c != "_")
-      .map(s => s.charAt(0).toLocaleUpperCase() + s.substring(1))
-      .join(" ");
-  }
-  return label;
-};
-
-const getNearestLink = (node: TreeNode): string => {
-  while (node && !node.link) {
-    node = Object.values(node.children)?.[0];
-  }
-  return node?.link || "";
-};
-
-const renderTreeNode = (
-  node: TreeNode,
-  improveLabels?: boolean,
-  TreeItemProps?: TreeItemProps,
-  LinkComponent?: ComponentType<LinkComponentType>
-) => {
-  return (
-    <TreeItem
-      nodeId={node.id + ""}
-      label={improveLabel(node.label, improveLabels)}
-      key={node.id}
-      ContentComponent={CustomTreeItemContent}
-      ContentProps={{
-        // @ts-expect-error CustomTreeItemContent expects link
-        link: getNearestLink(node),
-        LinkComponent: LinkComponent
-      }}
-      {...TreeItemProps}
-    >
-      {Object.values(node.children).map(_node =>
-        renderTreeNode(_node, improveLabels, TreeItemProps, LinkComponent)
-      )}
-    </TreeItem>
-  );
-};
-
-export const TreeMenuWithNextLinks: FunctionComponent<
-  TreeMenuWithNextLinksProps
-> = ({ links, improveLabels, TreeViewProps, TreeItemProps, LinkComponent }) => {
-  const topTreeNodes = convertLinksToTreeNodes(links);
-
-  const _treeViewProps = { ...TreeViewProps };
-
-  const treeViewSx = deepmerge(TreeViewProps?.sx || {}, {
-    "& .MuiTreeItem-content": {
-      padding: 0.5
-    },
-    "& a, a:hover": {
-      textDecoration: "none",
-      color: "inherit"
+  // remove duplicate items in children
+  Object.values(itemsMap).forEach(item => {
+    if (item.children?.length) {
+      item.children = Object.values(
+        Object.fromEntries(item.children.map(c => [c.id, c]))
+      );
     }
   });
-  _treeViewProps.sx = treeViewSx;
 
-  return (
-    <TreeView
-      aria-label="links"
-      defaultCollapseIcon={<ArrowDropDownIcon />}
-      defaultExpandIcon={<ArrowRightIcon />}
-      {..._treeViewProps}
-    >
-      {Object.values(topTreeNodes).map(node =>
-        renderTreeNode(node, improveLabels, TreeItemProps, LinkComponent)
-      )}
-    </TreeView>
-  );
+  return Object.values(itemsMap).filter(i => !i.id.includes("."));
 };

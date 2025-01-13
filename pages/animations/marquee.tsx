@@ -1,6 +1,7 @@
 import { List, ListItem, Paper, Typography } from "@mui/material";
 import { getStaticPropsFactory } from "../../demoUtils/staticProps";
 import { MarqueeAnimation } from "../../src/animations/MarqueeAnimation";
+import { JSX } from "react";
 
 const MarqueeAnimationDemoComponent = (): JSX.Element => {
   return (

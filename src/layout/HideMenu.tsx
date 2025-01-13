@@ -24,9 +24,10 @@ export const useHideMenu = () => {
 };
 
 export const HideMenuProvider: FunctionComponent<{
+  initialValue?: boolean;
   children?: ReactNode | ReactNode[];
-}> = ({ children }) => {
-  const [hide, setHide] = useState(false);
+}> = ({ children, initialValue }) => {
+  const [hide, setHide] = useState(!!initialValue);
   const value = useMemo(
     () => ({
       hide,

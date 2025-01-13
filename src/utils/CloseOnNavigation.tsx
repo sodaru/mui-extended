@@ -124,7 +124,7 @@ export const withCloseOnNavigation = <
       }, [props.open]);
 
       return (
-        <Modal {...(props as T)} ref={ref}>
+        <Modal {...(props as unknown as T)} ref={ref}>
           {children}
         </Modal>
       );

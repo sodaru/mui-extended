@@ -1,44 +1,30 @@
 import { Box } from "@mui/material";
-import Link from "next/link";
-import { useRouter } from "next/router";
 import { FunctionComponent } from "react";
 import { ThemeModeSwitch } from "../src";
 import {
-  LinkComponentType,
   TreeMenuWithNextLinks,
   TreeMenuWithNextLinksProps
 } from "../src/TreeMenuWithLinks";
 import { useStateWithSessionStorage } from "../src/utils";
 
-const NextLinks = ({ href, children }: LinkComponentType) => {
-  return (
-    <Link href={"/" + href} passHref={true}>
-      <a style={{ width: "100%" }}>{children}</a>
-    </Link>
-  );
-};
-
 export const TreeMenuWithNextLinksSessionPersisted: FunctionComponent<
   TreeMenuWithNextLinksProps
 > = props => {
-  const [expanded, setExpanded] = useStateWithSessionStorage<string[]>(
-    "layoutMenuExpanded",
-    []
-  );
-  const router = useRouter();
-  const onNodeToggle = (event: React.SyntheticEvent, nodeIds: string[]) => {
-    setExpanded(nodeIds);
-  };
+  const [expanded, setExpanded] = useStateWithSessionStorage<
+    Record<string, boolean>
+  >("layoutMenuExpanded", {});
 
   return (
     <TreeMenuWithNextLinks
       {...props}
-      TreeViewProps={{
-        expanded,
-        onNodeToggle,
-        selected: router.asPath.substring(1)
+      RichTreeViewProps={{
+        expandedItems: Object.keys(expanded).filter(k => expanded[k]),
+        onItemExpansionToggle: (event, itemId: string, isExpanded: boolean) => {
+          const newExpanded = { ...expanded };
+          newExpanded[itemId] = isExpanded;
+          setExpanded(newExpanded);
+        }
       }}
-      LinkComponent={NextLinks}
     />
   );
 };

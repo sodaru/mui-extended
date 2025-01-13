@@ -96,7 +96,7 @@ export const withFormField = <T extends PropsWithChildren<FormFieldAttributes>>(
 
     return (
       <PureFormFieldComponent
-        {...(props as T)}
+        {...(props as unknown as T)}
         name={name}
         label={_label}
         value={value}

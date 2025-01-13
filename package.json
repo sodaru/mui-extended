@@ -13,8 +13,8 @@
     "react GoogleAnalytics",
     "sodaru"
   ],
-  "module": "./dist/index.js",
-  "typings": "./dist/index.d.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.js",
   "files": [
     "dist"
   ],
@@ -31,8 +31,7 @@
     "prepack": "npm run test",
     "postversion": "git push --follow-tags",
     "dev": "next dev",
-    "start": "next start",
-    "export": "npx next export -o static-pages"
+    "start": "next start"
   },
   "repository": {
     "type": "git",
@@ -50,31 +49,34 @@
   },
   "homepage": "https://github.com/sodaru/mui-extended#readme",
   "devDependencies": {
-    "@date-io/date-fns": "^2.13.1",
-    "@emotion/react": "^11.8.1",
-    "@emotion/styled": "^11.8.1",
-    "@mui/icons-material": "^5.10.16",
-    "@mui/lab": "^5.0.0-alpha.111",
-    "@mui/material": "^5.10.17",
-    "@mui/x-date-pickers": "^5.0.10",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.0",
+    "@mui/icons-material": "^6.3.1",
+    "@mui/material": "^6.3.1",
+    "@mui/x-date-pickers": "^7.23.6",
+    "@mui/x-tree-view": "^7.23.6",
     "@next/bundle-analyzer": "^12.1.0",
-    "@types/js-yaml": "^4.0.5",
-    "@types/json-schema": "^7.0.11",
-    "@types/lodash": "^4.14.181",
-    "@types/node": "^17.0.21",
-    "@types/prettier": "^2.6.0",
-    "@types/react": "^17.0.2 || ^18.0.0",
-    "@types/react-dom": "^17.0.2 || ^18.0.0",
-    "@types/react-syntax-highlighter": "^13.5.2",
-    "eslint-config-next": "^12.1.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/json-schema": "^7.0.15",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.10.5",
+    "@types/react": "^19.0.4",
+    "@types/react-dom": "^19.0.2",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "date-fns": "^4.1.0",
+    "decorated-ajv": "^1.1.0",
+    "eslint-config-next": "^15.1.4",
     "eslint-config-sodaru": "^1.0.1",
     "js-yaml": "^4.1.0",
     "lodash": "^4.17.21",
-    "next": "^12.1.0",
+    "next": "^15.1.4",
     "prettier-config-sodaru": "^1.0.0",
-    "react": "^17.0.2 || ^18.0.0",
-    "react-dom": "^17.0.2 || ^18.0.0",
-    "rimraf": "^3.0.2"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^9.0.3",
+    "react-syntax-highlighter": "^15.6.1",
+    "remark-gfm": "^4.0.0",
+    "rimraf": "^6.0.1"
   },
   "prettier": "prettier-config-sodaru",
   "eslintConfig": {
@@ -84,49 +86,48 @@
     ]
   },
   "peerDependencies": {
-    "@date-io/date-fns": "^2.13.1",
-    "@mui/icons-material": "^5.6.1",
-    "@mui/lab": "^5.0.0-alpha.73",
-    "@mui/material": "^5.6.1",
-    "@mui/x-date-pickers": "^5.0.0-alpha.0",
-    "date-fns": "^2.28.0",
+    "@mui/icons-material": "^6.3.1",
+    "@mui/material": "^6.3.1",
+    "@mui/x-date-pickers": "^7.23.6",
+    "@mui/x-tree-view": "^7.23.6",
+    "date-fns": "^4.1.0",
     "decorated-ajv": "^1.1.0",
     "lodash": "^4.17.21",
-    "next": "^12.1.0 || ^13.0.0",
-    "prettier": "^2.6.2",
-    "react": "^17.0.2 || ^18.0.0",
-    "react-markdown": "^8.0.1",
-    "react-syntax-highlighter": "^15.5.0",
-    "remark-gfm": "^3.0.1",
-    "tslib": "^2.5.0"
+    "next": "^14.0.0 || ^15.0.0 || ^16.0.0",
+    "prettier": "^2.3.2 || ^3.4.2",
+    "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
+    "react-markdown": "^9.0.3",
+    "react-syntax-highlighter": "^15.6.1",
+    "remark-gfm": "^4.0.0",
+    "tslib": "^2.8.1"
   },
   "peerDependenciesMeta": {
-    "@date-io/date-fns": {
-      "optional": false
-    },
-    "@mui/lab": {
-      "optional": false
-    },
     "@mui/x-date-pickers": {
-      "optional": false
+      "optional": true
+    },
+    "@mui/x-tree-view": {
+      "optional": true
     },
     "date-fns": {
-      "optional": false
+      "optional": true
     },
     "decorated-ajv": {
-      "optional": false
+      "optional": true
+    },
+    "next": {
+      "optional": true
     },
     "prettier": {
-      "optional": false
+      "optional": true
     },
     "react-markdown": {
-      "optional": false
+      "optional": true
     },
     "react-syntax-highlighter": {
-      "optional": false
+      "optional": true
     },
     "remark-gfm": {
-      "optional": false
+      "optional": true
     }
   },
   "sideEffects": false

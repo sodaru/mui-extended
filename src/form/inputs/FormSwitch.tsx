@@ -21,7 +21,7 @@ const ControlledSwitch: FunctionComponent<
   }, [onChange]);
 
   const _onBlur = useMemo(() => {
-    return (event: FocusEvent<HTMLInputElement>) => {
+    return (event: FocusEvent<HTMLButtonElement>) => {
       onBlur(event.target.name);
     };
   }, [onBlur]);

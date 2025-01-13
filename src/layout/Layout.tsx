@@ -6,6 +6,7 @@ import {
   PaperProps,
   SwipeableDrawer,
   SwipeableDrawerProps,
+  SxProps,
   Theme,
   Toolbar
 } from "@mui/material";
@@ -16,10 +17,11 @@ import {
   ReactNode,
   useEffect,
   createRef,
-  forwardRef
+  forwardRef,
+  ReactEventHandler
 } from "react";
 import { SplitPane, SplitPaneProps } from "../splitPane/SplitPane";
-import { withCloseOnNavigation } from "../utils";
+import { CloseOnNavigationProps, withCloseOnNavigation } from "../utils";
 import { useMobile } from "../utils/useMobile";
 import { useHideMenu } from "./HideMenu";
 
@@ -81,7 +83,12 @@ const WebLayout: FunctionComponent<
   );
 };
 
-const MuiExtSwipeableDrawer = withCloseOnNavigation(SwipeableDrawer);
+const MuiExtSwipeableDrawer =
+  withCloseOnNavigation<
+    PropsWithChildren<
+      CloseOnNavigationProps & { onOpen: ReactEventHandler; sx: SxProps }
+    >
+  >(SwipeableDrawer);
 
 const MobileLayout: FunctionComponent<
   BaseLayoutProps & { swipeableDrawerProps?: SwipeableDrawerProps }

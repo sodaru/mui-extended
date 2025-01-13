@@ -64,7 +64,7 @@ export const CheckboxGroup: FunctionComponent<CheckboxGroupProps> = ({
 };
 
 export const FormCheckbox = forwardRef<
-  HTMLInputElement,
+  HTMLButtonElement,
   Omit<CheckboxProps, "checked" | "onChange" | "indeterminate"> &
     Required<Pick<CheckboxProps, "value">>
 >(function CheckboxWithGroup({ value, ...props }, ref) {

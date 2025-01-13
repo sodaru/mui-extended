@@ -240,22 +240,13 @@ const FormDemoComponent: FunctionComponent = () => {
                 }}
               />
 
-              <FormDatePicker
-                name="datePicker"
-                label="Date Picker"
-                renderInput={params => <TextField {...params} />}
-              />
+              <FormDatePicker name="datePicker" label="Date Picker" />
 
-              <FormTimePicker
-                name="timePicker"
-                label="Time Picker"
-                renderInput={params => <TextField {...params} />}
-              />
+              <FormTimePicker name="timePicker" label="Time Picker" />
 
               <FormDateTimePicker
                 name="datetimePicker"
                 label="DateTime Picker"
-                renderInput={params => <TextField {...params} />}
               />
 
               <Box>

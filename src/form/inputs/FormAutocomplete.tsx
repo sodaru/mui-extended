@@ -4,7 +4,14 @@ import {
   AutocompleteRenderInputParams,
   AutocompleteValue
 } from "@mui/material";
-import { forwardRef, Ref, RefAttributes, SyntheticEvent, useMemo } from "react";
+import {
+  forwardRef,
+  ReactNode,
+  Ref,
+  RefAttributes,
+  SyntheticEvent,
+  useMemo
+} from "react";
 import { debugRender } from "../debug";
 import {
   ControlledInputAttributes,
@@ -84,4 +91,4 @@ export const FormAutocomplete = withFormField(ControlledAutocomplete) as <
     Pick<ControlledInputAttributes, "name"> &
     Partial<Omit<ControlledInputAttributes, "name" | "value">> &
     RefAttributes<HTMLDivElement>
-) => JSX.Element;
+) => ReactNode;

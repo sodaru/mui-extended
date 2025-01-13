@@ -1,82 +1,52 @@
 import {
   DatePickerProps,
   DateTimePickerProps,
+  PickerValidDate,
   TimePickerProps
 } from "@mui/x-date-pickers";
 
-import { FocusEvent, FunctionComponent, useMemo } from "react";
+import { ComponentType, forwardRef, useCallback } from "react";
 import { debugRender } from "../../debug";
 import { FormFieldAttributes } from "../../FormField";
 
 export const withControlledDateTimePicker = <
-  T,
-  TD extends
-    | DatePickerProps<T, TD>
-    | DateTimePickerProps<T, TD>
-    | TimePickerProps<T, TD>
+  T extends PickerValidDate,
+  TD extends DatePickerProps<T> | DateTimePickerProps<T> | TimePickerProps<T>
 >(
-  Picker: (props: T & TD) => JSX.Element
-): FunctionComponent<T & TD & FormFieldAttributes> => {
-  const DecoratedPicker: FunctionComponent<T & TD & FormFieldAttributes> = ({
-    name,
-    onChange,
-    onBlur,
-    error,
-    helperText,
-    renderInput,
-    DialogProps = {},
-    ...props
-  }) => {
-    debugRender(name);
+  Picker: ComponentType<TD>
+) => {
+  const ControlledPicker = forwardRef<HTMLDivElement, TD & FormFieldAttributes>(
+    function ControlledPicker(
+      { onChange, onBlur, error, helperText, ...props },
+      ref
+    ) {
+      debugRender(props.name);
 
-    const _onChange = useMemo(
-      () => value => {
-        onChange(name, value);
-      },
-      [onChange, name]
-    );
+      const _onChange = useCallback(
+        (value: T) => {
+          onChange(props.name, value);
+        },
+        [onChange, props.name]
+      );
 
-    const dialogId = DialogProps.id || "form-date-picker-dialog";
+      const _onBlur = useCallback(() => {
+        onBlur(props.name);
+      }, [onBlur, props.name]);
 
-    const _DialogProps = { id: dialogId, ...DialogProps };
+      return (
+        <>
+          {/* @ts-expect-error Picker will be a valid type */}
+          <Picker
+            {...props}
+            onChange={_onChange}
+            _onBlur={_onBlur}
+            ref={ref}
+            slotProps={{ textField: { error, helperText } }}
+          />
+        </>
+      );
+    }
+  );
 
-    const _onBlur = useMemo(
-      () => (event: FocusEvent<HTMLInputElement>) => {
-        let propagate = true;
-        if (event.relatedTarget) {
-          let relatedTarget = event.relatedTarget;
-          while (relatedTarget.tagName != "BODY") {
-            if (relatedTarget.id == dialogId) {
-              propagate = false;
-              break;
-            }
-            relatedTarget = relatedTarget.parentElement;
-          }
-        }
-
-        if (propagate) {
-          onBlur(name);
-        }
-      },
-      [onBlur, name, dialogId]
-    );
-
-    return (
-      <Picker
-        {...(props as T & TD)}
-        renderInput={params => {
-          return renderInput({
-            ...params,
-            error,
-            helperText,
-            onBlur: _onBlur
-          });
-        }}
-        onChange={_onChange}
-        DialogProps={_DialogProps}
-      />
-    );
-  };
-
-  return DecoratedPicker;
+  return ControlledPicker;
 };

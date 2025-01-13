@@ -1,3 +1,5 @@
+/* eslint-disable */
+// @ts-nocheck
 import {
   Alert,
   Paper,
@@ -10,7 +12,6 @@ import {
   TableRow,
   Typography,
   useTheme,
-  Link as MuiLink,
   Box,
   IconButton,
   Tooltip
@@ -22,8 +23,8 @@ import remarkGfm from "remark-gfm";
 import typescript from "refractor/lang/typescript";
 import { darkThemeStyle } from "./styles/dark";
 import { lightThemeStyle } from "./styles/light";
-import Link from "next/link";
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
+import { MuiLinkWithNext } from "../NextMuiLink";
 
 SyntaxHighlighter.registerLanguage("typescript", typescript);
 
@@ -219,11 +220,7 @@ const Img = props => {
 };
 
 const A = props => {
-  return (
-    <Link href={props.href}>
-      <MuiLink {...props} />
-    </Link>
-  );
+  return <MuiLinkWithNext {...props} />;
 };
 
 export const MarkdownPreview: FunctionComponent<

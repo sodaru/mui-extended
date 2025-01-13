@@ -12,5 +12,5 @@
     "jsx": "react-jsx",
     "skipLibCheck": true
   },
-  "include": ["next-env.d.ts", "src"]
+  "include": ["src"]
 }
